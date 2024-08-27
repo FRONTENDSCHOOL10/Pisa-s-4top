@@ -1,11 +1,23 @@
 {
    "compilerOptions": {
-      "lib": ["DOM", "DOM.Iterable", "ES2020"],
+      "target": "es2016",
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],
       "jsx": "preserve",
+      "module": "ES2020",
+      "moduleResolution": "Bundler",
       "baseUrl": ".",
       "paths": {
          "@/*": ["src/*"]
-      }
-   },
-   "include": ["src"]
+      },
+      "types": ["vite/client"],
+      "allowImportingTsExtensions": true,
+      "allowJs": true,
+      "noEmit": true,
+      "isolatedModules": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "skipLibCheck": true,
+      "strict": true
+   }
 }
