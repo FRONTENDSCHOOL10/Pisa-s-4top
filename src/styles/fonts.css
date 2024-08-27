@@ -1,0 +1,11 @@
+@font-face {
+   font-family: 'Pretendard';
+   src: url('./assets/fonts/PretendardVariable.woff2');
+}
+
+*,
+*::after,
+*::before {
+   font-family: 'Pretendard', sans-serif;
+   color: #00050e;
+}
