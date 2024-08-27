@@ -1,0 +1,11 @@
+{
+   "compilerOptions": {
+      "lib": ["DOM", "DOM.Iterable", "ES2020"],
+      "jsx": "preserve",
+      "baseUrl": ".",
+      "paths": {
+         "@/*": ["src/*"]
+      }
+   },
+   "include": ["src"]
+}
