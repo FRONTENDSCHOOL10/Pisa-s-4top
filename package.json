@@ -3,7 +3,7 @@
   "private": true,
   "name": "vite-custom-template",
   "version": "0.0.1",
-  "description": "Vite 커스텀 템플릿을 사용해 React 프로젝트 오토 스캐폴딩",
+  "description": "Vite 커스텀 템플릿",
   "devDependencies": {
     "@eslint/js": "^9.8.0",
     "@types/node": "^22.0.0",
