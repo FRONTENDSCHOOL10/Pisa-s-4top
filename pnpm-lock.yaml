@@ -26,6 +26,9 @@ importers:
       react-router-dom:
         specifier: ^6.26.1
         version: 6.26.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      zustand:
+        specifier: ^4.5.5
+        version: 4.5.5(@types/react@18.3.3)(react@18.3.1)
     devDependencies:
       '@eslint/js':
         specifier: ^9.8.0
@@ -81,9 +84,6 @@ importers:
       vite:
         specifier: ^5.3.5
         version: 5.3.5(@types/node@22.0.0)
-      zustand:
-        specifier: ^4.5.5
-        version: 4.5.5(@types/react@18.3.3)(react@18.3.1)
 
 packages:
 

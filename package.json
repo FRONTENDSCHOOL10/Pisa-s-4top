@@ -4,6 +4,12 @@
   "name": "totd",
   "version": "0.0.1",
   "description": "멋쟁이사자처럼 프론트엔드 스쿨 10기 파이널 프로젝트 4조",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint \"./src/**\" --report-unused-disable-directives --ignore-pattern .gitignore"
+  },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
     "@types/node": "^22.0.0",
@@ -22,14 +28,7 @@
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4",
-    "vite": "^5.3.5",
-    "zustand": "^4.5.5"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint \"./src/**\" --report-unused-disable-directives --ignore-pattern .gitignore"
+    "vite": "^5.3.5"
   },
   "dependencies": {
     "pocketbase": "^0.21.4",
@@ -37,6 +36,7 @@
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.4.1",
-    "react-router-dom": "^6.26.1"
+    "react-router-dom": "^6.26.1",
+    "zustand": "^4.5.5"
   }
 }
