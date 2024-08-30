@@ -1,4 +1,4 @@
-module.exports = {
+export default {
    // 화살표 함수 식 매개변수 () 생략 여부 (ex: (a) => a)
    arrowParens: 'always',
    // 닫는 괄호(>) 위치 설정
@@ -27,5 +27,5 @@ module.exports = {
    // 탭 사용 여부
    useTabs: false,
    // Prettier TailwindCSS 플러그인 추가
-   plugins: [require('prettier-plugin-tailwindcss')],
+   plugins: ["prettier-plugin-tailwindcss"],
 };
