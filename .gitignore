@@ -132,3 +132,4 @@ dist
 .DS_store
 build
 dist
+*storybook.log
