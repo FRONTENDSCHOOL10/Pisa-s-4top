@@ -1,5 +1,7 @@
+import AppBar from './components/AppBar';
+
 function App() {
-   return <p>테스트</p>;
+   return <AppBar hasBackBtn={true} />;
 }
 
 export default App;
