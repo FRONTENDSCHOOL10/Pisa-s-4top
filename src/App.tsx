@@ -18,7 +18,28 @@ import MyReviewsPage from './pages/Settings/MyReviewsPage';
 import MyFavoritesPage from './pages/Settings/MyFavoritesPage';
 
 function App() {
-   return <p>테스트</p>;
+   return (
+      <Router>
+         <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/join" element={<JoinPage />} />
+            <Route path="/my-selection" element={<MySelectionPage />} />
+            <Route path="/my-taste" element={<MyTastePage />} />
+            <Route path="/" element={<MainPage />} />
+            <Route path="/recommend" element={<TeaListPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/detail/:id" element={<TeaDetailPage />} />
+            <Route path="/reviews" element={<ReviewsPage />} />
+            <Route path="/reviews/detail/:id" element={<ReviewsDetailPage />} />
+            <Route path="/reviews/write" element={<ReviewsWritePage />} />
+            <Route path="/reviews/edit/:id" element={<ReviewsEditPage />} />
+            <Route path="/my-page" element={<MyPage />} />
+            <Route path="/my-page/edit" element={<MyEditPage />} />
+            <Route path="/my-page/reviews" element={<MyReviewsPage />} />
+            <Route path="/my-page/favorites" element={<MyFavoritesPage />} />
+         </Routes>
+      </Router>
+   );
 }
 
 export default App;
