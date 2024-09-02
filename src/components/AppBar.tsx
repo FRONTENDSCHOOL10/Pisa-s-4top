@@ -15,13 +15,11 @@ function AppBar({ title, hasBackBtn, hasLogo }: AppBarProps) {
             <button className="" onClick={() => navigate(-1)}>
                <img src="/assets/fi-rs-angle-left.svg" alt="뒤로가기 버튼" />
             </button>
-         ) : null}
-         {hasLogo ? (
+         ) : hasLogo ? (
             <button className="">
                <img src="/assets/logo.svg" alt="totd 로고" />
             </button>
-         ) : null}
-         {title ? (
+         ) : title ? (
             <>
                <button className="" onClick={() => navigate(-1)}>
                   <img src="/assets/fi-rs-angle-left.svg" alt="뒤로가기 버튼" />
