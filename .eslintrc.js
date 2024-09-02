@@ -4,6 +4,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:react-refresh/recommended",
+    "plugin:storybook/recommended"
   ],
   plugins: ["react", "react-hooks", "react-refresh"],
   rules: {
