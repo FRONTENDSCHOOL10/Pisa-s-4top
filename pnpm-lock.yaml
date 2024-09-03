@@ -11,6 +11,9 @@ importers:
       '@flaticon/flaticon-uicons':
         specifier: ^3.3.1
         version: 3.3.1
+      cox-postposition:
+        specifier: ^1.4.1
+        version: 1.4.1
       pocketbase:
         specifier: ^0.21.4
         version: 0.21.4
@@ -36,6 +39,9 @@ importers:
         specifier: ^4.5.5
         version: 4.5.5(@types/react@18.3.3)(react@18.3.1)
     devDependencies:
+      '@axe-core/react':
+        specifier: ^4.10.0
+        version: 4.10.0
       '@chromatic-com/storybook':
         specifier: ^1.8.0
         version: 1.8.0(react@18.3.1)
@@ -93,6 +99,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.41)
+      axe-core:
+        specifier: ^4.10.0
+        version: 4.10.0
       eslint:
         specifier: 9.x
         version: 9.8.0
@@ -123,9 +132,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.6
         version: 0.6.6(prettier@3.3.3)
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       storybook:
         specifier: ^8.2.9
         version: 8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2))
@@ -151,6 +157,9 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@axe-core/react@4.10.0':
+    resolution: {integrity: sha512-gpFj1+G0zabbd0ZDum1N5FPJtUOfPIfslXNH58WuR7opSK0WTwPJ49ZlYr/Wg2fA4VGI5lfkG5fAZSG9p8ecKw==}
 
   '@babel/code-frame@7.24.7':
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
@@ -1657,6 +1666,10 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
+  axe-core@4.10.0:
+    resolution: {integrity: sha512-Mr2ZakwQ7XUAjp7pAwQWRhhK8mQQ6JAaNWSjmjxil0R8BPioMtQsTLOolGYkji1rcL++3dCqZA3zWqpT+9Ew6g==}
+    engines: {node: '>=4'}
+
   babel-core@7.0.0-bridge.0:
     resolution: {integrity: sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg==}
     peerDependencies:
@@ -1866,6 +1879,9 @@ packages:
 
   core-js-compat@3.38.1:
     resolution: {integrity: sha512-JRH6gfXxGmrzF3tZ57lFx97YARxCXPaMzPo6jELZhv88pBH5VXpQ+y0znKGlFnzuaihqhLbefxSJxWJMPtfDzw==}
+
+  cox-postposition@1.4.1:
+    resolution: {integrity: sha512-TNXGxd7l49ogBp0VMVDHhId2wk2NTpzcR2xg+rjHzB25YSs91gEDko0WmV9xPNLZzPnqdeBcrVHbHJzo3EfnNQ==}
 
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -3524,6 +3540,9 @@ packages:
   remark-stringify@11.0.0:
     resolution: {integrity: sha512-1OSmLd3awB/t8qdoEOMazZkNsfVTeY4fTsgzcQFdXNq8ToTN4ZGwrMnlda4K6smTFKD+GRV6O48i6Z4iKgPPpw==}
 
+  requestidlecallback@0.3.0:
+    resolution: {integrity: sha512-TWHFkT7S9p7IxLC5A1hYmAYQx2Eb9w1skrXmQ+dS1URyvR8tenMLl4lHbqEOUnpEYxNKpkVMXUgknVpBZWXXfQ==}
+
   requireindex@1.2.0:
     resolution: {integrity: sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==}
     engines: {node: '>=0.10.5'}
@@ -4109,6 +4128,11 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+
+  '@axe-core/react@4.10.0':
+    dependencies:
+      axe-core: 4.10.0
+      requestidlecallback: 0.3.0
 
   '@babel/code-frame@7.24.7':
     dependencies:
@@ -5917,6 +5941,8 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.0.0
 
+  axe-core@4.10.0: {}
+
   babel-core@7.0.0-bridge.0(@babel/core@7.25.2):
     dependencies:
       '@babel/core': 7.25.2
@@ -6137,6 +6163,8 @@ snapshots:
   core-js-compat@3.38.1:
     dependencies:
       browserslist: 4.23.3
+
+  cox-postposition@1.4.1: {}
 
   cross-spawn@7.0.3:
     dependencies:
@@ -8054,6 +8082,8 @@ snapshots:
       '@types/mdast': 4.0.4
       mdast-util-to-markdown: 2.1.0
       unified: 11.0.5
+
+  requestidlecallback@0.3.0: {}
 
   requireindex@1.2.0: {}
 
