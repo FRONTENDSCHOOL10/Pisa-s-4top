@@ -12,8 +12,8 @@ function AppBar({ title, hasBackBtn, hasLogo }: AppBarProps) {
    return (
       <div className="flex h-20 w-80 items-center space-x-1 bg-slate-200 px-4 py-3 text-lg">
          {hasBackBtn ? (
-            <button className="" onClick={() => navigate(-1)}>
-               <img src="/assets/fi-rs-angle-left.svg" alt="뒤로가기 버튼" />
+            <button aria-label="뒤로가기 버튼" onClick={() => navigate(-1)}>
+               <span className="fi fi-rs-angle-left"></span>
             </button>
          ) : hasLogo ? (
             <button className="">
@@ -21,8 +21,8 @@ function AppBar({ title, hasBackBtn, hasLogo }: AppBarProps) {
             </button>
          ) : title ? (
             <>
-               <button className="" onClick={() => navigate(-1)}>
-                  <img src="/assets/fi-rs-angle-left.svg" alt="뒤로가기 버튼" />
+               <button aria-label="뒤로가기 버튼" onClick={() => navigate(-1)}>
+                  <span className="fi fi-rs-angle-left"></span>
                </button>
                <span>{title}</span>
             </>
