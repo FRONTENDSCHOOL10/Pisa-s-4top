@@ -21,20 +21,20 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
          <nav className="flex h-[3.25rem] w-[22.5rem] items-center bg-slate-50 py-[0.88rem] text-base">
             {hasBackBtn ? (
                <button
-                  className="p-[1rem]"
+                  className="focus-green px-4"
                   aria-label="뒤로가기 버튼"
                   onClick={() => navigate(-1)}
                >
                   <span className="fi fi-rs-angle-left text-xs text-green-700" />
                </button>
             ) : hasLogo ? (
-               <button className="mx-auto p-3">
+               <button className="focus-green mx-auto">
                   <img src="/assets/totd-logo.svg" alt="totd 로고" />
                </button>
             ) : title ? (
                <>
                   <button
-                     className="p-[1rem]"
+                     className="focus-green m-4"
                      aria-label="뒤로가기 버튼"
                      onClick={() => navigate(-1)}
                   >
@@ -44,7 +44,7 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
                </>
             ) : (
                <button
-                  className="p-[1rem]"
+                  className="focus-green px-4"
                   aria-label="뒤로가기 버튼"
                   onClick={() => navigate(-1)}
                >
