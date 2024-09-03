@@ -1,0 +1,4 @@
+.fi.fi-sr-heart.white::before {
+   color: #fff;
+   -webkit-text-stroke: 1px #d6d3d1;
+}

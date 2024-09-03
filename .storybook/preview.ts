@@ -1,4 +1,6 @@
 /** @type { import('@storybook/react').Preview } */
+import '../src/styles/globals.css';
+
 const preview = {
    parameters: {
       controls: {
@@ -8,6 +10,8 @@ const preview = {
          },
       },
    },
+
+   tags: ['autodocs']
 };
 
 export default preview;
