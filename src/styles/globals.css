@@ -4,3 +4,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* focus 그린 커스텀 */
+@layer components {
+   .focus-green {
+      @apply focus:rounded-md focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-[5px];
+   }
+}
