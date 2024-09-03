@@ -8,8 +8,8 @@ const TeaRecommendCard = () => {
                className="h-32 w-full rounded-md object-cover"
             />
          </div>
-         <button className="mt-4 rounded px-4 py-2 text-white hover:bg-blue-600">
-            버튼 텍스트
+         <button className="mt-4 rounded px-4 py-2">
+            <span className="fi fi-sr-heart white"></span>
          </button>
          <div className="mt-2">
             <h3 className="text-lg font-semibold">English Breakfast</h3>
