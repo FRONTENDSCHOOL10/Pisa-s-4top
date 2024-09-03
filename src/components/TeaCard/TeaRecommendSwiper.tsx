@@ -5,7 +5,7 @@ import TeaRecommendCard from './TeaRecommendCard';
 export default function TeaRecommendSwiper() {
    return (
       <Swiper
-         spaceBetween={20}
+         spaceBetween={8}
          slidesPerView="auto"
          loop={true}
          centeredSlides={true}
