@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import TeaRecommendCard from './TeaRecommendCard';
 
-const TeaRecommendSwiper = () => {
+export default function TeaRecommendSwiper() {
    return (
       <Swiper
          spaceBetween={20}
@@ -28,6 +28,4 @@ const TeaRecommendSwiper = () => {
          </SwiperSlide>
       </Swiper>
    );
-};
-
-export default TeaRecommendSwiper;
+}

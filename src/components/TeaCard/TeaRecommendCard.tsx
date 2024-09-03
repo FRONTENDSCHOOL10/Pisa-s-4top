@@ -1,4 +1,4 @@
-const TeaRecommendCard = () => {
+export default function TeaRecommendCard() {
    return (
       <article className="relative w-40 cursor-pointer rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-70% to-stone-100 to-100% shadow-xl">
          <div className="rounded-t-2xl bg-stone-200">
@@ -19,6 +19,4 @@ const TeaRecommendCard = () => {
          </div>
       </article>
    );
-};
-
-export default TeaRecommendCard;
+}
