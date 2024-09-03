@@ -1,5 +1,5 @@
 @import url('./fonts.css');
-@import url('./icons.css');
+@import url('../../public/assets/starRate.css');
 @import '@flaticon/flaticon-uicons/css/all/all';
 
 @tailwind base;
