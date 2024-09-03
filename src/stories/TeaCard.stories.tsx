@@ -3,6 +3,7 @@ import TeaRecommendCard from '@/components/TeaCard/TeaRecommendCard';
 import TeaRecommendSwiper from '@/components/TeaCard/TeaRecommendSwiper';
 import TeaDescriptionCard from '@/components/TeaCard/TeaDescriptionCard';
 import TeaReviewCard from '@/components/TeaCard/TeaReviewCard';
+import TeaRecipeCard from '@/components/TeaCard/TeaRecipeCard';
 
 export default {
    title: 'Components/TeaComponents',
@@ -12,3 +13,4 @@ export const RecommendCard: StoryFn = () => <TeaRecommendCard />;
 export const RecommendSwiper: StoryFn = () => <TeaRecommendSwiper />;
 export const DescriptionCard: StoryFn = () => <TeaDescriptionCard />;
 export const ReviewCard: StoryFn = () => <TeaReviewCard />;
+export const RecipeCard: StoryFn = () => <TeaRecipeCard />;
