@@ -55,8 +55,36 @@ export function ButtonXlarge() {
 
 export function ButtonHeart() {
    return (
-      <button className="absolute bottom-14 right-3 rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-60% to-stone-100 px-1.5 py-1.5 transition hover:bg-gradient-to-b hover:from-red-600 hover:from-0% hover:to-red-400">
+      <button
+         className="rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-60% to-stone-100 px-1.5 py-1.5 transition hover:bg-gradient-to-b hover:from-red-600 hover:from-0% hover:to-red-400"
+         type="button"
+      >
          <span className="fi fi-sr-heart text-shadow-sm flex justify-center text-white"></span>
       </button>
+   );
+}
+
+export function ButtonHeartSmall() {
+   return (
+      <button
+         className="rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-60% to-stone-100 px-1 py-1 transition hover:bg-gradient-to-b hover:from-red-600 hover:from-0% hover:to-red-400"
+         type="button"
+      >
+         <span className="fi fi-sr-heart text-shadow-sm flex justify-center text-[0.625rem] text-white"></span>
+      </button>
+   );
+}
+
+export function ButtonHeartSmallwithCount() {
+   return (
+      <>
+         <button
+            className="rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-60% to-stone-100 px-1 py-1 transition hover:bg-gradient-to-b hover:from-red-600 hover:from-0% hover:to-red-400"
+            type="button"
+         >
+            <span className="fi fi-sr-heart text-shadow-sm flex justify-center text-[0.625rem] text-white"></span>
+         </button>
+         <span className="ml-1 text-base font-bold text-red-600">10</span>
+      </>
    );
 }

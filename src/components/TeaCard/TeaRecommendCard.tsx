@@ -10,7 +10,9 @@ export default function TeaRecommendCard() {
                className="h-36 w-full rounded-md object-cover"
             />
          </div>
-         <ButtonHeart />
+         <div className="absolute bottom-14 right-3">
+            <ButtonHeart />
+         </div>
          <div className="mt-2 p-3">
             <h3 className="mb-1 text-sm font-semibold text-stone-950">
                English Breakfast

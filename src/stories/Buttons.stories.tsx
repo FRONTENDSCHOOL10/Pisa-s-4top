@@ -6,6 +6,9 @@ import {
    ButtonLarge,
    ButtonLargeError,
    ButtonXlarge,
+   ButtonHeart,
+   ButtonHeartSmall,
+   ButtonHeartSmallwithCount,
 } from '../components/Buttons/Buttons';
 
 export default {
@@ -17,3 +20,6 @@ export const Medium: StoryFn = () => <ButtonMedium />;
 export const Large: StoryFn = () => <ButtonLarge />;
 export const LargeError: StoryFn = () => <ButtonLargeError />;
 export const XLarge: StoryFn = () => <ButtonXlarge />;
+export const Heart: StoryFn = () => <ButtonHeart />;
+export const HeartSmall: StoryFn = () => <ButtonHeartSmall />;
+export const HeartSmallCount: StoryFn = () => <ButtonHeartSmallwithCount />;
