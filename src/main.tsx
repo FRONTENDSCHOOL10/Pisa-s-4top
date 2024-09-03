@@ -1,8 +1,15 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, { StrictMode } from 'react';
+import ReactDOM, { createRoot } from 'react-dom/client';
+import axe from '@axe-core/react';
+import ko from 'axe-core/locales/ko.json';
 
 import '@/styles/globals.css';
 import App from './App';
+
+// 개발 버전에서만 접근성 검사되도록 조건 처리
+if (process.env.NODE_ENV !== 'production') {
+   axe(React, ReactDOM, 1000, { locale: ko } as any);
+}
 
 const container = document.getElementById('root');
 
