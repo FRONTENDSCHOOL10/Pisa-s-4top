@@ -1,19 +1,21 @@
 const TeaRecommendCard = () => {
    return (
-      <article className="rounded-2xl bg-stone-100 p-4 shadow-md">
-         <div>
+      <article className="relative w-40 cursor-pointer rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-70% to-stone-100 to-100% shadow-xl">
+         <div className="rounded-t-2xl bg-stone-200">
             <img
                src=""
                alt="티 상품 미리보기"
-               className="h-32 w-full rounded-md object-cover"
+               className="h-36 w-full rounded-md object-cover"
             />
          </div>
-         <button className="mt-4 rounded px-4 py-2">
-            <span className="fi fi-sr-heart white"></span>
+         <button className="absolute bottom-14 right-3 rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-60% to-stone-100 px-1.5 py-1.5 transition hover:bg-gradient-to-b hover:from-red-600 hover:from-0% hover:to-red-400">
+            <span className="fi fi-sr-heart white flex justify-center"></span>
          </button>
-         <div className="mt-2">
-            <h3 className="text-lg font-semibold">English Breakfast</h3>
-            <p className="text-sm text-gray-600">TWINING</p>
+         <div className="mt-2 p-3">
+            <h3 className="mb-1 text-sm font-semibold text-stone-950">
+               English Breakfast
+            </h3>
+            <p className="text-xs text-stone-400">TWINING</p>
          </div>
       </article>
    );
