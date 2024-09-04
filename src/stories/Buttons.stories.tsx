@@ -37,3 +37,15 @@ export const LargeError: Story = {
 export const XLarge: Story = {
    render: () => <ButtonXlarge />,
 };
+
+export const Heart: Story = {
+   render: () => <ButtonHeart />,
+};
+
+export const HeartSmall: Story = {
+   render: () => <ButtonHeartSmall />,
+};
+
+export const HeartSmallWithCount: Story = {
+   render: () => <ButtonHeartSmallwithCount />,
+};
