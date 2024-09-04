@@ -17,6 +17,7 @@ import MyEditPage from './pages/Settings/MyEditPage';
 import MyReviewsPage from './pages/Settings/MyReviewsPage';
 import MyFavoritesPage from './pages/Settings/MyFavoritesPage';
 import BottomNav from './components/BottomNav';
+import Logo from './components/Logo';
 
 function App() {
    return (
@@ -27,7 +28,7 @@ function App() {
                <Route path="/join" element={<JoinPage />} />
                <Route path="/my-selection" element={<MySelectionPage />} />
                <Route path="/my-taste" element={<MyTastePage />} />
-               <Route path="/" element={<MainPage />} />
+               <Route path="/" element={<Logo alt="대체" />} />
                <Route path="/recommend" element={<TeaListPage />} />
                <Route path="/search" element={<SearchPage />} />
                <Route path="/detail/:id" element={<TeaDetailPage />} />
