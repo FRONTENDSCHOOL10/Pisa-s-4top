@@ -13,9 +13,9 @@ function Logo({ small, large }: LogoProps) {
    return (
       <div>
          {small ? (
-            <img src="/assets/typeLogo-sm.svg" alt="totd 로고와 글자" />
+            <img src="/assets/typeLogo-sm.svg" alt="totd 로고" />
          ) : large ? (
-            <img src="/assets/typeLogo-lg.svg" alt="totd 로고와 글자" />
+            <img src="/assets/typeLogo-lg.svg" alt="totd 로고" />
          ) : (
             <img src="/assets/totd-logo.svg" alt="totd 로고" />
          )}
