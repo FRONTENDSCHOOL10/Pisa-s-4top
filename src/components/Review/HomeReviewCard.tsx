@@ -20,7 +20,7 @@ export default function HomeReviewCard({
    return (
       <Link
          to={reviewDetailPage}
-         className="shadow-home-review flex h-[9.375rem] w-[21.5rem] gap-2 rounded-2xl border border-white bg-white/20 p-2"
+         className="flex h-[9.375rem] w-[21.5rem] gap-2 rounded-2xl border border-white bg-white/20 p-2 shadow-home-review"
          aria-label={`${nickname}님이 작성한 ${title} 리뷰`}
       >
          <img
