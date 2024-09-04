@@ -30,7 +30,13 @@ export default function TeaReviewCard({
                   {reviewTitle}
                </h3>
                <div className="flex justify-between">
-                  <span className="gray-rateScore-20"></span>
+                  <div className="w-20">
+                     <img
+                        className="h-4 object-cover"
+                        src="/assets/starRate.svg#gray-rateScore-30"
+                        alt="별점 3.0"
+                     />
+                  </div>
                   <p className="text-xs text-stone-400">{nickName}</p>
                </div>
             </div>
