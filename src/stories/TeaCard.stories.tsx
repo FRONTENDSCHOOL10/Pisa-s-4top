@@ -14,21 +14,21 @@ export default meta;
 type Story = StoryObj<typeof TeaRecommendCard>;
 
 export const RecommendCard: Story = {
-   render: () => <TeaRecommendCard />,
+   args: {},
 };
 
 export const RecommendSwiper: StoryObj<typeof TeaRecommendSwiper> = {
-   render: () => <TeaRecommendSwiper />,
+   args: {},
 };
 
 export const DescriptionCard: StoryObj<typeof TeaDescriptionCard> = {
-   render: () => <TeaDescriptionCard />,
+   args: {},
 };
 
 export const ReviewCard: StoryObj<typeof TeaReviewCard> = {
-   render: () => <TeaReviewCard />,
+   args: {},
 };
 
 export const RecipeCard: StoryObj<typeof TeaRecipeCard> = {
-   render: () => <TeaRecipeCard />,
+   args: {},
 };
