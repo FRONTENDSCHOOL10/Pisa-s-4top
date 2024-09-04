@@ -2,8 +2,8 @@ import CheckBox from '@/components/Input/CheckBox';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta = {
-   title: 'Components/Input',
-   component: CheckBox, // 기본 컴포넌트 설정
+   title: 'Components/Input/CheckBox',
+   component: CheckBox,
 };
 
 export default meta;

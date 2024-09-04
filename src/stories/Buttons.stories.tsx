@@ -12,7 +12,7 @@ import {
 
 const meta: Meta = {
    title: 'Components/Buttons',
-   component: ButtonSmall, // 기본 컴포넌트 설정 (스토리 간 공통 부분)
+   component: ButtonSmall,
 };
 
 export default meta;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import BottomNav from '@/components/BottomNav';
 
 export default {
-   title: 'Components/BottomNav',
+   title: 'Components/Navigation/BottomNav',
    component: BottomNav,
    decorators: [
       (Story) => (
@@ -13,9 +13,10 @@ export default {
          </Router>
       ),
    ],
-} as Meta;
+} as Meta<typeof BottomNav>;
 
-const Template: StoryFn = (args: any) => <BottomNav {...args} />;
+type Story = StoryObj<typeof BottomNav>;
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default: Story = {
+   args: {},
+};
