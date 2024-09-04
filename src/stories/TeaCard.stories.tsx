@@ -1,14 +1,29 @@
-import { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import TeaRecommendCard from '@/components/TeaCard/TeaRecommendCard';
 import TeaRecommendSwiper from '@/components/TeaCard/TeaRecommendSwiper';
 import TeaDescriptionCard from '@/components/TeaCard/TeaDescriptionCard';
 import TeaReviewCard from '@/components/TeaCard/TeaReviewCard';
 
-export default {
+const meta: Meta = {
    title: 'Components/TeaComponents',
-} as Meta;
+   component: TeaRecommendCard, // 기본 컴포넌트 설정
+};
 
-export const RecommendCard: StoryFn = () => <TeaRecommendCard />;
-export const RecommendSwiper: StoryFn = () => <TeaRecommendSwiper />;
-export const DescriptionCard: StoryFn = () => <TeaDescriptionCard />;
-export const ReviewCard: StoryFn = () => <TeaReviewCard />;
+export default meta;
+type Story = StoryObj;
+
+export const RecommendCard: Story = {
+   render: () => <TeaRecommendCard />,
+};
+
+export const RecommendSwiper: Story = {
+   render: () => <TeaRecommendSwiper />,
+};
+
+export const DescriptionCard: Story = {
+   render: () => <TeaDescriptionCard />,
+};
+
+export const ReviewCard: Story = {
+   render: () => <TeaReviewCard />,
+};
