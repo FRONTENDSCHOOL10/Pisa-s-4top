@@ -3,6 +3,7 @@ import TeaRecommendCard from '@/components/TeaCard/TeaRecommendCard';
 import TeaRecommendSwiper from '@/components/TeaCard/TeaRecommendSwiper';
 import TeaDescriptionCard from '@/components/TeaCard/TeaDescriptionCard';
 import TeaReviewCard from '@/components/TeaCard/TeaReviewCard';
+import TeaRecipeCard from '@/components/TeaCard/TeaRecipeCard';
 
 const meta: Meta = {
    title: 'Components/TeaComponents',

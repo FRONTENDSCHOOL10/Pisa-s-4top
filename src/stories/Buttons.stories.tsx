@@ -5,6 +5,9 @@ import {
    ButtonLarge,
    ButtonLargeError,
    ButtonXlarge,
+   ButtonHeart,
+   ButtonHeartSmall,
+   ButtonHeartSmallwithCount,
 } from '../components/Buttons/Buttons';
 
 const meta: Meta = {
