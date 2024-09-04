@@ -10,7 +10,7 @@ interface Props {
 }
 
 function Input({ title, type, id = type, defaultValue = '' }: Props) {
-   const inputTitle = (title: string) => {
+   const inputTitle = (title: string): string => {
       return postposition.put(title, '을'); // 조사(을/를) 검사
    };
 

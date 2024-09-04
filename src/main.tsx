@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
    axe(React, ReactDOM, 1000, { locale: ko } as any);
 }
 
-const container = document.getElementById('root');
+const container: HTMLElement | null = document.getElementById('root');
 
 if (!container) {
    throw new Error('문서에 "#root" 요소가 존재하지 않습니다.');
