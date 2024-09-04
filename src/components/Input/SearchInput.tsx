@@ -31,7 +31,7 @@ function SearchInput({ id = 'search', defaultValue = '', onClick }: Props) {
                title={getSearchInputTitle}
             />
             <button
-               className="pl-2"
+               className="px-2"
                aria-label="검색"
                type="submit"
                onClick={onClick}
