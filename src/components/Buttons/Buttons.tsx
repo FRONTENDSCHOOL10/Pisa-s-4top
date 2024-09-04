@@ -1,7 +1,7 @@
 export function ButtonSmall() {
    return (
       <button
-         className="h-9 w-[5.19rem] rounded bg-green-700 text-xs font-normal text-stone-100"
+         className="h-9 w-[5.19rem] rounded bg-green-700 text-xs font-normal text-stone-100 hover:bg-green-600"
          type="button"
       >
          버튼sm
@@ -12,7 +12,7 @@ export function ButtonSmall() {
 export function ButtonMedium() {
    return (
       <button
-         className="h-[1.94rem] w-60 rounded bg-green-700 text-xs font-normal text-stone-100"
+         className="h-[1.94rem] w-60 rounded bg-green-700 text-xs font-normal text-stone-100 hover:bg-green-600"
          type="button"
       >
          버튼md
@@ -23,7 +23,7 @@ export function ButtonMedium() {
 export function ButtonLarge() {
    return (
       <button
-         className="h-[1.94rem] w-[18.5rem] rounded bg-green-700 text-xs font-normal text-stone-100"
+         className="h-[1.94rem] w-[18.5rem] rounded bg-green-700 text-xs font-normal text-stone-100 hover:bg-green-600"
          type="button"
       >
          버튼lg
@@ -34,7 +34,7 @@ export function ButtonLarge() {
 export function ButtonLargeError() {
    return (
       <button
-         className="h-[1.94rem] w-[18.5rem] rounded bg-red-600 text-xs font-normal text-stone-100"
+         className="h-[1.94rem] w-[18.5rem] rounded bg-red-600 text-xs font-normal text-stone-100 hover:bg-red-500"
          type="button"
       >
          버튼lg-error
@@ -45,7 +45,7 @@ export function ButtonLargeError() {
 export function ButtonXlarge() {
    return (
       <button
-         className="h-[2.81rem] w-[18.5rem] rounded bg-green-700 text-xs font-normal text-stone-100"
+         className="h-[2.81rem] w-[18.5rem] rounded bg-green-700 text-xs font-normal text-stone-100 hover:bg-green-600"
          type="button"
       >
          버튼xl
