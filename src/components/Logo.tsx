@@ -5,14 +5,12 @@
    <Logo large/> => totd 글자 있는 큰 로고
 */
 
+import createUrl from '@/utils/createUrl';
+
 interface LogoProps {
    small?: boolean;
    large?: boolean;
    alt?: string;
-}
-
-export function createUrl(str: string): string {
-   return `${import.meta.env.BASE_URL}assets/${str}.svg`;
 }
 
 function Logo({ small, large, alt }: LogoProps) {
