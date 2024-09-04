@@ -7,7 +7,7 @@
 
 import { useNavigate } from 'react-router-dom';
 
-interface AppBarProps {
+export interface AppBarProps {
    hasBackBtn?: boolean;
    hasLogo?: boolean;
    title?: string;
