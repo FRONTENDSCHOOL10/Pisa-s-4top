@@ -1,3 +1,5 @@
+import StarRating from '../Review/StarRate';
+
 export interface TeaReviewCardProps {
    profileImageUrl?: string;
    reviewTitle: string;
@@ -30,13 +32,7 @@ export default function TeaReviewCard({
                   {reviewTitle}
                </h3>
                <div className="flex justify-between">
-                  <div className="w-20">
-                     <img
-                        className="h-4 object-cover"
-                        src="/assets/starRate.svg#gray-rateScore-30"
-                        alt="별점 3.0"
-                     />
-                  </div>
+                  <StarRating score={3} />
                   <p className="text-xs text-stone-400">{nickName}</p>
                </div>
             </div>
