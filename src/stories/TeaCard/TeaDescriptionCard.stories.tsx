@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import TeaDescriptionCard, {
    TeaDescriptionCardProps,
-} from '../../components/TeaCard/TeaDescriptionCard';
+} from '@/components/TeaCard/TeaDescriptionCard';
 
 const meta: Meta = {
    title: 'Components/TeaCard/TeaDescriptionCard',
