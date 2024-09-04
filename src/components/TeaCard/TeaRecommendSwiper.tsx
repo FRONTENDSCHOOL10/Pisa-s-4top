@@ -1,8 +1,14 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import TeaRecommendCard from './TeaRecommendCard';
+import TeaRecommendCard, { TeaRecommendCardProps } from './TeaRecommendCard';
 
-export default function TeaRecommendSwiper() {
+interface TeaRecommendSwiperProps {
+   teaRecommendations: TeaRecommendCardProps[];
+}
+
+export default function TeaRecommendSwiper({
+   teaRecommendations,
+}: TeaRecommendSwiperProps) {
    return (
       <Swiper
          spaceBetween={8}
@@ -11,21 +17,11 @@ export default function TeaRecommendSwiper() {
          centeredSlides={true}
          style={{ overflow: 'visible' }}
       >
-         <SwiperSlide style={{ width: 'auto' }}>
-            <TeaRecommendCard />
-         </SwiperSlide>
-         <SwiperSlide style={{ width: 'auto' }}>
-            <TeaRecommendCard />
-         </SwiperSlide>
-         <SwiperSlide style={{ width: 'auto' }}>
-            <TeaRecommendCard />
-         </SwiperSlide>
-         <SwiperSlide style={{ width: 'auto' }}>
-            <TeaRecommendCard />
-         </SwiperSlide>
-         <SwiperSlide style={{ width: 'auto' }}>
-            <TeaRecommendCard />
-         </SwiperSlide>
+         {teaRecommendations.map((recommendation, index) => (
+            <SwiperSlide key={index} style={{ width: 'auto' }}>
+               <TeaRecommendCard {...recommendation} />
+            </SwiperSlide>
+         ))}
       </Swiper>
    );
 }

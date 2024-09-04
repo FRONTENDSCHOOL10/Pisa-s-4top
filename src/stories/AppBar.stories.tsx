@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import AppBar, { AppBarProps } from '@/components/AppBar';
 
 export default {
-   title: 'Components/AppBar',
+   title: 'Components/Navigation/AppBar',
    component: AppBar,
    decorators: [
       (Story) => (
