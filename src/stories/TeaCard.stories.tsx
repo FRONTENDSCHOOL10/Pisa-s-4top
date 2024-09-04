@@ -5,30 +5,30 @@ import TeaDescriptionCard from '@/components/TeaCard/TeaDescriptionCard';
 import TeaReviewCard from '@/components/TeaCard/TeaReviewCard';
 import TeaRecipeCard from '@/components/TeaCard/TeaRecipeCard';
 
-const meta: Meta = {
+const meta: Meta<typeof TeaRecommendCard> = {
    title: 'Components/TeaComponents',
-   component: TeaRecommendCard, // 기본 컴포넌트 설정
+   component: TeaRecommendCard,
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<typeof TeaRecommendCard>;
 
 export const RecommendCard: Story = {
    render: () => <TeaRecommendCard />,
 };
 
-export const RecommendSwiper: Story = {
+export const RecommendSwiper: StoryObj<typeof TeaRecommendSwiper> = {
    render: () => <TeaRecommendSwiper />,
 };
 
-export const DescriptionCard: Story = {
+export const DescriptionCard: StoryObj<typeof TeaDescriptionCard> = {
    render: () => <TeaDescriptionCard />,
 };
 
-export const ReviewCard: Story = {
+export const ReviewCard: StoryObj<typeof TeaReviewCard> = {
    render: () => <TeaReviewCard />,
 };
 
-export const RecipeCard: Story = {
+export const RecipeCard: StoryObj<typeof TeaRecipeCard> = {
    render: () => <TeaRecipeCard />,
 };

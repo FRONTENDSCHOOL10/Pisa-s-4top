@@ -17,7 +17,7 @@ Responsive: <div class="yourspritesname"></div>
    height: 16px;
    background-position: 93.6768149882904% 16.513761467889907%;
    background-size: 608.3333333333334% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-00::after {
@@ -37,7 +37,7 @@ div.gray-rateScore-00::after {
    height: 16px;
    background-position: 93.89671361502347% 0.9174311926605505%;
    background-size: 601.1764705882352% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-05::after {
@@ -57,7 +57,7 @@ div.gray-rateScore-05::after {
    height: 16px;
    background-position: 93.45794392523365% 32.11009174311926%;
    background-size: 615.6626506024096% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-10::after {
@@ -77,7 +77,7 @@ div.gray-rateScore-10::after {
    height: 16px;
    background-position: 93.45794392523365% 47.706422018348626%;
    background-size: 615.6626506024096% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-15::after {
@@ -97,7 +97,7 @@ div.gray-rateScore-15::after {
    height: 16px;
    background-position: 62.23776223776224% 83.4862385321101%;
    background-size: 623.170731707317% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-20::after {
@@ -117,7 +117,7 @@ div.gray-rateScore-20::after {
    height: 16px;
    background-position: 62.23776223776224% 99.08256880733946%;
    background-size: 623.170731707317% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-25::after {
@@ -137,7 +137,7 @@ div.gray-rateScore-25::after {
    height: 16px;
    background-position: 81.20649651972158% 83.4862385321101%;
    background-size: 638.75% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-30::after {
@@ -157,7 +157,7 @@ div.gray-rateScore-30::after {
    height: 16px;
    background-position: 81.20649651972158% 99.08256880733946%;
    background-size: 638.75% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-35::after {
@@ -177,7 +177,7 @@ div.gray-rateScore-35::after {
    height: 16px;
    background-position: 99.76851851851852% 63.30275229357798%;
    background-size: 646.8354430379746% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-40::after {
@@ -197,7 +197,7 @@ div.gray-rateScore-40::after {
    height: 16px;
    background-position: 99.76851851851852% 78.89908256880734%;
    background-size: 646.8354430379746% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-45::after {
@@ -217,7 +217,7 @@ div.gray-rateScore-45::after {
    height: 16px;
    background-position: 99.53810623556582% 94.4954128440367%;
    background-size: 655.1282051282051% 781.25%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.gray-rateScore-50::after {
@@ -237,7 +237,7 @@ div.gray-rateScore-50::after {
    height: 29px;
    background-position: 0.2638522427440633% 1.0416666666666667%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-00::after {
@@ -257,7 +257,7 @@ div.rateScore-00::after {
    height: 29px;
    background-position: 0.2638522427440633% 32.291666666666664%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-05::after {
@@ -277,7 +277,7 @@ div.rateScore-05::after {
    height: 29px;
    background-position: 0.2638522427440633% 63.541666666666664%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-10::after {
@@ -297,7 +297,7 @@ div.rateScore-10::after {
    height: 29px;
    background-position: 0.2638522427440633% 94.79166666666667%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-15::after {
@@ -317,7 +317,7 @@ div.rateScore-15::after {
    height: 29px;
    background-position: 35.35620052770449% 1.0416666666666667%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-20::after {
@@ -337,7 +337,7 @@ div.rateScore-20::after {
    height: 29px;
    background-position: 35.35620052770449% 32.291666666666664%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-25::after {
@@ -357,7 +357,7 @@ div.rateScore-25::after {
    height: 29px;
    background-position: 35.35620052770449% 63.541666666666664%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-30::after {
@@ -377,7 +377,7 @@ div.rateScore-30::after {
    height: 29px;
    background-position: 35.35620052770449% 94.79166666666667%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-35::after {
@@ -397,7 +397,7 @@ div.rateScore-35::after {
    height: 29px;
    background-position: 70.44854881266491% 1.0416666666666667%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-40::after {
@@ -417,7 +417,7 @@ div.rateScore-40::after {
    height: 29px;
    background-position: 70.44854881266491% 32.291666666666664%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-45::after {
@@ -437,7 +437,7 @@ div.rateScore-45::after {
    height: 29px;
    background-position: 70.44854881266491% 63.541666666666664%;
    background-size: 387.1212121212121% 431.0344827586207%;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    padding: 0;
 }
 div.rateScore-50::after {
@@ -493,7 +493,7 @@ div.rateScore-50::after {
    width: 84px;
    height: 16px;
    padding: 0;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    background-size: 608.3333333333334% 781.25%;
    animation-name: gray-rateScore-frames;
    animation-timing-function: steps(1);
@@ -553,7 +553,7 @@ div.gray-rateScore-animation::after {
    width: 132px;
    height: 29px;
    padding: 0;
-   background-image: url(starRate.webp);
+   background-image: url(/assets/starRate.webp);
    background-size: 387.1212121212121% 431.0344827586207%;
    animation-name: rateScore-frames;
    animation-timing-function: steps(1);
