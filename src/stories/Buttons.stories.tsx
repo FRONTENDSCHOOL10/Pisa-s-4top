@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
    ButtonSmall,
    ButtonMedium,
@@ -11,15 +10,30 @@ import {
    ButtonHeartSmallwithCount,
 } from '../components/Buttons/Buttons';
 
-export default {
+const meta: Meta = {
    title: 'Components/Buttons',
-} as Meta;
+   component: ButtonSmall, // 기본 컴포넌트 설정 (스토리 간 공통 부분)
+};
 
-export const Small: StoryFn = () => <ButtonSmall />;
-export const Medium: StoryFn = () => <ButtonMedium />;
-export const Large: StoryFn = () => <ButtonLarge />;
-export const LargeError: StoryFn = () => <ButtonLargeError />;
-export const XLarge: StoryFn = () => <ButtonXlarge />;
-export const Heart: StoryFn = () => <ButtonHeart />;
-export const HeartSmall: StoryFn = () => <ButtonHeartSmall />;
-export const HeartSmallCount: StoryFn = () => <ButtonHeartSmallwithCount />;
+export default meta;
+type Story = StoryObj;
+
+export const Small: Story = {
+   render: () => <ButtonSmall />,
+};
+
+export const Medium: Story = {
+   render: () => <ButtonMedium />,
+};
+
+export const Large: Story = {
+   render: () => <ButtonLarge />,
+};
+
+export const LargeError: Story = {
+   render: () => <ButtonLargeError />,
+};
+
+export const XLarge: Story = {
+   render: () => <ButtonXlarge />,
+};
