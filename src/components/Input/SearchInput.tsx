@@ -11,7 +11,7 @@ interface Props {
 function SearchInput({ id = 'search', defaultValue = '', onClick }: Props) {
    const getSearchInputTitle: string = '원하는 티를 검색해보세요!';
 
-   const boxShadow = `shadow-[0px_2px_20px_0px_rgba(214,211,209,1),0px_0px_30px_0px_rgba(255,255,255,1)]`;
+   const boxShadow: string = `shadow-[0px_2px_20px_0px_rgba(214,211,209,1),0px_0px_30px_0px_rgba(255,255,255,1)]`;
 
    return (
       <div
@@ -39,7 +39,7 @@ function SearchInput({ id = 'search', defaultValue = '', onClick }: Props) {
                <span
                   className="fi fi-rr-search flex justify-center text-stone-400"
                   aria-hidden={true}
-               ></span>
+               />
             </button>
          </div>
       </div>
