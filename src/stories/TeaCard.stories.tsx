@@ -28,3 +28,7 @@ export const DescriptionCard: Story = {
 export const ReviewCard: Story = {
    render: () => <TeaReviewCard />,
 };
+
+export const RecipeCard: Story = {
+   render: () => <TeaRecipeCard />,
+};
