@@ -2,7 +2,11 @@
 export default {
    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
    theme: {
-      extend: {},
+      extend: {
+         boxShadow: {
+            'home-review': '0px 2px 30px 0px var(--tailwind-stone-stone-300, #D6D3D1)'
+         }
+      },
    },
    plugins: [
       function ({ addUtilities }) {
