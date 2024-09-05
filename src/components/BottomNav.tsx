@@ -8,7 +8,7 @@ function BottomNav() {
       <div className="relative">
          <nav
             aria-label="하단 내비게이션"
-            className="fixed bottom-0 z-10 flex h-[3.75rem] w-full items-center justify-around border-t-[1px] bg-opacity-20 text-xl bg-blend-multiply backdrop-blur-sm [box-shadow:0px_-10px_30px_0px_var(--tailwind-stone-stone-300,_#D6D3D1),_0px_0px_30px_0px_var(--tailwind-white-white,_#FFF)_inset]"
+            className="fixed bottom-0 left-0 z-10 flex h-[3.75rem] w-full items-center justify-around border-t-[1px] bg-stone-50 text-xl bg-blend-multiply [box-shadow:0px_-10px_30px_0px_var(--tailwind-stone-stone-300,_#D6D3D1),_0px_0px_30px_0px_var(--tailwind-white-white,_#FFF)_inset]"
          >
             <Link to={'/'} className="focus-green" aria-label="메인 페이지">
                {pathname === '/' ? (
