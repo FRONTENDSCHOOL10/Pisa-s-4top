@@ -19,7 +19,7 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
 
    return (
       <header>
-         <nav className="flex h-[3.25rem] w-full items-center py-[0.88rem] text-base">
+         <nav className="fixed left-0 top-0 z-10 flex h-[3.25rem] w-full items-center bg-stone-50 py-[0.88rem] text-base">
             {hasBackBtn ? (
                <button
                   type="button"
