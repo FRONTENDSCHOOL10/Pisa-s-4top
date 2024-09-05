@@ -1,15 +1,16 @@
-/* 아이디 & 비밀번호 & 닉네임 입력 input */
+/* (공통) 사용자 입력 input */
 
-import postposition from 'cox-postposition';
 import { useId } from 'react';
+import postposition from 'cox-postposition';
 
 interface Props {
    title: string;
    type: string;
+   focusOutlineColor?: string;
    [property: string]: any;
 }
 
-function Input({ title, type, ...restProps }: Props) {
+function Input({ title, type, focusOutlineColor, ...restProps }: Props) {
    const inputId: string = useId();
 
    const inputTitle = (title: string): string => {
@@ -18,13 +19,15 @@ function Input({ title, type, ...restProps }: Props) {
 
    const getInputTitle: string = `${inputTitle(title)} 입력하세요.`;
 
+   const inputStyle = `w-full rounded bg-stone-100 p-3 text-base font-normal placeholder-current outline focus:outline-2 ${focusOutlineColor}`;
+
    return (
       <div className="input-group w-full">
          <label className="sr-only" htmlFor={inputId}>
             {`${title} 입력`}
          </label>
          <input
-            className="h-9 w-full rounded border border-solid border-stone-950 px-[0.6875rem] py-2 text-xs font-normal placeholder-current"
+            className={inputStyle}
             type={type}
             id={inputId}
             placeholder={getInputTitle}
