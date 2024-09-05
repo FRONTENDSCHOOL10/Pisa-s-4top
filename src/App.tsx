@@ -1,8 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import BottomNav from './components/BottomNav';
-import AppBar from './components/AppBar';
-
+import Layout from './components/Layout';
 import {
    LoginPage,
    JoinPage,
@@ -25,69 +23,75 @@ import {
 const routes = [
    {
       path: '/',
-      element: <MainPage />,
-   },
-   {
-      path: '/login',
-      element: <LoginPage />,
-   },
-   {
-      path: '/join',
-      element: <JoinPage />,
-   },
-   {
-      path: '/my-selection',
-      element: <MySelectionPage />,
-   },
-   {
-      path: '/my-taste',
-      element: <MyTastePage />,
-   },
-   {
-      path: '/recommend',
-      element: <TeaListPage />,
-   },
-   {
-      path: '/search',
-      element: <SearchPage />,
-   },
-   {
-      path: '/detail/:id',
-      element: <TeaDetailPage />,
-   },
-   {
-      path: '/reviews',
-      element: <ReviewsPage />,
+      element: <Layout />,
       children: [
+         {
+            index: true,
+            element: <MainPage />,
+         },
+         {
+            path: 'login',
+            element: <LoginPage />,
+         },
+         {
+            path: 'join',
+            element: <JoinPage />,
+         },
+         {
+            path: 'my-selection',
+            element: <MySelectionPage />,
+         },
+         {
+            path: 'my-taste',
+            element: <MyTastePage />,
+         },
+         {
+            path: 'recommend',
+            element: <TeaListPage />,
+         },
+         {
+            path: 'search',
+            element: <SearchPage />,
+         },
          {
             path: 'detail/:id',
-            element: <ReviewsDetailPage />,
-         },
-         {
-            path: 'write',
-            element: <ReviewsWritePage />,
-         },
-         {
-            path: 'edit/:id',
-            element: <ReviewsEditPage />,
-         },
-      ],
-   },
-   {
-      path: '/my-page',
-      element: <MyPage />,
-      children: [
-         {
-            path: 'edit',
-            element: <MyEditPage />,
+            element: <TeaDetailPage />,
          },
          {
             path: 'reviews',
-            element: <MyReviewsPage />,
+            element: <ReviewsPage />,
+            children: [
+               {
+                  path: 'detail/:id',
+                  element: <ReviewsDetailPage />,
+               },
+               {
+                  path: 'write',
+                  element: <ReviewsWritePage />,
+               },
+               {
+                  path: 'edit/:id',
+                  element: <ReviewsEditPage />,
+               },
+            ],
          },
          {
-            path: 'favorites',
-            element: <MyFavoritesPage />,
+            path: 'my-page',
+            element: <MyPage />,
+            children: [
+               {
+                  path: 'edit',
+                  element: <MyEditPage />,
+               },
+               {
+                  path: 'reviews',
+                  element: <MyReviewsPage />,
+               },
+               {
+                  path: 'favorites',
+                  element: <MyFavoritesPage />,
+               },
+            ],
          },
       ],
    },
@@ -96,13 +100,7 @@ const routes = [
 const router = createBrowserRouter(routes);
 
 const App = () => {
-   return (
-      <>
-         <AppBar />
-         <RouterProvider router={router} />
-         <BottomNav />
-      </>
-   );
+   return <RouterProvider router={router} />;
 };
 
 export default App;
