@@ -15,7 +15,7 @@ interface LogoProps {
 
 function Logo({ small, large, alt }: LogoProps) {
    return (
-      <div>
+      <>
          {small ? (
             <img src={createUrl('typeLogo-sm')} />
          ) : large ? (
@@ -25,7 +25,7 @@ function Logo({ small, large, alt }: LogoProps) {
          ) : (
             <img src={createUrl('totd-logo')} />
          )}
-      </div>
+      </>
    );
 }
 

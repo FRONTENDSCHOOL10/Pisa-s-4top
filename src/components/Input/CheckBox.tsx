@@ -3,19 +3,24 @@
 import { useId } from 'react';
 
 interface Props {
-   title: string;
+   label: string;
    [property: string]: any;
 }
 
-function CheckBox({ title, ...restProps }: Props) {
+function CheckBox({ label, ...restProps }: Props) {
    const checkId: string = useId();
 
    return (
       <div className="checkbox-group flex items-center gap-2">
-         <input type="checkbox" id={checkId} {...restProps} />
-         <label className="text-xs font-normal" htmlFor={checkId}>
-            {title}
+         <label className="select-none text-sm font-normal" htmlFor={checkId}>
+            {label}
          </label>
+         <input
+            className="order-first"
+            type="checkbox"
+            id={checkId}
+            {...restProps}
+         />
       </div>
    );
 }

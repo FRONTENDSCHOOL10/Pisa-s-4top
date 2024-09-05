@@ -11,10 +11,11 @@ export default function TeaRecommendSwiper({
 }: TeaRecommendSwiperProps) {
    return (
       <Swiper
-         spaceBetween={8}
+         spaceBetween={16}
          slidesPerView="auto"
          loop={true}
          centeredSlides={true}
+         autoplay={true}
          style={{ overflow: 'visible' }}
       >
          {teaRecommendations.map((recommendation, index) => (
