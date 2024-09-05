@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { MemoryRouter } from 'react-router-dom'; // MemoryRouter를 임포트합니다.
+import { MemoryRouter } from 'react-router-dom';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
 
 const meta: Meta<typeof HomeReviewCard> = {
@@ -13,12 +13,13 @@ const meta: Meta<typeof HomeReviewCard> = {
       ),
    ],
    argTypes: {
-      reviewDetailPage: { control: 'text' },
-      imageUrl: { control: 'text' },
+      id: { control: 'text' },
+      profileImg: { control: 'text' },
       altText: { control: 'text' },
       title: { control: 'text' },
       nickname: { control: 'text' },
       comment: { control: 'text' },
+      score: { control: { type: 'number', min: 0, max: 5, step: 1 } },
    },
 };
 
@@ -27,11 +28,12 @@ type Story = StoryObj<typeof HomeReviewCard>;
 
 export const Primary: Story = {
    args: {
-      reviewDetailPage: '/reviews/1',
-      imageUrl: 'https://via.placeholder.com/150',
-      altText: 'Review Image',
+      id: '1',
+      profileImg: 'https://via.placeholder.com/150',
+      altText: 'Profile Image',
       title: '라벤더 티 후기',
       nickname: 'tea_lover',
       comment: '이 차는 정말 상쾌하고 향이 좋아요!',
+      score: 3,
    },
 };

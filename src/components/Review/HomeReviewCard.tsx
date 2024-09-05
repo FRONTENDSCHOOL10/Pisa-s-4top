@@ -1,42 +1,43 @@
 import { Link } from 'react-router-dom';
+import StarRating from './StarRate';
 
 interface HomeReviewCardProps {
-   reviewDetailPage: string;
-   imageUrl: string;
+   id: string;
+   profileImg: string;
    altText?: string;
    title: string;
    nickname: string;
    comment: string;
+   score: 0 | 1 | 2 | 3 | 4 | 5;
 }
 
 export default function HomeReviewCard({
-   reviewDetailPage,
-   imageUrl,
-   altText = '',
+   id,
+   profileImg,
+   altText = '작성자 프로필 이미지',
    title,
    nickname,
    comment,
+   score,
 }: HomeReviewCardProps) {
    return (
       <Link
-         to={reviewDetailPage}
-         className="flex h-[9.375rem] w-[21.5rem] gap-2 rounded-2xl border border-white bg-white/20 p-2 shadow-home-review"
-         aria-label={`${nickname}님이 작성한 ${title} 리뷰`}
+         to={`/reviews/detail/${id}`}
+         className="flex min-h-28 w-full gap-2 rounded-2xl border border-white bg-white/20 p-3 shadow-home-review"
+         aria-label={`${nickname}님이 작성한 ${title} 리뷰 상세 페이지로 이동`}
       >
          <img
-            src={imageUrl}
-            className="w-[8.375rem] rounded-lg object-cover"
+            src={profileImg}
+            className="h-9 w-9 rounded-full object-cover"
             alt={altText}
          />
-         <div className="flex flex-col justify-between">
-            <h1 className="text-sm font-black text-stone-950">{title}</h1>
-            <h2 className="text-[.625rem] font-extrabold leading-tight text-stone-400">
-               {nickname}
-            </h2>
-            <p className="max-h-[63px] overflow-hidden text-ellipsis text-[.625rem] font-extralight leading-tight text-stone-950">
-               {comment}
-            </p>
-            <span className="gray-rateScore-00"></span>
+         <div className="flex w-full flex-col gap-1">
+            <h1 className="text-base font-black text-stone-950">{title}</h1>
+            <h2 className="text-sm font-medium text-stone-400">{nickname}</h2>
+            <p className="text-sm font-light text-stone-950">{comment}</p>
+            <div className="self-end">
+               <StarRating score={score} aria-label={`별점 ${score}점`} />
+            </div>
          </div>
       </Link>
    );
