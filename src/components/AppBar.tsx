@@ -6,6 +6,7 @@
 */
 
 import { useNavigate } from 'react-router-dom';
+import Logo from './Logo';
 
 export interface AppBarProps {
    hasBackBtn?: boolean;
@@ -18,24 +19,30 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
 
    return (
       <header>
-         <nav className="flex h-[3.25rem] w-[22.5rem] items-center bg-slate-50 py-[0.88rem] text-base">
+         <nav className="fixed left-0 top-0 z-10 flex h-[3.25rem] w-full items-center bg-stone-100 py-[0.88rem] text-base">
             {hasBackBtn ? (
                <button
+                  type="button"
                   className="focus-green px-4"
-                  aria-label="뒤로가기 버튼"
+                  aria-label="뒤로가기"
                   onClick={() => navigate(-1)}
                >
                   <span className="fi fi-rs-angle-left text-xs text-green-700" />
                </button>
             ) : hasLogo ? (
-               <button className="focus-green mx-auto">
-                  <img src="/assets/totd-logo.svg" alt="totd 로고" />
+               <button
+                  className="focus-green mx-auto"
+                  onClick={() => navigate('/')}
+                  type="button"
+               >
+                  <Logo alt="메인 페이지로 이동" />
                </button>
             ) : title ? (
                <>
                   <button
+                     type="button"
                      className="focus-green m-4"
-                     aria-label="뒤로가기 버튼"
+                     aria-label="뒤로가기"
                      onClick={() => navigate(-1)}
                   >
                      <span className="fi fi-rs-angle-left text-xs text-green-700" />
@@ -44,8 +51,9 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
                </>
             ) : (
                <button
+                  type="button"
                   className="focus-green px-4"
-                  aria-label="뒤로가기 버튼"
+                  aria-label="뒤로가기"
                   onClick={() => navigate(-1)}
                >
                   <span className="fi fi-rs-angle-left text-xs text-green-700" />
