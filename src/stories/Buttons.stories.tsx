@@ -1,51 +1,51 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import {
-   ButtonSmall,
-   ButtonMedium,
+   ButtonDefault,
+   ButtonFullWidth,
    ButtonLarge,
-   ButtonLargeError,
-   ButtonXlarge,
+   ButtonError,
    ButtonHeart,
-   ButtonHeartSmall,
-   ButtonHeartSmallwithCount,
+   ButtonHeartwithCount,
 } from '../components/Buttons/Buttons';
 
-const meta: Meta = {
+interface ButtonHeartwithCountProps {
+  totalLike: number;
+}
+
+const meta: Meta<typeof ButtonHeartwithCount> = {
    title: 'Components/Buttons',
-   component: ButtonSmall,
+   component: ButtonHeartwithCount,
+   argTypes: {
+      totalLike: { control: 'number', defaultValue: 0 },
+   },
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<typeof ButtonHeartwithCount>;
 
-export const Small: Story = {
-   render: () => <ButtonSmall />,
+export const Default: Story = {
+   render: () => <ButtonDefault />,
 };
 
-export const Medium: Story = {
-   render: () => <ButtonMedium />,
+export const FullWidth: Story = {
+   render: () => <ButtonFullWidth />,
 };
 
 export const Large: Story = {
    render: () => <ButtonLarge />,
 };
 
-export const LargeError: Story = {
-   render: () => <ButtonLargeError />,
-};
-
-export const XLarge: Story = {
-   render: () => <ButtonXlarge />,
+export const Error: Story = {
+   render: () => <ButtonError />,
 };
 
 export const Heart: Story = {
    render: () => <ButtonHeart />,
 };
 
-export const HeartSmall: Story = {
-   render: () => <ButtonHeartSmall />,
-};
-
 export const HeartSmallWithCount: Story = {
-   render: () => <ButtonHeartSmallwithCount />,
+   render: (args: ButtonHeartwithCountProps) => <ButtonHeartwithCount {...args} />,
+   args: {
+      totalLike: 10,
+   },
 };

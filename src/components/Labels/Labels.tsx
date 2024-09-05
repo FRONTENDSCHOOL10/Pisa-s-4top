@@ -1,37 +1,77 @@
 import { memo, useState } from 'react';
 
+/* label 컴포넌트 */
+// 컴포넌트 사용법
+// <Label label='라벨 데이터' size='small'/> : small 라벨
+// <Label label='라벨 데이터' size='large'/> : large 라벨
+// <Label label='라벨 데이터' size='large' isWarning={true}/> : large 알러지 주의 warning 라벨
 interface LabelProps {
-   isButton?: boolean;
-   taste: string;
+   label?: string;
+   size?: 'small' | 'large';
+   isWarning?: boolean;
 }
 
-const labelClass =
-   'rounded-[1.375rem] border border-solid border-lime-700 px-2.5 py-[.3125rem] text-xs font-normal text-lime-700 bg-stone-100';
+const smallClass = 'text-sm font-medium px-3 py-1.5';
+const largeClass = 'text-base font-semibold px-4 py-2';
 
-export const Label = memo(({ isButton = false, taste }: LabelProps) => {
-   const [isClicked, setIsClicked] = useState(false);
+export const Label = memo(
+   ({ label = '라벨', size = 'small', isWarning = false }: LabelProps) => {
+      const defaultClass =
+         'select-none inline-flex items-center justify-center rounded-[1.375rem] border bg-stone-50';
+      const defaultStyle = 'border-stone-300 text-stone-600';
+      const warningStyle = 'border-red-600  text-red-600';
 
-   function handleClick() {
-      if (isButton) {
-         setIsClicked((prevState) => !prevState);
-      }
+      const sizeClass = isWarning
+         ? largeClass
+         : size === 'large'
+           ? largeClass
+           : smallClass;
+      const labelStyle = isWarning ? warningStyle : defaultStyle;
+
+      return (
+         <span className={`${defaultClass} ${sizeClass} ${labelStyle}`}>
+            {isWarning ? '⛔ 알러지 주의' : label}
+         </span>
+      );
    }
+);
 
-   const buttonClass = `rounded-[1.375rem] border border-solid border-lime-700 px-2.5 py-[.3125rem] text-xs font-normal text-lime-700 hover:bg-lime-100 ${isClicked ? 'bg-lime-300' : 'bg-stone-100'}`;
+/* label 버튼 컴포넌트 */
+// 컴포넌트 사용법
+// <LabelButton label='라벨 데이터' size='small'/> : small 라벨 버튼
+// <LabelButton label='라벨 데이터' size='large'/> : large 라벨 버튼
+interface LabelButtonProps {
+   label?: string;
+   size?: 'small' | 'large';
+}
 
-   return isButton ? (
-      <button className={buttonClass} type="button" onClick={handleClick}>
-         {taste}
-      </button>
-   ) : (
-      <span className={labelClass}>{taste}</span>
-   );
-});
+export const LabelButton = memo(
+   ({ label = '라벨 버튼', size = 'small' }: LabelButtonProps) => {
+      const [isActive, setIsActive] = useState(false);
 
-export const LabelWarning = memo(() => {
-   return (
-      <span className="rounded-[1.375rem] border border-solid border-red-600 bg-stone-100 px-2.5 py-[.3125rem] text-xs font-normal text-red-600">
-         ⛔ 알러지 주의
-      </span>
-   );
-});
+      function handleClick() {
+         setIsActive((prevState) => !prevState);
+      }
+
+      const defaultClass =
+         'select-none inline-flex items-center justify-center rounded-[1.375rem] hover:border-2 hover:border-stone-400 hover:bg-stone-200';
+      const sizeClass = size === 'large' ? largeClass : smallClass;
+
+      const activeClass = 'border-2 bg-lime-50 border-lime-700 text-lime-700';
+      const inactiveClass =
+         'border bg-stone-50 border-stone-300 text-stone-600';
+
+      const buttonClass = `${defaultClass} ${sizeClass} ${isActive ? activeClass : inactiveClass}`;
+
+      return (
+         <button
+            className={buttonClass}
+            type="button"
+            onClick={handleClick}
+            aria-pressed={isActive}
+         >
+            {label}
+         </button>
+      );
+   }
+);
