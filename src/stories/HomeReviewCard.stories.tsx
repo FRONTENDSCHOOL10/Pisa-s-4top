@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
 
 const meta: Meta<typeof HomeReviewCard> = {
-   title: 'Components/HomeReviewCard',
+   title: 'Components/TeaCard/HomeReviewCard',
    component: HomeReviewCard,
    decorators: [
       (Story) => (

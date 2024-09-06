@@ -1,90 +1,141 @@
-export function ButtonSmall() {
+import { useState, useEffect } from 'react';
+
+/* 기본 버튼 */
+interface ButtonDefaultProps {
+   text?: string;
+}
+
+export function ButtonDefault({ text = '버튼default' }: ButtonDefaultProps) {
    return (
       <button
-         className="h-9 w-[5.19rem] rounded bg-green-700 text-xs font-normal text-stone-100 hover:bg-green-600"
+         className="inline-flex items-center justify-center whitespace-nowrap rounded bg-green-700 px-4 py-3 text-base font-normal text-stone-100 hover:bg-green-600"
          type="button"
       >
-         버튼sm
+         {text}
       </button>
    );
 }
 
-export function ButtonMedium() {
+/* full width 버튼 */
+interface ButtonFullWidthProps {
+   text?: string;
+}
+
+export function ButtonFullWidth({
+   text = '버튼fullWidth',
+}: ButtonFullWidthProps) {
    return (
       <button
-         className="h-[1.94rem] w-60 rounded bg-green-700 text-xs font-normal text-stone-100 hover:bg-green-600"
+         className="inline-flex w-full items-center justify-center whitespace-nowrap rounded bg-green-700 py-3 text-base font-normal text-stone-100 hover:bg-green-600"
          type="button"
       >
-         버튼md
+         {text}
       </button>
    );
 }
 
-export function ButtonLarge() {
+/* large 버튼 */
+interface ButtonLargeProps {
+   text?: string;
+}
+
+export function ButtonLarge({ text = '버튼large' }: ButtonLargeProps) {
    return (
       <button
-         className="h-[1.94rem] w-[18.5rem] rounded bg-green-700 text-xs font-normal text-stone-100 hover:bg-green-600"
+         className="inline-flex w-full items-center justify-center whitespace-nowrap rounded bg-green-700 py-6 text-base font-normal text-stone-100 hover:bg-green-600"
          type="button"
       >
-         버튼lg
+         {text}
       </button>
    );
 }
 
-export function ButtonLargeError() {
+/* full width 빨간색 버튼 */
+interface ButtonErrorProps {
+   text?: string;
+}
+
+export function ButtonError({ text = '버튼error' }: ButtonErrorProps) {
    return (
       <button
-         className="h-[1.94rem] w-[18.5rem] rounded bg-red-600 text-xs font-normal text-stone-100 hover:bg-red-500"
+         className="inline-flex w-full items-center justify-center whitespace-nowrap rounded bg-red-600 py-3 text-base font-normal text-stone-100 hover:bg-red-500"
          type="button"
       >
-         버튼lg-error
+         {text}
       </button>
    );
 }
 
-export function ButtonXlarge() {
-   return (
-      <button
-         className="h-[2.81rem] w-[18.5rem] rounded bg-green-700 text-xs font-normal text-stone-100 hover:bg-green-600"
-         type="button"
-      >
-         버튼xl
-      </button>
-   );
-}
-
+/* 찜 버튼 컴포넌트 */
 export function ButtonHeart() {
+   const [isActive, setIsActive] = useState(false);
+
+   function handleClick() {
+      setIsActive((prevState) => !prevState);
+   }
+
+   const classes = `fi flex justify-center items-center ${
+      isActive ? 'fi-sr-heart text-red-600' : 'fi-rr-heart text-stone-300'
+   }`;
+
    return (
       <button
-         className="rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-60% to-stone-100 px-1.5 py-1.5 transition hover:bg-gradient-to-b hover:from-red-600 hover:from-0% hover:to-red-400"
+         className="select-none"
          type="button"
+         onClick={handleClick}
+         aria-pressed={isActive}
+         aria-label={isActive ? '찜 활성화' : '찜 해제'}
       >
-         <span className="fi fi-sr-heart text-shadow-sm flex justify-center text-white"></span>
+         <span className={classes}></span>
       </button>
    );
 }
 
-export function ButtonHeartSmall() {
-   return (
-      <button
-         className="rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-60% to-stone-100 px-1 py-1 transition hover:bg-gradient-to-b hover:from-red-600 hover:from-0% hover:to-red-400"
-         type="button"
-      >
-         <span className="fi fi-sr-heart text-shadow-sm flex justify-center text-[0.625rem] text-white"></span>
-      </button>
-   );
+/* 찜 버튼 + 카운트 컴포넌트 */
+interface ButtonHeartwithCountProps {
+   totalLike: number;
 }
 
-export function ButtonHeartSmallwithCount() {
+export function ButtonHeartwithCount({
+   totalLike = 0,
+}: ButtonHeartwithCountProps) {
+   const [isActive, setIsActive] = useState(false);
+   const [count, setCount] = useState(totalLike);
+
+   function handleClick() {
+      setIsActive((prevState) => {
+         const newActive = !prevState;
+         setCount(newActive ? count + 1 : totalLike);
+         return newActive;
+      });
+   }
+
+   useEffect(() => {
+      if (!isActive) {
+         setCount(totalLike);
+      }
+   }, [isActive, totalLike]);
+
+   const buttonClasses = `select-none rounded-2xl ${isActive ? 'bg-red-600 px-[.3125rem] py-[.3125rem]' : 'border border-stone-300 px-1 py-1'}`;
+   const iconClasses = `fi flex justify-center items-center ${
+      isActive
+         ? 'fi-sr-heart text-white text-[.6188rem]'
+         : 'fi-rr-heart text-stone-300 text-[.625rem]'
+   }`;
+   const numberClasses = `ml-1 text-base font-bold ${isActive ? 'text-red-600' : 'text-stone-300'}`;
+
    return (
-      <>
+      <div>
          <button
-            className="rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-60% to-stone-100 px-1 py-1 transition hover:bg-gradient-to-b hover:from-red-600 hover:from-0% hover:to-red-400"
+            className={buttonClasses}
             type="button"
+            onClick={handleClick}
+            aria-pressed={isActive}
+            aria-label={isActive ? '찜 활성화' : '찜 해제'}
          >
-            <span className="fi fi-sr-heart text-shadow-sm flex justify-center text-[0.625rem] text-white"></span>
+            <span className={iconClasses}></span>
          </button>
-         <span className="ml-1 text-base font-bold text-red-600">10</span>
-      </>
+         <span className={numberClasses}>{count}</span>
+      </div>
    );
 }

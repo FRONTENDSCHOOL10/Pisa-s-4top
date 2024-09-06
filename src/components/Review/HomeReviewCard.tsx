@@ -12,13 +12,13 @@ interface HomeReviewCardProps {
 }
 
 export default function HomeReviewCard({
-   id,
-   profileImg,
+   id = '리뷰글 id',
+   profileImg = '작성자 프로필 이미지 URL',
    altText = '작성자 프로필 이미지',
-   title,
-   nickname,
-   comment,
-   score,
+   title = '리뷰 타이틀',
+   nickname = '리뷰 작성자',
+   comment = '한줄평(max 50자)',
+   score = 5,
 }: HomeReviewCardProps) {
    return (
       <Link
