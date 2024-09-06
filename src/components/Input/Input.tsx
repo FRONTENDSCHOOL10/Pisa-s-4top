@@ -19,7 +19,8 @@ function Input({ title, type, focusOutlineColor, ...restProps }: Props) {
 
    const getInputTitle: string = `${inputTitle(title)} 입력하세요.`;
 
-   const inputStyle = `w-full rounded bg-stone-100 p-3 text-base font-normal placeholder-current outline focus:outline-2 ${focusOutlineColor}`;
+   const inputStyle =
+      `w-full rounded bg-stone-100 p-3 text-base font-normal placeholder-current outline focus:outline-2 ${focusOutlineColor ?? ''}`.trim();
 
    return (
       <div className="input-group w-full">
