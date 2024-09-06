@@ -12,6 +12,7 @@ function BottomNav() {
          >
             <Link to={'/'} className="focus-green" aria-label="메인 페이지">
                {pathname === '/' ? (
+                  // 아리아히든~
                   <span className="fi fi-sr-home text-stone-500" />
                ) : (
                   <span className="fi fi-rr-home active: cursor-pointer text-stone-400" />
@@ -56,3 +57,4 @@ function BottomNav() {
 }
 
 export default BottomNav;
+// 통일~

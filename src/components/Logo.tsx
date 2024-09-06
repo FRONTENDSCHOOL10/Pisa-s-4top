@@ -30,3 +30,4 @@ function Logo({ small, large, alt }: LogoProps) {
 }
 
 export default Logo;
+// 통일~

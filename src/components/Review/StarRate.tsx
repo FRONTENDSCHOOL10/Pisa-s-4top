@@ -1,5 +1,6 @@
 interface StarRatingProps {
    score: 0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
+   // 12345만 받기
    altText?: string;
 }
 
@@ -19,3 +20,6 @@ export default function StarRating({
       </div>
    );
 }
+
+// 초록색 컴포넌트 만들기
+// 여기는 .5 구현
