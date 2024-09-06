@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import AppBar, { AppBarProps } from '@/components/AppBar';
+import AppBar, { AppBarProps } from '@/components/Main/AppBar';
 
 export default {
    title: 'Components/Navigation/AppBar',

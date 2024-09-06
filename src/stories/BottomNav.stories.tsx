@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import BottomNav from '@/components/BottomNav';
+import BottomNav from '@/components/Main/BottomNav';
 
 export default {
    title: 'Components/Navigation/BottomNav',
