@@ -4,6 +4,7 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/free-mode';
 
+// 프롭 추가
 export default function SplashSwiper() {
    return (
       <Swiper
@@ -22,7 +23,8 @@ export default function SplashSwiper() {
             style={{ width: '144px', height: '144px' }}
             className="rounded-2xl bg-stone-200"
          >
-            1
+            <img src="{}" alt="" />
+            {/* 리팩토링 시 프롭 추가 */}
          </SwiperSlide>
          <SwiperSlide
             style={{ width: '144px', height: '144px' }}

@@ -69,6 +69,7 @@ function DuplicateCheckInput({ title, type, ...restProps }: Props) {
             onChange={handleChange}
             {...restProps}
          />
+         {/* 버튼 컴포넌트로 변경 */}
          <button className="w-[200px]" type="button" onClick={handleClick}>
             중복확인
          </button>

@@ -13,8 +13,8 @@ function SearchInput({ onClick, ...restProps }: Props) {
    const searchId: string = useId();
 
    const getSearchInputTitle: string = '원하는 티를 검색해보세요!';
-
-   const boxShadow: string = `shadow-[0px_2px_20px_0px_rgba(214,211,209,1),0px_0px_30px_0px_rgba(255,255,255,1)]`;
+   // 테일윈드 컨피그~
+   const boxShadow: string = `shadow-[0px_2px_20px_0px_rgba(214,211,209,1), 0px_0px_30px_0px_rgba(255,255,255,1)]`;
 
    const borderColor: string = isFocusSearch
       ? `border-b-green-700`

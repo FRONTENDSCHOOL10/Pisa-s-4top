@@ -18,8 +18,10 @@ export default function HomeReviewCard({
    title = '리뷰 타이틀',
    nickname = '리뷰 작성자',
    comment = '한줄평(max 50자)',
+   // 제한 해제
    score = 5,
 }: HomeReviewCardProps) {
+   // 리팩토링
    return (
       <Link
          to={`/reviews/detail/${id}`}
@@ -32,6 +34,7 @@ export default function HomeReviewCard({
             alt={altText}
          />
          <div className="flex w-full flex-col gap-1">
+            {/* h3로 변경 */}
             <h1 className="text-base font-black text-stone-950">{title}</h1>
             <h2 className="text-sm font-medium text-stone-400">{nickname}</h2>
             <p className="text-sm font-light text-stone-950">{comment}</p>

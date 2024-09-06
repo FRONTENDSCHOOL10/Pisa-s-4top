@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
 /* 기본 버튼 */
+// 레스트프롭 추가 확인
 interface ButtonDefaultProps {
    text?: string;
 }
-
+// 버튼 타입도 프롭에 추가해주세용! -> 프롭으로 받되 옵션!
 export function ButtonDefault({ text = '버튼default' }: ButtonDefaultProps) {
    return (
       <button
@@ -49,7 +50,7 @@ export function ButtonLarge({ text = '버튼large' }: ButtonLargeProps) {
       </button>
    );
 }
-
+// 컬러만 달라서 error status 프롭..!
 /* full width 빨간색 버튼 */
 interface ButtonErrorProps {
    text?: string;

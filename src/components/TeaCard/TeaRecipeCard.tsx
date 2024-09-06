@@ -9,6 +9,7 @@ export default function TeaRecipeCard({
    imageUrl,
    steps,
 }: TeaRecipeCardProps) {
+   // 리팩토링
    return (
       <article className="relative max-w-lg rounded-2xl border border-stone-300 bg-white p-5 shadow-xl">
          <h3 className="mb-3 text-sm font-extrabold text-stone-950">{title}</h3>
