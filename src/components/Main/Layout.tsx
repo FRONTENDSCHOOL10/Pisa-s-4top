@@ -2,8 +2,7 @@ import { Outlet } from 'react-router-dom';
 import AppBar from './AppBar';
 import BottomNav from './BottomNav';
 
-// 펑션으로 통일~
-const Layout = () => {
+export default function Layout() {
    return (
       <>
          <AppBar />
@@ -13,7 +12,4 @@ const Layout = () => {
          <BottomNav />
       </>
    );
-};
-
-export default Layout;
-// 통일~
+}

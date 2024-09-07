@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { SelectColor } from '@/components/Input/SelectColor';
+import { SelectColor } from '@/components/Select/SelectColor';
 
 const meta: Meta<typeof SelectColor> = {
    title: 'Components/Input/ColorDropdown',
