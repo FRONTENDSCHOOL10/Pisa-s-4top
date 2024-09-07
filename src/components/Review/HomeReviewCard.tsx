@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import StarRating from './StarRate';
 
+/* 홈 리뷰 카드 컴포넌트 */
+// 사용법
+// <HomeReviewCard id="리뷰 ID" profileImg="작성자 프로필 이미지 URL" title="리뷰 제목" nickname="작성자 닉네임" comment="리뷰 내용" score={리뷰 별점} />
 interface HomeReviewCardProps {
    id: string;
    profileImg: string;
-   altText?: string;
    title: string;
    nickname: string;
    comment: string;
@@ -14,34 +16,31 @@ interface HomeReviewCardProps {
 export default function HomeReviewCard({
    id = '리뷰글 id',
    profileImg = '작성자 프로필 이미지 URL',
-   altText = '작성자 프로필 이미지',
    title = '리뷰 타이틀',
-   nickname = '리뷰 작성자',
-   comment = '한줄평(max 50자)',
-   // 제한 해제
+   nickname = '작성자 닉네임',
+   comment = '리뷰 내용',
    score = 5,
 }: HomeReviewCardProps) {
-   // 리팩토링
    return (
       <Link
          to={`/reviews/detail/${id}`}
-         className="flex min-h-28 w-full gap-2 rounded-2xl border border-white bg-white/20 p-3 shadow-home-review"
          aria-label={`${nickname}님이 작성한 ${title} 리뷰 상세 페이지로 이동`}
       >
-         <img
-            src={profileImg}
-            className="h-9 w-9 rounded-full object-cover"
-            alt={altText}
-         />
-         <div className="flex w-full flex-col gap-1">
-            {/* h3로 변경 */}
-            <h1 className="text-base font-black text-stone-950">{title}</h1>
-            <h2 className="text-sm font-medium text-stone-400">{nickname}</h2>
-            <p className="text-sm font-light text-stone-950">{comment}</p>
-            <div className="self-end">
-               <StarRating score={score} aria-label={`별점 ${score}점`} />
+         <article className="flex min-h-28 w-full gap-2 rounded-2xl border border-white bg-white/20 p-3 shadow-home-review">
+            <img
+               src={profileImg}
+               className="h-9 w-9 rounded-full object-cover"
+               alt={`작성자 ${nickname}의 프로필 이미지`}
+            />
+            <div className="flex w-full flex-col gap-1">
+               <h3 className="text-base font-black text-stone-950">{title}</h3>
+               <p className="text-sm font-medium text-stone-400">{nickname}</p>
+               <p className="text-sm font-light text-stone-950">{comment}</p>
+               <div className="self-end">
+                  <StarRating score={score} aria-label={`별점 ${score}점`} />
+               </div>
             </div>
-         </div>
+         </article>
       </Link>
    );
 }
