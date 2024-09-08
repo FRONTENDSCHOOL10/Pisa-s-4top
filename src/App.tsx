@@ -60,20 +60,18 @@ const routes = [
          {
             path: 'reviews',
             element: <ReviewsPage />,
-            children: [
-               {
-                  path: 'detail/:id',
-                  element: <ReviewsDetailPage />,
-               },
-               {
-                  path: 'write',
-                  element: <ReviewsWritePage />,
-               },
-               {
-                  path: 'edit/:id',
-                  element: <ReviewsEditPage />,
-               },
-            ],
+         },
+         {
+            path: 'reviews/detail',
+            element: <ReviewsDetailPage />,
+         },
+         {
+            path: 'reviews/write',
+            element: <ReviewsWritePage />,
+         },
+         {
+            path: 'reviews/edit/:id',
+            element: <ReviewsEditPage />,
          },
          {
             path: 'my-page',
