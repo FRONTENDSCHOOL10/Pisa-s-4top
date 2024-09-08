@@ -1,11 +1,16 @@
 import { Label } from './Labels';
 
-export default function LabelGroup({ tasteNames }: { tasteNames: string[] }) {
+interface LabelGroupProps {
+   labels: { label: string }[];
+   size?: 'small' | 'large';
+}
+
+export function LabelGroup({ labels = [], size = 'large' }: LabelGroupProps) {
    return (
-      <>
-         {tasteNames.map((tasteName, index) => (
-            <Label key={index} label={tasteName} />
+      <div className="flex flex-wrap gap-1">
+         {labels.map((labelProps, index) => (
+            <Label key={index} {...labelProps} size={size} />
          ))}
-      </>
+      </div>
    );
 }
