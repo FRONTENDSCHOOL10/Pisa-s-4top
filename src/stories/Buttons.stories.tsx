@@ -1,15 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import {
-   ButtonDefault,
-   ButtonFullWidth,
-   ButtonLarge,
-   ButtonHeart,
-   ButtonHeartwithCount,
-} from '@/components/Buttons/Buttons';
+import { Button, ButtonHeart, ButtonHeartwithCount } from '@/components/Buttons/Buttons'; // 통합된 버튼 컴포넌트 및 Heart 버튼들
 
 const meta: Meta = {
    title: 'Components/Buttons',
-   component: ButtonDefault, // 기본 컴포넌트 설정 (필요에 따라 변경)
+   component: Button,
    argTypes: {
       totalLike: { control: 'number' },
       onToggle: { action: 'clicked' },
@@ -18,47 +12,52 @@ const meta: Meta = {
 
 export default meta;
 
-type ButtonDefaultStory = StoryObj<typeof ButtonDefault>;
+type ButtonStory = StoryObj<typeof Button>; 
+type ButtonHeartStory = StoryObj<typeof ButtonHeart>;
 type ButtonHeartwithCountStory = StoryObj<typeof ButtonHeartwithCount>;
 
-export const Default: ButtonDefaultStory = {
+export const Default: ButtonStory = {
    render: () => (
-      <ButtonDefault
-         content="Default Button"
+      <Button
+         content="Small Button"
+         size="small"
          handleClick={() => console.log('Clicked')}
       />
    ),
 };
 
-export const FullWidth: ButtonDefaultStory = {
+export const FullWidth: ButtonStory = {
    render: () => (
-      <ButtonFullWidth
+      <Button
          content="Full Width Button"
+         size="fullWidth"
          handleClick={() => console.log('Clicked')}
       />
    ),
 };
 
-export const FullWidthError: ButtonDefaultStory = {
+export const FullWidthError: ButtonStory = {
    render: () => (
-      <ButtonFullWidth
-         content="Full Width Error Button"
+      <Button
+         content="FullWidth Error Button"
+         size="fullWidth"
          isError={true}
          handleClick={() => console.log('Clicked')}
       />
    ),
 };
 
-export const Large: ButtonDefaultStory = {
+export const Large: ButtonStory = {
    render: () => (
-      <ButtonLarge
+      <Button
          content="Large Button"
+         size="large"
          handleClick={() => console.log('Clicked')}
       />
    ),
 };
 
-export const Heart: ButtonDefaultStory = {
+export const Heart: ButtonHeartStory = {
    render: () => (
       <ButtonHeart
          type="button"
@@ -68,13 +67,9 @@ export const Heart: ButtonDefaultStory = {
 };
 
 export const HeartWithCount: ButtonHeartwithCountStory = {
-   render: (args) => (
-      <ButtonHeartwithCount
-         {...args}
-      />
-   ),
+   render: (args) => <ButtonHeartwithCount {...args} />,
    args: {
       totalLike: 10,
-      onToggle: () => console.log('찜 버튼 토글됨'),
+      onToggle: () => console.log('찜 카운트 버튼 토글됨'),
    },
 };

@@ -2,93 +2,44 @@ import { useState, useEffect } from 'react';
 
 /* 기본 버튼 */
 // 사용법
-// <ButtonDefault content="버튼 내용" type="button" handleClick={() => console.log('Clicked')} />
-export interface ButtonDefaultProps {
+// small버튼: <Button content="버튼 내용" type="button" size="small" handleClick={() => console.log('small 버튼 클릭됨')} />
+// fullWidth버튼: <Button content="버튼 내용" type="button" size="fullWidth" handleClick={() => console.log('fullWidth 버튼 클릭됨')} />
+// fullWidth-error버튼: <Button content="버튼 내용" type="button" size="fullWidth" isError={true} handleClick={() => console.log('error 버튼 클릭됨')} />
+// large버튼: <Button content="버튼 내용" type="button" size="large" handleClick={() => console.log('large 버튼 클릭됨')} />
+export interface ButtonProps {
    content: string;
    type?: 'button' | 'submit' | 'reset';
-   handleClick: () => void;
-   [props: string] : any;
-}
-
-export function ButtonDefault({
-   content = '버튼default',
-   type = 'button',
-   handleClick,
-   ...restProps
-}: ButtonDefaultProps) {
-   return (
-      <button
-         className="inline-flex items-center justify-center whitespace-nowrap rounded bg-green-700 px-4 py-3 text-base font-normal text-stone-100 hover:bg-green-600"
-         type={type}
-         onClick={handleClick}
-         {...restProps}
-         aria-label={content}
-      >
-         {content}
-      </button>
-   );
-}
-
-/* full width 버튼 */
-// 사용법
-// <ButtonFullWidth content="버튼 내용" type="button" handleClick={() => console.log('Clicked')} />
-// <ButtonFullWidth content="버튼 내용" type="button" isError={true} handleClick={() => console.log('Clicked')} /> : 빨간색 버튼
-export interface ButtonFullWidthProps {
-   content?: string;
-   type?: 'button' | 'submit' | 'reset';
+   size?: 'small' | 'fullWidth' | 'large';
    isError?: boolean;
    handleClick: () => void;
-   [props: string] : any;
+   [props: string]: any;
 }
 
 const defaultClass: string =
-   'inline-flex w-full items-center justify-center whitespace-nowrap rounded py-3 text-base font-normal text-stone-100';
-const defaultStyle: string = 'bg-green-700  hover:bg-green-600';
-const redStyle: string = 'bg-red-600 hover:bg-red-500';
+   'inline-flex items-center justify-center whitespace-nowrap rounded text-base font-normal text-stone-100';
+const defaultColor: string = 'bg-green-700 hover:bg-green-600';
+const errorColor: string = 'bg-red-600 hover:bg-red-500';
+const sizeClasses: { [key in 'small' | 'fullWidth' | 'large']: string } = {
+   small: 'px-4 py-3',
+   fullWidth: 'w-full py-3',
+   large: 'w-full py-6',
+};
 
-export function ButtonFullWidth({
-   content = '버튼fullWidth',
+export function Button({
+   content = '버튼',
    type = 'button',
+   size = 'small',
    isError = false,
    handleClick,
    ...restProps
-}: ButtonFullWidthProps) {
+}: ButtonProps) {
+   const appliedSize = isError ? 'fullWidth' : size;
    return (
       <button
-         className={`${defaultClass} ${isError ? redStyle : defaultStyle}`}
+         className={`${defaultClass} ${sizeClasses[appliedSize]} ${isError ? errorColor : defaultColor}`}
          type={type}
          onClick={handleClick}
          {...restProps}
-         aria-label={content}
-      >
-         {content}
-      </button>
-   );
-}
-
-/* large 버튼 */
-// 사용법
-// <ButtonLarge content="버튼 내용" type="button" handleClick={() => console.log('Clicked')} />
-export interface ButtonLargeProps {
-   content?: string;
-   type?: 'button' | 'submit' | 'reset';
-   handleClick: () => void;
-   [props: string] : any;
-}
-
-export function ButtonLarge({
-   content = '버튼large',
-   type = 'button',
-   handleClick,
-   ...restProps
-}: ButtonLargeProps) {
-   return (
-      <button
-         className="inline-flex w-full items-center justify-center whitespace-nowrap rounded bg-green-700 py-6 text-base font-normal text-stone-100 hover:bg-green-600"
-         type={type}
-         onClick={handleClick}
-         {...restProps}
-         aria-label={content}
       >
          {content}
       </button>
@@ -101,10 +52,14 @@ export function ButtonLarge({
 export interface ButtonHeartProps {
    type?: 'button' | 'submit' | 'reset';
    onToggle?: () => void;
-   [props: string] : any;
+   [props: string]: any;
 }
 
-export function ButtonHeart({ type, onToggle, ...restProps }: ButtonHeartProps) {
+export function ButtonHeart({
+   type,
+   onToggle,
+   ...restProps
+}: ButtonHeartProps) {
    const [isActive, setIsActive] = useState(false);
 
    function handleToggle() {
@@ -138,7 +93,7 @@ export interface ButtonHeartwithCountProps {
    type?: 'button' | 'submit' | 'reset';
    totalLike: number;
    onToggle?: () => void;
-   [props: string] : any;
+   [props: string]: any;
 }
 
 export function ButtonHeartwithCount({
