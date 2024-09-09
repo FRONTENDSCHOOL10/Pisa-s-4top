@@ -1,7 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { TeaBrewingGuide, TeaBrewingGuideProps } from '@/components/TeaCard/TeaBrewingGuide';
+import {
+   TeaBrewingGuide,
+   TeaBrewingGuideProps,
+} from '@/components/TeaCard/TeaBrewingGuide';
 
-const meta: Meta = {
+const meta: Meta<TeaBrewingGuideProps> = {
    title: 'Components/TeaCard/TeaBrewingGuide',
    component: TeaBrewingGuide,
    argTypes: {
