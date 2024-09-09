@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import TeaRecommendSwiper from '@/components/TeaCard/TeaRecommendSwiper';
-import { TeaRecommendCardProps } from '@/components/TeaCard/TeaRecommendCard';
+import { TeaRecommendCardProps } from '@/components/TeaCard/CardComponents';
 
 const meta: Meta = {
    title: 'Components/TeaCard/TeaRecommendSwiper',
