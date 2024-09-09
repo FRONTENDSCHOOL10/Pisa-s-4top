@@ -4,18 +4,12 @@ import { useState } from 'react';
 // 사용법
 // <TabButton tabs={['홍차', '우롱차', '녹차', '허브차']} onTabSelect={handleTabSelect} />
 export type TabButtonProps = {
-   type?: 'button' | 'submit' | 'reset';
    tabs: string[];
    onTabSelect: (tab: string) => void;
    [props: string]: any;
 };
 
-export function TabButton({
-   type = 'button',
-   tabs,
-   onTabSelect,
-   ...restProps
-}: TabButtonProps) {
+export function TabButton({ tabs, onTabSelect, ...restProps }: TabButtonProps) {
    const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
    function handleTabClick(tab: string) {
@@ -28,7 +22,7 @@ export function TabButton({
          {tabs.map((tab) => (
             <li key={tab}>
                <button
-                  type={type}
+                  type="button"
                   className={`flex rounded-full border border-lime-700 px-[.625rem] py-[.3125rem] text-center text-xs font-normal text-lime-700 ${selectedTab === tab ? 'bg-lime-50' : 'bg-stone-100'}`}
                   onClick={() => handleTabClick(tab)}
                >
