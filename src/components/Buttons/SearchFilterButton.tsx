@@ -21,6 +21,7 @@ export default function SearchFilterButton() {
    return (
       <div className="search-filter-group flex gap-1 rounded-full bg-stone-300 p-0.5">
          <button
+            type="button"
             className={`${searchDefaultStyle} ${selected === 0 ? searchFocusStyle : ''}`.trim()}
             onClick={() => handleClick(0)}
             aria-pressed={selected === 0}
@@ -28,6 +29,7 @@ export default function SearchFilterButton() {
             상품
          </button>
          <button
+            type="button"
             className={`${searchDefaultStyle} ${selected === 1 ? searchFocusStyle : ''}`.trim()}
             onClick={() => handleClick(1)}
             aria-pressed={selected === 1}
