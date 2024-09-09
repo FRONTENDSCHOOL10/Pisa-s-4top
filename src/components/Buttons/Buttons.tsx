@@ -1,13 +1,20 @@
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 /* 기본 버튼 */
-// 사용법
+/* 버튼 사용법 */
 // small버튼: <Button content="버튼 내용" type="button" size="small" handleClick={() => console.log('small 버튼 클릭됨')} />
 // fullWidth버튼: <Button content="버튼 내용" type="button" size="fullWidth" handleClick={() => console.log('fullWidth 버튼 클릭됨')} />
 // fullWidth-error버튼: <Button content="버튼 내용" type="button" size="fullWidth" isError={true} handleClick={() => console.log('error 버튼 클릭됨')} />
 // large버튼: <Button content="버튼 내용" type="button" size="large" handleClick={() => console.log('large 버튼 클릭됨')} />
+
+/* 링크 버튼 사용법 */
+// <Button content="버튼 내용" size="small" isLink={true} href="/" />
 export interface ButtonProps {
    content: string;
+   isLink?: boolean;
+   href?: string;
+   ariaLabel?: string;
    type?: 'button' | 'submit' | 'reset';
    size?: 'small' | 'fullWidth' | 'large';
    isError?: boolean;
@@ -27,6 +34,9 @@ const sizeClasses: { [key in 'small' | 'fullWidth' | 'large']: string } = {
 
 export function Button({
    content = '버튼',
+   isLink = false,
+   href,
+   ariaLabel,
    type = 'button',
    size = 'small',
    isError = false,
@@ -34,11 +44,27 @@ export function Button({
    ...restProps
 }: ButtonProps) {
    const appliedSize = isError ? 'fullWidth' : size;
+   const style = `${defaultClass} ${sizeClasses[appliedSize]} ${isError ? errorColor : defaultColor}`;
+
+   if (isLink && href && ariaLabel) {
+      return (
+         <Link
+            to={href}
+            className={style}
+            aria-label={`${ariaLabel} 페이지로 이동`}
+            {...restProps}
+         >
+            {content}
+         </Link>
+      );
+   }
+
    return (
       <button
-         className={`${defaultClass} ${sizeClasses[appliedSize]} ${isError ? errorColor : defaultColor}`}
+         className={style}
          type={type}
          onClick={handleClick}
+         aria-label={ariaLabel}
          {...restProps}
       >
          {content}
@@ -50,16 +76,11 @@ export function Button({
 // 사용법
 // <ButtonHeart type="button" onToggle={() => console.log('찜 버튼 토글됨')} />
 export interface ButtonHeartProps {
-   type?: 'button' | 'submit' | 'reset';
    onToggle?: () => void;
    [props: string]: any;
 }
 
-export function ButtonHeart({
-   type,
-   onToggle,
-   ...restProps
-}: ButtonHeartProps) {
+export function ButtonHeart({ onToggle, ...restProps }: ButtonHeartProps) {
    const [isActive, setIsActive] = useState(false);
 
    function handleToggle() {
@@ -75,7 +96,7 @@ export function ButtonHeart({
    return (
       <button
          className="select-none"
-         type={type}
+         type="button"
          onClick={handleToggle}
          {...restProps}
          aria-pressed={isActive}
@@ -90,14 +111,12 @@ export function ButtonHeart({
 // 사용법
 // <ButtonHeart type="button" totalLike={DB에서 티에 대한 토탈 찜 개수} onToggle={() => console.log('찜 버튼 토글됨')} />
 export interface ButtonHeartwithCountProps {
-   type?: 'button' | 'submit' | 'reset';
    totalLike: number;
    onToggle?: () => void;
    [props: string]: any;
 }
 
 export function ButtonHeartwithCount({
-   type = 'button',
    totalLike = 0,
    onToggle,
    ...restProps
@@ -134,7 +153,7 @@ export function ButtonHeartwithCount({
       <div className="flex items-center">
          <button
             className={buttonClass}
-            type={type}
+            type="button"
             onClick={handleToggle}
             {...restProps}
             aria-pressed={isActive}
