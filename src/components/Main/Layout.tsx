@@ -2,18 +2,14 @@ import { Outlet } from 'react-router-dom';
 import AppBar from './AppBar';
 import BottomNav from './BottomNav';
 
-// 펑션으로 통일~
-const Layout = () => {
+export default function Layout() {
    return (
       <>
-         <AppBar />
-         <main className="content py-16">
+         <main className="content mx-auto box-border py-16">
+            <AppBar />
             <Outlet />
+            <BottomNav />
          </main>
-         <BottomNav />
       </>
    );
-};
-
-export default Layout;
-// 통일~
+}
