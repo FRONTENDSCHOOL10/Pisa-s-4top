@@ -74,7 +74,7 @@ export function Button({
 
 /* 찜 버튼 컴포넌트 */
 // 사용법
-// <ButtonHeart type="button" onToggle={() => console.log('찜 버튼 토글됨')} />
+// <ButtonHeart onToggle={() => console.log('찜 버튼 토글됨')} />
 export interface ButtonHeartProps {
    onToggle?: () => void;
    [props: string]: any;
@@ -109,7 +109,7 @@ export function ButtonHeart({ onToggle, ...restProps }: ButtonHeartProps) {
 
 /* 찜 버튼 + 카운트 컴포넌트 */
 // 사용법
-// <ButtonHeart type="button" totalLike={DB에서 티에 대한 토탈 찜 개수} onToggle={() => console.log('찜 버튼 토글됨')} />
+// <ButtonHeart totalLike={DB에서 티에 대한 토탈 찜 개수} onToggle={() => console.log('찜 버튼 토글됨')} />
 export interface ButtonHeartwithCountProps {
    totalLike: number;
    onToggle?: () => void;
