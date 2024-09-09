@@ -1,19 +1,27 @@
 import { Meta, StoryObj } from '@storybook/react';
-import TeaRecommendCard, {
+import {
+   TeaRecommendCard,
    TeaRecommendCardProps,
-} from '@/components/TeaCard/TeaRecommendCard';
+} from '@/components/TeaCard/CardComponents';
 
-const meta: Meta = {
-   title: 'Components/TeaCard/TeaRecommendCard',
+const meta: Meta<TeaRecommendCardProps> = {
+   title: 'Components/Card/TeaRecommendCard',
    component: TeaRecommendCard,
+   argTypes: {
+      teaName: { control: 'text' },
+      imageUrl: { control: 'text' },
+      brand: { control: 'text' },
+   },
 };
 
 export default meta;
 
-export const Default: StoryObj<TeaRecommendCardProps> = {
+type Story = StoryObj<TeaRecommendCardProps>;
+
+export const Default: Story = {
    args: {
-      imageUrl: '',
-      teaName: 'English Breakfast',
-      brand: 'TWINING',
+      teaName: '말차 그린 티',
+      imageUrl: 'https://via.placeholder.com/150',
+      brand: 'TeaBrand',
    },
 };
