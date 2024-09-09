@@ -1,21 +1,29 @@
 import { Meta, StoryObj } from '@storybook/react';
-import TeaReviewCard, {
+import {
+   TeaReviewCard,
    TeaReviewCardProps,
-} from '@/components/TeaCard/TeaReviewCard';
+} from '@/components/TeaCard/CardComponents';
 
-const meta: Meta = {
-   title: 'Components/TeaCard/TeaReviewCard',
+const meta: Meta<TeaReviewCardProps> = {
+   title: 'Components/Card/TeaReviewCard',
    component: TeaReviewCard,
+   argTypes: {
+      profileImageUrl: { control: 'text' },
+      reviewTitle: { control: 'text' },
+      nickName: { control: 'text' },
+      reviewContent: { control: 'text' },
+   },
 };
 
 export default meta;
 
-export const Default: StoryObj<TeaReviewCardProps> = {
+type Story = StoryObj<TeaReviewCardProps>;
+
+export const Default: Story = {
    args: {
-      profileImageUrl: '',
-      reviewTitle: '데일리로 마시기 좋아요~',
-      nickName: '홍길동',
-      reviewContent:
-         '트와이닝스 얼 그레이는 중국 홍차를 베이스로 하여 감귤계인 베르가못의 향을 첨가해 부드럽고 산뜻한 맛을 살렸습니다. 핫티로 마셔도 좋고 아이스티로도 잘 어울립니다.',
+      profileImageUrl: 'https://via.placeholder.com/150',
+      reviewTitle: '환상적인 티',
+      nickName: 'TeaLover',
+      reviewContent: '이 티는 정말 맛있습니다. 부드럽고 향이 좋습니다.',
    },
 };

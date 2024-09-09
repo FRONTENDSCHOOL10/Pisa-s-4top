@@ -23,7 +23,7 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
             {hasBackBtn ? (
                <button
                   type="button"
-                  className="focus-green px-4"
+                  className="focus-green m-4"
                   aria-label="뒤로가기"
                   onClick={() => navigate(-1)}
                >
@@ -52,7 +52,7 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
             ) : (
                <button
                   type="button"
-                  className="focus-green px-4"
+                  className="focus-green m-4"
                   aria-label="뒤로가기"
                   onClick={() => navigate(-1)}
                >

@@ -1,114 +1,119 @@
 import { useState, useEffect } from 'react';
 
 /* 기본 버튼 */
-// 레스트프롭 추가 확인
-interface ButtonDefaultProps {
-   text?: string;
+// 사용법
+// small버튼: <Button content="버튼 내용" type="button" size="small" handleClick={() => console.log('small 버튼 클릭됨')} />
+// fullWidth버튼: <Button content="버튼 내용" type="button" size="fullWidth" handleClick={() => console.log('fullWidth 버튼 클릭됨')} />
+// fullWidth-error버튼: <Button content="버튼 내용" type="button" size="fullWidth" isError={true} handleClick={() => console.log('error 버튼 클릭됨')} />
+// large버튼: <Button content="버튼 내용" type="button" size="large" handleClick={() => console.log('large 버튼 클릭됨')} />
+export interface ButtonProps {
+   content: string;
+   type?: 'button' | 'submit' | 'reset';
+   size?: 'small' | 'fullWidth' | 'large';
+   isError?: boolean;
+   handleClick: () => void;
+   [props: string]: any;
 }
-// 버튼 타입도 프롭에 추가해주세용! -> 프롭으로 받되 옵션!
-export function ButtonDefault({ text = '버튼default' }: ButtonDefaultProps) {
+
+const defaultClass: string =
+   'inline-flex items-center justify-center whitespace-nowrap rounded text-base font-normal text-stone-100';
+const defaultColor: string = 'bg-green-700 hover:bg-green-600';
+const errorColor: string = 'bg-red-600 hover:bg-red-500';
+const sizeClasses: { [key in 'small' | 'fullWidth' | 'large']: string } = {
+   small: 'px-4 py-3',
+   fullWidth: 'w-full py-3',
+   large: 'w-full py-6',
+};
+
+export function Button({
+   content = '버튼',
+   type = 'button',
+   size = 'small',
+   isError = false,
+   handleClick,
+   ...restProps
+}: ButtonProps) {
+   const appliedSize = isError ? 'fullWidth' : size;
    return (
       <button
-         className="inline-flex items-center justify-center whitespace-nowrap rounded bg-green-700 px-4 py-3 text-base font-normal text-stone-100 hover:bg-green-600"
-         type="button"
+         className={`${defaultClass} ${sizeClasses[appliedSize]} ${isError ? errorColor : defaultColor}`}
+         type={type}
+         onClick={handleClick}
+         {...restProps}
       >
-         {text}
-      </button>
-   );
-}
-
-/* full width 버튼 */
-interface ButtonFullWidthProps {
-   text?: string;
-}
-
-export function ButtonFullWidth({
-   text = '버튼fullWidth',
-}: ButtonFullWidthProps) {
-   return (
-      <button
-         className="inline-flex w-full items-center justify-center whitespace-nowrap rounded bg-green-700 py-3 text-base font-normal text-stone-100 hover:bg-green-600"
-         type="button"
-      >
-         {text}
-      </button>
-   );
-}
-
-/* large 버튼 */
-interface ButtonLargeProps {
-   text?: string;
-}
-
-export function ButtonLarge({ text = '버튼large' }: ButtonLargeProps) {
-   return (
-      <button
-         className="inline-flex w-full items-center justify-center whitespace-nowrap rounded bg-green-700 py-6 text-base font-normal text-stone-100 hover:bg-green-600"
-         type="button"
-      >
-         {text}
-      </button>
-   );
-}
-// 컬러만 달라서 error status 프롭..!
-/* full width 빨간색 버튼 */
-interface ButtonErrorProps {
-   text?: string;
-}
-
-export function ButtonError({ text = '버튼error' }: ButtonErrorProps) {
-   return (
-      <button
-         className="inline-flex w-full items-center justify-center whitespace-nowrap rounded bg-red-600 py-3 text-base font-normal text-stone-100 hover:bg-red-500"
-         type="button"
-      >
-         {text}
+         {content}
       </button>
    );
 }
 
 /* 찜 버튼 컴포넌트 */
-export function ButtonHeart() {
+// 사용법
+// <ButtonHeart type="button" onToggle={() => console.log('찜 버튼 토글됨')} />
+export interface ButtonHeartProps {
+   type?: 'button' | 'submit' | 'reset';
+   onToggle?: () => void;
+   [props: string]: any;
+}
+
+export function ButtonHeart({
+   type,
+   onToggle,
+   ...restProps
+}: ButtonHeartProps) {
    const [isActive, setIsActive] = useState(false);
 
-   function handleClick() {
+   function handleToggle() {
       setIsActive((prevState) => !prevState);
+      if (onToggle) {
+         onToggle();
+      }
    }
-
-   const classes = `fi flex justify-center items-center ${
+   const iconClass: string = `fi flex justify-center items-center ${
       isActive ? 'fi-sr-heart text-red-600' : 'fi-rr-heart text-stone-300'
    }`;
 
    return (
       <button
          className="select-none"
-         type="button"
-         onClick={handleClick}
+         type={type}
+         onClick={handleToggle}
+         {...restProps}
          aria-pressed={isActive}
-         aria-label={isActive ? '찜 활성화' : '찜 해제'}
+         aria-label={isActive ? '찜 활성화' : '찜 비활성화'}
       >
-         <span className={classes}></span>
+         <span className={iconClass} aria-hidden="true"></span>
       </button>
    );
 }
 
 /* 찜 버튼 + 카운트 컴포넌트 */
-interface ButtonHeartwithCountProps {
+// 사용법
+// <ButtonHeart type="button" totalLike={DB에서 티에 대한 토탈 찜 개수} onToggle={() => console.log('찜 버튼 토글됨')} />
+export interface ButtonHeartwithCountProps {
+   type?: 'button' | 'submit' | 'reset';
    totalLike: number;
+   onToggle?: () => void;
+   [props: string]: any;
 }
 
 export function ButtonHeartwithCount({
+   type = 'button',
    totalLike = 0,
+   onToggle,
+   ...restProps
 }: ButtonHeartwithCountProps) {
    const [isActive, setIsActive] = useState(false);
    const [count, setCount] = useState(totalLike);
 
-   function handleClick() {
+   function handleToggle() {
       setIsActive((prevState) => {
          const newActive = !prevState;
          setCount(newActive ? count + 1 : totalLike);
          return newActive;
       });
+      if (onToggle) {
+         onToggle();
+      }
    }
 
    useEffect(() => {
@@ -117,26 +122,29 @@ export function ButtonHeartwithCount({
       }
    }, [isActive, totalLike]);
 
-   const buttonClasses = `select-none rounded-2xl ${isActive ? 'bg-red-600 px-[.3125rem] py-[.3125rem]' : 'border border-stone-300 px-1 py-1'}`;
-   const iconClasses = `fi flex justify-center items-center ${
+   const buttonClass: string = `select-none rounded-2xl ${isActive ? 'bg-red-600 px-[.3125rem] py-[.3125rem]' : 'border border-stone-300 px-1 py-1'}`;
+   const iconClass: string = `fi flex justify-center items-center ${
       isActive
          ? 'fi-sr-heart text-white text-[.6188rem]'
          : 'fi-rr-heart text-stone-300 text-[.625rem]'
    }`;
-   const numberClasses = `ml-1 text-base font-bold ${isActive ? 'text-red-600' : 'text-stone-300'}`;
+   const numberClass: string = `ml-1 text-base font-bold ${isActive ? 'text-red-600' : 'text-stone-300'}`;
 
    return (
-      <div>
+      <div className="flex items-center">
          <button
-            className={buttonClasses}
-            type="button"
-            onClick={handleClick}
+            className={buttonClass}
+            type={type}
+            onClick={handleToggle}
+            {...restProps}
             aria-pressed={isActive}
-            aria-label={isActive ? '찜 활성화' : '찜 해제'}
+            aria-label={isActive ? '찜 활성화' : '찜 비활성화'}
          >
-            <span className={iconClasses}></span>
+            <span className={iconClass} aria-hidden="true"></span>
          </button>
-         <span className={numberClasses}>{count}</span>
+         <span className={numberClass} aria-hidden="true">
+            {count}
+         </span>
       </div>
    );
 }
