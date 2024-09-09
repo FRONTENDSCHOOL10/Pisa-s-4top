@@ -12,25 +12,25 @@ const searchDefaultStyle: string = `w-1/2 rounded-full py-2 font-bold text-stone
 const searchFocusStyle: string = `bg-stone-100`; // focused
 
 export default function SearchFilterButton() {
-   const [selected, setSelected] = useState<boolean>(false);
+   const [selected, setSelected] = useState<number>(0);
 
-   const handleClick = (state: boolean): void => {
-      setSelected(state);
+   const handleClick = (index: number): void => {
+      setSelected(index);
    };
 
    return (
       <div className="search-filter-group flex gap-1 rounded-full bg-stone-300 p-0.5">
          <button
-            className={`${searchDefaultStyle} ${!selected ? searchFocusStyle : ''}`.trim()}
-            onClick={() => handleClick(false)}
-            aria-pressed={!selected}
+            className={`${searchDefaultStyle} ${selected === 0 ? searchFocusStyle : ''}`.trim()}
+            onClick={() => handleClick(0)}
+            aria-pressed={selected === 0}
          >
             상품
          </button>
          <button
-            className={`${searchDefaultStyle} ${selected ? searchFocusStyle : ''}`.trim()}
-            onClick={() => handleClick(true)}
-            aria-pressed={selected}
+            className={`${searchDefaultStyle} ${selected === 1 ? searchFocusStyle : ''}`.trim()}
+            onClick={() => handleClick(1)}
+            aria-pressed={selected === 1}
          >
             리뷰
          </button>
