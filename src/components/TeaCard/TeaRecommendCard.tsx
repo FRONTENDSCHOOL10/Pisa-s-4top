@@ -5,16 +5,17 @@ export interface TeaRecommendCardProps {
    imageUrl: string;
    teaName: string;
    brand: string;
+   teaId: string;
 }
 
 export default function TeaRecommendCard({
    imageUrl,
    teaName,
    brand,
+   teaId,
 }: TeaRecommendCardProps) {
    return (
-      // 링크로 리팩토링
-      <Link>
+      <Link to={`/tea/${teaId}`}>
          <article className="relative w-40 cursor-pointer rounded-2xl border border-stone-300 bg-gradient-to-b from-white from-70% to-stone-100 to-100% shadow-xl">
             <div className="overflow-hidden rounded-t-2xl bg-stone-200">
                <img
