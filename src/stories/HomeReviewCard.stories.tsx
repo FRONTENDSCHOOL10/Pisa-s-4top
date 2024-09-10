@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
 
 const meta: Meta<typeof HomeReviewCard> = {
-   title: 'Components/TeaCard/HomeReviewCard',
+   title: 'Components/HomeReviewCard',
    component: HomeReviewCard,
    decorators: [
       (Story) => (
@@ -15,7 +15,6 @@ const meta: Meta<typeof HomeReviewCard> = {
    argTypes: {
       id: { control: 'text' },
       profileImg: { control: 'text' },
-      altText: { control: 'text' },
       title: { control: 'text' },
       nickname: { control: 'text' },
       comment: { control: 'text' },
@@ -30,7 +29,6 @@ export const Primary: Story = {
    args: {
       id: '1',
       profileImg: 'https://via.placeholder.com/150',
-      altText: 'Profile Image',
       title: '라벤더 티 후기',
       nickname: 'tea_lover',
       comment: '이 차는 정말 상쾌하고 향이 좋아요!',

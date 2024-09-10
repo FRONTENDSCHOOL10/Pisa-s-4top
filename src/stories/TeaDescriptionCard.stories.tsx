@@ -1,18 +1,23 @@
 import { Meta, StoryObj } from '@storybook/react';
-import TeaDescriptionCard, {
+import {
+   TeaDescriptionCard,
    TeaDescriptionCardProps,
-} from '@/components/TeaCard/TeaDescriptionCard';
+} from '@/components/TeaCard/CardComponents';
 
-const meta: Meta = {
-   title: 'Components/TeaCard/TeaDescriptionCard',
+const meta: Meta<TeaDescriptionCardProps> = {
+   title: 'Components/Card/TeaDescriptionCard',
    component: TeaDescriptionCard,
+   argTypes: {
+      description: { control: 'text' }, // 컨트롤을 통해 UI에서 값을 조정할 수 있도록 설정
+   },
 };
 
 export default meta;
 
-export const Default: StoryObj<TeaDescriptionCardProps> = {
+type Story = StoryObj<TeaDescriptionCardProps>;
+
+export const Default: Story = {
    args: {
-      title: '어떤 티인가요?',
-      description: '트와이닝스 얼 그레이는 중국 홍차를 베이스로...',
+      description: '이 티는 과일향이 강한 것이 특징입니다.',
    },
 };
