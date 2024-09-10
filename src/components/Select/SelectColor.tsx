@@ -1,4 +1,22 @@
-import { useState } from 'react';
+/* SelectColor 사용법
+
+이 컴포넌트는 사용자가 수색 기록 시 선택할 수 있는 색상 선택 드롭다운입니다. 색상을 선택하면 선택된 색상이 미리보기로 표시됩니다.
+
+---- 사용법 예시 ----
+
+import { SelectColor } from '@/components/Select/SelectColor';
+
+export default function App() {
+   return (
+      <div>
+         <SelectColor />
+      </div>
+   );
+}
+
+*/
+
+import { useState, useCallback } from 'react';
 
 type ColorOption = {
    label: string;
@@ -19,14 +37,23 @@ export function SelectColor() {
       null
    );
 
-   const handleToggle = () => {
-      setIsOpen(!isOpen);
-   };
+   const handleToggle = useCallback(() => {
+      setIsOpen((prev) => !prev);
+   }, []);
 
-   const handleSelect = (option: ColorOption) => {
+   const handleSelect = useCallback((option: ColorOption) => {
       setSelectedOption(option);
       setIsOpen(false);
-   };
+   }, []);
+
+   const commonButtonClasses =
+      'flex cursor-pointer items-center justify-center p-2 hover:bg-stone-100';
+   const selectedColorClass = selectedOption
+      ? selectedOption.value
+      : 'bg-stone-200';
+   const selectedLabel = selectedOption
+      ? selectedOption.label
+      : '색상을 선택하세요';
 
    return (
       <div className="relative w-full">
@@ -35,13 +62,9 @@ export function SelectColor() {
             onClick={handleToggle}
          >
             <span
-               className={`mr-2 h-4 w-4 rounded-full ${
-                  selectedOption ? selectedOption.value : 'bg-stone-200'
-               }`}
-            ></span>
-            <span className="text-base">
-               {selectedOption ? selectedOption.label : '색상을 선택하세요'}
-            </span>
+               className={`mr-2 h-4 w-4 rounded-full ${selectedColorClass}`}
+            />
+            <span className="text-base">{selectedLabel}</span>
          </div>
 
          {isOpen && (
@@ -49,12 +72,12 @@ export function SelectColor() {
                {options.map((option) => (
                   <li
                      key={option.value}
-                     className="flex cursor-pointer items-center justify-center p-2 hover:bg-stone-100"
+                     className={commonButtonClasses}
                      onClick={() => handleSelect(option)}
                   >
                      <span
                         className={`mr-2 h-4 w-4 rounded-full ${option.value}`}
-                     ></span>
+                     />
                      {option.label}
                   </li>
                ))}

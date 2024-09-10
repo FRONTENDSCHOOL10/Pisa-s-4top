@@ -1,3 +1,35 @@
+/* StarRating 사용법
+
+* StarRating
+
+---- 사용법 예시 ----
+
+import { StarRating } from '@/components/Review/StarRate';
+
+export default function App() {
+   return (
+      <div>
+         <StarRating score={4} altText="차의 별점" />
+      </div>
+   );
+}
+
+* StarRatingAverage
+
+---- 사용법 예시 ----
+
+import { StarRatingAverage } from '@/components/Review/StarRate';
+
+export default function App() {
+   return (
+      <div>
+         <StarRatingAverage score={4.5} />
+      </div>
+   );
+}
+
+*/
+
 interface StarRatingProps {
    score: 0 | 1 | 2 | 3 | 4 | 5;
    altText?: string;
