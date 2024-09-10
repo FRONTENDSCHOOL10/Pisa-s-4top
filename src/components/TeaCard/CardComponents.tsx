@@ -1,3 +1,59 @@
+/* CardComponent 사용법
+
+TeaDescriptionCard
+
+- `description`: 티에 대한 설명 (필수)
+
+---- 사용법 예시 ----
+<TeaDescriptionCard description="이 티는 매우 향긋하고 건강에 좋습니다." />
+------------------
+
+TeaRecipeCard
+
+- `title`: 레시피 제목 (필수)
+- `imageUrl`: 레시피와 관련된 이미지 경로 (필수)
+- `steps`: 레시피의 단계들 (필수, 문자열 배열)
+
+---- 사용법 예시 ----
+<TeaRecipeCard 
+   title="홍차 레시피" 
+   imageUrl="image_url" 
+   steps={['물 끓이기', '홍차 넣기', '우려내기']} 
+/>
+------------------
+
+TeaRecommendCard
+
+- `imageUrl`: 추천할 티의 이미지 경로 (필수)
+- `teaName`: 티 이름 (필수)
+- `brand`: 티 브랜드 이름 (필수)
+
+---- 사용법 예시 ----
+<TeaRecommendCard 
+   imageUrl="tea_image_url" 
+   teaName="녹차" 
+   brand="티 브랜드 이름" 
+/>
+------------------
+
+TeaReviewCard
+
+- `profileImageUrl`: 사용자의 프로필 이미지 경로 (선택)
+- `reviewTitle`: 리뷰 제목 (필수)
+- `nickName`: 리뷰 작성자 닉네임 (필수)
+- `reviewContent`: 리뷰 내용 (필수)
+
+---- 사용법 예시 ----
+<TeaReviewCard 
+   profileImageUrl="profile_image_url" 
+   reviewTitle="맛있어요!" 
+   nickName="홍차러버" 
+   reviewContent="이 티는 정말 맛있습니다. 꼭 추천해요!" 
+/>
+------------------
+
+*/
+
 import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
@@ -19,9 +75,9 @@ export function CardImage({
    return (
       <img
          src={src}
-         alt={decorative ? '' : alt} // 장식용 이미지는 alt 속성을 빈 문자열로 처리
+         alt={decorative ? '' : alt}
          className={`w-full rounded-md object-cover ${className}`}
-         aria-hidden={decorative} // 장식용 이미지는 스크린 리더에서 숨김 처리
+         aria-hidden={decorative}
       />
    );
 }
@@ -44,7 +100,7 @@ interface CardLayoutProps {
    children: React.ReactNode;
    className?: string;
    to?: string;
-   ariaLabel?: string; // 접근성을 위한 설명
+   ariaLabel?: string;
 }
 
 export function CardLayout({
@@ -57,7 +113,7 @@ export function CardLayout({
       <article
          role="article"
          className={`relative w-full rounded-2xl border border-stone-300 bg-white p-5 shadow-xl ${className}`}
-         aria-label={ariaLabel} // aria-label을 통해 의미를 명확히 전달
+         aria-label={ariaLabel}
       >
          {children}
       </article>
