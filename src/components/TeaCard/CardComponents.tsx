@@ -1,13 +1,70 @@
+/* CardComponent 사용법
+
+TeaDescriptionCard
+
+- `description`: 티에 대한 설명 (필수)
+
+---- 사용법 예시 ----
+<TeaDescriptionCard description="이 티는 매우 향긋하고 건강에 좋습니다." />
+------------------
+
+TeaRecipeCard
+
+- `title`: 레시피 제목 (필수)
+- `imageUrl`: 레시피와 관련된 이미지 경로 (필수)
+- `steps`: 레시피의 단계들 (필수, 문자열 배열)
+
+---- 사용법 예시 ----
+<TeaRecipeCard 
+   title="홍차 레시피" 
+   imageUrl="image_url" 
+   steps={['물 끓이기', '홍차 넣기', '우려내기']} 
+/>
+------------------
+
+TeaRecommendCard
+
+- `imageUrl`: 추천할 티의 이미지 경로 (필수)
+- `teaName`: 티 이름 (필수)
+- `brand`: 티 브랜드 이름 (필수)
+
+---- 사용법 예시 ----
+<TeaRecommendCard 
+   imageUrl="tea_image_url" 
+   teaName="녹차" 
+   brand="티 브랜드 이름" 
+/>
+------------------
+
+TeaReviewCard
+
+- `profileImageUrl`: 사용자의 프로필 이미지 경로 (선택)
+- `reviewTitle`: 리뷰 제목 (필수)
+- `nickName`: 리뷰 작성자 닉네임 (필수)
+- `reviewContent`: 리뷰 내용 (필수)
+
+---- 사용법 예시 ----
+<TeaReviewCard 
+   profileImageUrl="profile_image_url" 
+   reviewTitle="맛있어요!" 
+   nickName="홍차러버" 
+   reviewContent="이 티는 정말 맛있습니다. 꼭 추천해요!" 
+/>
+------------------
+
+*/
+
 import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
+import { SelectColor } from '../Select/SelectColor';
 
 // 공통 UI 컴포넌트
 interface ImageProps {
    src: string;
    alt: string;
    className?: string;
-   decorative?: boolean; // 장식용 이미지 여부
+   decorative?: boolean;
 }
 
 export function CardImage({
@@ -19,9 +76,9 @@ export function CardImage({
    return (
       <img
          src={src}
-         alt={decorative ? '' : alt} // 장식용 이미지는 alt 속성을 빈 문자열로 처리
+         alt={decorative ? '' : alt}
          className={`w-full rounded-md object-cover ${className}`}
-         aria-hidden={decorative} // 장식용 이미지는 스크린 리더에서 숨김 처리
+         aria-hidden={decorative}
       />
    );
 }
@@ -33,7 +90,7 @@ interface TitleProps {
 
 export function CardTitle({ children, className }: TitleProps) {
    return (
-      <h3 className={`text-sm font-extrabold text-stone-950 ${className}`}>
+      <h3 className={`text-xl font-extrabold text-stone-950 ${className}`}>
          {children}
       </h3>
    );
@@ -44,7 +101,7 @@ interface CardLayoutProps {
    children: React.ReactNode;
    className?: string;
    to?: string;
-   ariaLabel?: string; // 접근성을 위한 설명
+   ariaLabel?: string;
 }
 
 export function CardLayout({
@@ -57,7 +114,7 @@ export function CardLayout({
       <article
          role="article"
          className={`relative w-full rounded-2xl border border-stone-300 bg-white p-5 shadow-xl ${className}`}
-         aria-label={ariaLabel} // aria-label을 통해 의미를 명확히 전달
+         aria-label={ariaLabel}
       >
          {children}
       </article>
@@ -81,7 +138,7 @@ export function TeaDescriptionCard({ description }: TeaDescriptionCardProps) {
    return (
       <CardLayout ariaLabel="티 설명 카드">
          <CardTitle>어떤 티인가요?</CardTitle>
-         <p className="mt-2 text-xs font-medium text-stone-600">
+         <p className="mt-2 text-sm font-medium text-stone-600">
             {description}
          </p>
       </CardLayout>
@@ -103,7 +160,7 @@ export function TeaRecipeCard({ title, imageUrl, steps }: TeaRecipeCardProps) {
             <div className="w-1/3">
                <CardImage src={imageUrl} alt="Recipe" />
             </div>
-            <ol className="text-xs leading-6">
+            <ol className="text-sm leading-6">
                {steps.map((step, index) => (
                   <li key={index}>{step}</li>
                ))}
@@ -183,13 +240,24 @@ export function TeaReviewCard({
                <CardTitle className="mb-1">{reviewTitle}</CardTitle>
                <div className="flex justify-between">
                   <StarRating score={3} />
-                  <p className="text-xs text-stone-400">{nickName}</p>
+                  <p className="text-sm text-stone-400">{nickName}</p>
                </div>
             </div>
          </div>
-         <p className="border-t border-t-stone-200 pt-3 text-xs font-medium text-stone-600">
+         <p className="border-t border-t-stone-200 pt-3 text-sm font-medium text-stone-600">
             {reviewContent}
          </p>
+      </CardLayout>
+   );
+}
+
+// 티 수색 선택 카드
+
+export function TeaColorCard() {
+   return (
+      <CardLayout ariaLabel="티 설명 카드">
+         <CardTitle>수색</CardTitle>
+         <SelectColor />
       </CardLayout>
    );
 }

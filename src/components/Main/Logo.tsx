@@ -13,7 +13,7 @@ interface LogoProps {
    alt?: string;
 }
 
-function Logo({ small, large, alt }: LogoProps) {
+export default function Logo({ small, large, alt }: LogoProps) {
    return (
       <>
          {small ? (
@@ -28,6 +28,3 @@ function Logo({ small, large, alt }: LogoProps) {
       </>
    );
 }
-
-export default Logo;
-// 통일~
