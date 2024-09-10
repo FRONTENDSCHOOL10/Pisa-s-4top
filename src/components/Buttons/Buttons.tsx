@@ -9,7 +9,8 @@ import { useState, useEffect } from 'react';
 // large버튼: <Button content="버튼 내용" type="button" size="large" handleClick={() => console.log('large 버튼 클릭됨')} />
 
 /* 링크 버튼 사용법 */
-// <Button content="버튼 내용" size="small" isLink={true} href="/" />
+// <Button content="버튼 내용" size="small" isLink={true} href="/" ariaLabel='이동하는 페이지 명' />
+
 export interface ButtonProps {
    content: string;
    isLink?: boolean;
@@ -18,7 +19,7 @@ export interface ButtonProps {
    type?: 'button' | 'submit' | 'reset';
    size?: 'small' | 'fullWidth' | 'large';
    isError?: boolean;
-   handleClick: () => void;
+   handleClick?: () => void;
    [props: string]: any;
 }
 
@@ -51,7 +52,7 @@ export function Button({
          <Link
             to={href}
             className={style}
-            aria-label={`${ariaLabel} 페이지로 이동`}
+            aria-label={ariaLabel}
             {...restProps}
          >
             {content}
@@ -64,7 +65,6 @@ export function Button({
          className={style}
          type={type}
          onClick={handleClick}
-         aria-label={ariaLabel}
          {...restProps}
       >
          {content}
