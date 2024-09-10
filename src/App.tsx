@@ -76,20 +76,18 @@ const routes = [
          {
             path: 'my-page',
             element: <MyPage />,
-            children: [
-               {
-                  path: 'edit',
-                  element: <MyEditPage />,
-               },
-               {
-                  path: 'reviews',
-                  element: <MyReviewsPage />,
-               },
-               {
-                  path: 'favorites',
-                  element: <MyFavoritesPage />,
-               },
-            ],
+         },
+         {
+            path: 'my-page/edit',
+            element: <MyEditPage />,
+         },
+         {
+            path: 'my-page/reviews',
+            element: <MyReviewsPage />,
+         },
+         {
+            path: 'my-page/favorites',
+            element: <MyFavoritesPage />,
          },
       ],
    },

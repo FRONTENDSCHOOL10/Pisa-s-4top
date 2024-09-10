@@ -1,80 +1,114 @@
 /* 중복확인 input */
 
-import { useEffect, useRef, useState } from 'react';
+/* 사용법
 
-import { INPUT_TYPE, OUTLINE_COLORS } from '@/constants';
+0. 사용 시 <form></form> 태그를 직접 넣어주어야 합니다.
+
+1. 닉네임 중복확인의 경우 (pattern 속성 필요! 최소 1글자, 최대 10글자)
+<form onSubmit={(e: FormEvent<HTMLFormElement>) => { e.preventDefault(); }}>
+   <DuplicateCheckInput title="닉네임" type="text" pattern=".{1,10}" />
+</form>
+
+2. 이메일 중복확인의 경우
+<form onSubmit={(e: FormEvent<HTMLFormElement>) => { e.preventDefault(); }}>
+   <DuplicateCheckInput title="이메일" type="email" />
+</form>
+
+*/
+
+import { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
+
+import { INPUT_TYPE } from '@/constants';
 import { isValidEmail, isValidNickName } from '@/utils/isValidCheck';
+import { Button } from '../Buttons/Buttons';
 import Input from './Input';
 
-interface Props {
+export interface Props {
    title: string;
    type: string;
    focusOutlineColor?: string;
    [property: string]: any;
 }
 
-function DuplicateCheckInput({ title, type, ...restProps }: Props) {
-   const [outlineColor, setOutlineColor] = useState<string>(
-      OUTLINE_COLORS.DEFAULT
-   );
+export default function DuplicateCheckInput({
+   title,
+   type,
+   ...restProps
+}: Props) {
+   const [outlineColor, setOutlineColor] = useState<string>('outline-default');
+   const [text, setText] = useState<string>('');
+   const textRef = useRef<string>('');
 
-   const [text, setText] = useState('');
-   const textRef = useRef('');
+   // ! 추후 DB에서 가져오기로 수정
+   const TEST: string = '하하';
+   const TEST2: string = '12345@naver.com';
 
-   const TEST = '하하';
-   const TEST2 = '12345@naver.com';
-
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-      textRef.current = e.target.value;
-      console.log(textRef.current);
+   // 입력값 실시간으로 변경
+   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+      textRef.current = e.target.value.trim();
+      console.log(textRef.current); // ! test용 코드
    };
 
-   const handleClick = () => {
-      setText(textRef.current);
-   };
+   // 중복확인 버튼 눌렀을 때
+   const handleClick = (): void => {
+      const currentText: string = textRef.current; // 최신 입력 값 가져옴
+      setText(currentText); // 상태 업데이트
+      console.log('클릭'); // ! test용 코드
 
-   useEffect(() => {
-      if (text === '') return;
-
-      let isValid = false;
-      let isDuplicate = false;
+      let isNull: boolean = false; // 공백 확인
+      let isDuplicate: boolean = false; // 중복확인
+      let isValid: boolean = false; // 정규식 확인
 
       switch (type) {
          case INPUT_TYPE.NICKNAME: {
-            isDuplicate = text === TEST;
-            isValid = isValidNickName(text);
+            isNull = currentText === '';
+            isDuplicate = currentText === TEST;
+            isValid = isValidNickName(currentText);
             break;
          }
          case INPUT_TYPE.EMAIL: {
-            isDuplicate = text === TEST2;
-            isValid = isValidEmail(text);
+            isNull = currentText === '';
+            isDuplicate = currentText === TEST2;
+            isValid = isValidEmail(currentText);
             break;
          }
       }
 
-      if (isDuplicate || !isValid) {
-         setOutlineColor(OUTLINE_COLORS.ERROR);
+      if (isNull || isDuplicate || !isValid) {
+         setOutlineColor('outline-error');
+         return;
       } else {
-         setOutlineColor(OUTLINE_COLORS.SUCCESS);
+         setOutlineColor('outline-success');
+         console.log('성공: ', currentText); // ! test용 코드
       }
-   }, [text, type]);
+   };
 
+   // Enter key 눌렀을 때
+   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+         handleClick?.();
+         return;
+      }
+   };
+
+   // ! 버튼 컴포넌트로 변경
    return (
-      <>
+      <div className="flex gap-1.5 bg-white">
          <Input
             title={title}
             type={type}
             focusOutlineColor={outlineColor}
             defaultValue={text}
             onChange={handleChange}
+            onKeyPress={handleKeyPress}
             {...restProps}
          />
-         {/* 버튼 컴포넌트로 변경 */}
-         <button className="w-[200px]" type="button" onClick={handleClick}>
-            중복확인
-         </button>
-      </>
+         <Button
+            content="중복확인"
+            type="button"
+            size="small"
+            handleClick={handleClick}
+         />
+      </div>
    );
 }
-
-export default DuplicateCheckInput;
