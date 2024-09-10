@@ -6,7 +6,7 @@ export default function Layout() {
    return (
       <>
          <AppBar />
-         <main className="content py-16">
+         <main className="content py-16 bg-stone-100">
             <Outlet />
          </main>
          <BottomNav />

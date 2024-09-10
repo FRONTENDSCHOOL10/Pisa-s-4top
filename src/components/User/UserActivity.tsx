@@ -1,7 +1,7 @@
 // 사용법
-// <UserStatus title="리뷰 개수" count={25} />
+// <UserActivity title="리뷰 개수" count={25} />
 
-export interface UserStatusProps {
+export interface UserActivityProps {
    title: string;
    count: number;
    className?: string;
@@ -13,12 +13,12 @@ const containerClass: string =
 const titleClass: string = 'text-sm font-normal text-stone-600';
 const countClass: string = 'text-[2rem] font-bold leading-9 text-lime-700';
 
-export function UserStatus({
+export function UserActivity({
    title = '찜 개수',
    count = 0,
    className = '',
    ...restProps
-}: UserStatusProps) {
+}: UserActivityProps) {
    return (
       <div className={`${containerClass} ${className}`} {...restProps}>
          <p className={titleClass}>{title}</p>
