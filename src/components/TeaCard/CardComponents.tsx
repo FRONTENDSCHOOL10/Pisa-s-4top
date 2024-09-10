@@ -58,6 +58,7 @@ import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
 import { SelectColor } from '../Select/SelectColor';
+import { LabelGroup } from '../Labels/Labels';
 
 // 공통 UI 컴포넌트
 interface ImageProps {
@@ -255,9 +256,21 @@ export function TeaReviewCard({
 
 export function TeaColorCard() {
    return (
-      <CardLayout ariaLabel="티 설명 카드">
-         <CardTitle>수색</CardTitle>
+      <CardLayout ariaLabel="티 수색 선택 카드">
+         <CardTitle className="mb-2 !text-stone-500">수색</CardTitle>
          <SelectColor />
+      </CardLayout>
+   );
+}
+
+// 티 맛 선택 카드
+
+export function TeaTasteCard() {
+   const labels = [{ label: '라벤더' }, { label: '풀향' }, { label: '우유' }];
+   return (
+      <CardLayout ariaLabel="티 맛 선택 카드">
+         <CardTitle className="mb-2 !text-stone-500">맛</CardTitle>
+         <LabelGroup labels={labels} className="justify-center" />
       </CardLayout>
    );
 }
