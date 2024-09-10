@@ -27,7 +27,10 @@ function ReviewsDetailPage() {
          <article>
             <h3>수색</h3>
          </article>
-         <div>reviewTitle reviewContent</div>
+         <div>
+            <h1>reviewTitle</h1>
+            <p>reviewContent</p>
+         </div>
          <div className="mb-2 w-full">
             <ButtonFullWidth text="리뷰 수정하기" />
          </div>
