@@ -21,11 +21,11 @@ function ReviewsDetailPage() {
          <p className="my-4">nickname</p>
          <StarRatingAverage score={3} />
          <article className="mt-4">
-            <h3>맛</h3>
+            <h2>맛</h2>
             <LabelGroup labels={labels} size="large" />
          </article>
          <article>
-            <h3>수색</h3>
+            <h2>수색</h2>
          </article>
          <div>
             <h1>reviewTitle</h1>
