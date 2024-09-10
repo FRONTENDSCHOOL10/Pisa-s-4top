@@ -9,12 +9,26 @@
 
 import { useState } from 'react';
 
-const searchDefaultStyle: string = `w-full truncate rounded-full py-2 font-bold text-stone-600`; // 공통 스타일링
-const searchFocusStyle: string = `bg-stone-100`; // focused
-
 export interface Props {
    filter: string[];
 }
+
+interface SearchStyles {
+   default: string;
+   selected: string;
+   unselected: string;
+   group: string;
+   listItem: string;
+}
+
+// 스타일을 객체로 관리
+export const SEARCH_STYLES: SearchStyles = {
+   default: 'w-full truncate rounded-full py-2 font-bold',
+   selected: 'bg-stone-100 text-stone-600',
+   unselected: 'text-stone-400',
+   group: 'search-filter-group flex gap-1 rounded-full bg-stone-300 p-0.5',
+   listItem: 'flex-1 truncate',
+};
 
 export default function SearchFilterButton({ filter }: Props) {
    const [selected, setSelected] = useState<number>(0);
@@ -24,12 +38,12 @@ export default function SearchFilterButton({ filter }: Props) {
    };
 
    return (
-      <ul className="search-filter-group flex gap-1 rounded-full bg-stone-300 p-0.5">
+      <ul className={SEARCH_STYLES.group}>
          {filter.map((data, index) => (
-            <li key={data} className="flex-1 truncate">
+            <li key={data} className={SEARCH_STYLES.listItem}>
                <button
                   type="button"
-                  className={`${searchDefaultStyle} ${selected === index ? searchFocusStyle : ''}`.trim()}
+                  className={`${SEARCH_STYLES.default} ${selected === index ? SEARCH_STYLES.selected : SEARCH_STYLES.unselected}`.trim()}
                   onClick={() => handleClick(index)}
                   aria-pressed={selected === index}
                >
