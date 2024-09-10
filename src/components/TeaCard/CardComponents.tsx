@@ -89,7 +89,7 @@ interface TitleProps {
 
 export function CardTitle({ children, className }: TitleProps) {
    return (
-      <h3 className={`text-sm font-extrabold text-stone-950 ${className}`}>
+      <h3 className={`text-base font-extrabold text-stone-950 ${className}`}>
          {children}
       </h3>
    );
@@ -137,7 +137,7 @@ export function TeaDescriptionCard({ description }: TeaDescriptionCardProps) {
    return (
       <CardLayout ariaLabel="티 설명 카드">
          <CardTitle>어떤 티인가요?</CardTitle>
-         <p className="mt-2 text-xs font-medium text-stone-600">
+         <p className="mt-2 text-sm font-medium text-stone-600">
             {description}
          </p>
       </CardLayout>
@@ -159,7 +159,7 @@ export function TeaRecipeCard({ title, imageUrl, steps }: TeaRecipeCardProps) {
             <div className="w-1/3">
                <CardImage src={imageUrl} alt="Recipe" />
             </div>
-            <ol className="text-xs leading-6">
+            <ol className="text-sm leading-6">
                {steps.map((step, index) => (
                   <li key={index}>{step}</li>
                ))}
@@ -239,7 +239,7 @@ export function TeaReviewCard({
                <CardTitle className="mb-1">{reviewTitle}</CardTitle>
                <div className="flex justify-between">
                   <StarRating score={3} />
-                  <p className="text-xs text-stone-400">{nickName}</p>
+                  <p className="text-sm text-stone-400">{nickName}</p>
                </div>
             </div>
          </div>
