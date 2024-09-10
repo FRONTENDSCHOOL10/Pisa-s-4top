@@ -57,13 +57,14 @@ TeaReviewCard
 import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
+import { SelectColor } from '../Select/SelectColor';
 
 // 공통 UI 컴포넌트
 interface ImageProps {
    src: string;
    alt: string;
    className?: string;
-   decorative?: boolean; // 장식용 이미지 여부
+   decorative?: boolean;
 }
 
 export function CardImage({
@@ -89,7 +90,7 @@ interface TitleProps {
 
 export function CardTitle({ children, className }: TitleProps) {
    return (
-      <h3 className={`text-sm font-extrabold text-stone-950 ${className}`}>
+      <h3 className={`text-xl font-extrabold text-stone-950 ${className}`}>
          {children}
       </h3>
    );
@@ -137,7 +138,7 @@ export function TeaDescriptionCard({ description }: TeaDescriptionCardProps) {
    return (
       <CardLayout ariaLabel="티 설명 카드">
          <CardTitle>어떤 티인가요?</CardTitle>
-         <p className="mt-2 text-xs font-medium text-stone-600">
+         <p className="mt-2 text-sm font-medium text-stone-600">
             {description}
          </p>
       </CardLayout>
@@ -159,7 +160,7 @@ export function TeaRecipeCard({ title, imageUrl, steps }: TeaRecipeCardProps) {
             <div className="w-1/3">
                <CardImage src={imageUrl} alt="Recipe" />
             </div>
-            <ol className="text-xs leading-6">
+            <ol className="text-sm leading-6">
                {steps.map((step, index) => (
                   <li key={index}>{step}</li>
                ))}
@@ -239,13 +240,24 @@ export function TeaReviewCard({
                <CardTitle className="mb-1">{reviewTitle}</CardTitle>
                <div className="flex justify-between">
                   <StarRating score={3} />
-                  <p className="text-xs text-stone-400">{nickName}</p>
+                  <p className="text-sm text-stone-400">{nickName}</p>
                </div>
             </div>
          </div>
-         <p className="border-t border-t-stone-200 pt-3 text-xs font-medium text-stone-600">
+         <p className="border-t border-t-stone-200 pt-3 text-sm font-medium text-stone-600">
             {reviewContent}
          </p>
+      </CardLayout>
+   );
+}
+
+// 티 수색 선택 카드
+
+export function TeaColorCard() {
+   return (
+      <CardLayout ariaLabel="티 설명 카드">
+         <CardTitle>수색</CardTitle>
+         <SelectColor />
       </CardLayout>
    );
 }
