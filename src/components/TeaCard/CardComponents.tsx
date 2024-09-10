@@ -42,6 +42,7 @@ TeaReviewCard
 - `reviewTitle`: 리뷰 제목 (필수)
 - `nickName`: 리뷰 작성자 닉네임 (필수)
 - `reviewContent`: 리뷰 내용 (필수)
+- `score`: 별점 (필수)
 
 ---- 사용법 예시 ----
 <TeaReviewCard 
@@ -212,6 +213,7 @@ export interface TeaReviewCardProps {
    reviewTitle: string;
    nickName: string;
    reviewContent: string;
+   score: 0 | 1 | 2 | 3 | 4 | 5;
 }
 
 export function TeaReviewCard({
@@ -219,6 +221,7 @@ export function TeaReviewCard({
    reviewTitle,
    nickName,
    reviewContent,
+   score,
 }: TeaReviewCardProps) {
    return (
       <CardLayout to={''} ariaLabel="티 리뷰 카드">
@@ -240,7 +243,7 @@ export function TeaReviewCard({
             <div className="w-full">
                <CardTitle className="mb-1">{reviewTitle}</CardTitle>
                <div className="flex justify-between">
-                  <StarRating score={3} />
+                  <StarRating score={score} />
                   <p className="text-sm text-stone-400">{nickName}</p>
                </div>
             </div>
