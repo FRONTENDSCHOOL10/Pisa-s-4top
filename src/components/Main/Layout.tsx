@@ -5,11 +5,11 @@ import BottomNav from './BottomNav';
 export default function Layout() {
    return (
       <>
-         <AppBar />
-         <main className="content py-16">
+         <main className="content mx-auto box-border py-16">
+            <AppBar />
             <Outlet />
+            <BottomNav />
          </main>
-         <BottomNav />
       </>
    );
 }
