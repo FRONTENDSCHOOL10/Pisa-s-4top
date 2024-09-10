@@ -57,13 +57,14 @@ TeaReviewCard
 import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
+import { SelectColor } from '../Select/SelectColor';
 
 // 공통 UI 컴포넌트
 interface ImageProps {
    src: string;
    alt: string;
    className?: string;
-   decorative?: boolean; // 장식용 이미지 여부
+   decorative?: boolean;
 }
 
 export function CardImage({
@@ -89,7 +90,7 @@ interface TitleProps {
 
 export function CardTitle({ children, className }: TitleProps) {
    return (
-      <h3 className={`text-base font-extrabold text-stone-950 ${className}`}>
+      <h3 className={`text-xl font-extrabold text-stone-950 ${className}`}>
          {children}
       </h3>
    );
@@ -246,6 +247,17 @@ export function TeaReviewCard({
          <p className="border-t border-t-stone-200 pt-3 text-sm font-medium text-stone-600">
             {reviewContent}
          </p>
+      </CardLayout>
+   );
+}
+
+// 티 수색 선택 카드
+
+export function TeaColorCard() {
+   return (
+      <CardLayout ariaLabel="티 설명 카드">
+         <CardTitle>수색</CardTitle>
+         <SelectColor />
       </CardLayout>
    );
 }
