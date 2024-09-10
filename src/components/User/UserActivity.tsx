@@ -18,9 +18,9 @@ export function UserActivity({
    ...restProps
 }: UserActivityProps) {
    return (
-      <div className={containerClass} {...restProps}>
-         <p className={titleClass}>{title}</p>
-         <span className={countClass}>{count}</span>
-      </div>
+      <dl className={containerClass} {...restProps}>
+         <dt className={titleClass}>{title}</dt>
+         <dd className={countClass}>{count}</dd>
+      </dl>
    );
 }

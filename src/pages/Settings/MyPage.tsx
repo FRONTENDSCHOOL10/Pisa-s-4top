@@ -2,15 +2,27 @@ import { Button } from '@/components/Buttons/Buttons';
 import { UserActivity } from '@/components/User/UserActivity';
 import UserCollection from '@/components/User/UserCollection';
 
-function MyPage() {
+interface Activity {
+   title: string;
+   count: number;
+   style?: React.CSSProperties;
+}
+
+const activities: Activity[] = [
+   { title: '찜 개수', count: 999 },
+   { title: '리뷰 개수', count: 999 },
+   { title: '평균', count: 4.5, style: { gridColumn: 'span 2' } },
+];
+
+export default function MyPage() {
    return (
       <div className="mx-5 mb-10 mt-5 flex flex-col gap-6">
          <h1 className="sr-only">마이페이지</h1>
          <div className="mb-3 flex flex-col items-center">
             <img
                src=""
-               alt="프로필 이미지"
-               className="object-cover mb-4 h-[9.375rem] w-[9.375rem] rounded-full bg-stone-300"
+               alt="프로필"
+               className="mb-4 h-[9.375rem] w-[9.375rem] rounded-full bg-stone-300 object-cover"
             />
             <p className="mb-2 text-xs font-normal text-stone-950">상큼한</p>
             <p className="mb-6 text-base font-extrabold text-stone-950">
@@ -22,7 +34,6 @@ function MyPage() {
                ariaLabel="프로필 수정 페이지"
                content="프로필 수정"
                size="small"
-               handleClick={() => console.log('프로필 수정 페이지로 이동')}
             />
          </div>
          <div>
@@ -30,13 +41,9 @@ function MyPage() {
                나의 활동
             </h2>
             <div className="grid grid-cols-2 gap-4">
-               <UserActivity title="찜 개수" count={999} />
-               <UserActivity title="리뷰 개수" count={999} />
-               <UserActivity
-                  title="평균"
-                  count={4.5}
-                  style={{ gridColumn: 'span 2' }}
-               />
+               {activities.map((activity, index) => (
+                  <UserActivity key={index} {...activity} />
+               ))}
             </div>
          </div>
          <UserCollection />
@@ -48,5 +55,3 @@ function MyPage() {
       </div>
    );
 }
-
-export default MyPage;

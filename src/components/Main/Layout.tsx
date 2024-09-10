@@ -20,12 +20,12 @@ export default function Layout({ hasBackBtn, hasLogo, title }: LayoutProps) {
    const hideAppBar = HIDE_APP_BAR_PATHS.includes(pathname);
    const hideBottonNav = HIDE_BOTTOM_NAV_PATHS.includes(pathname);
 
-    return (
+   return (
       <>
          {!hideAppBar && (
             <AppBar hasBackBtn={hasBackBtn} hasLogo={hasLogo} title={title} />
          )}
-         <main className="content py-16 bg-stone-100">
+         <main className="content bg-stone-100 py-16">
             <Outlet />
          </main>
          {!hideBottonNav && <BottomNav />}
