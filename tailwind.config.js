@@ -4,8 +4,13 @@ export default {
    theme: {
       extend: {
          boxShadow: {
-            'home-review': '0px 2px 30px 0px var(--tailwind-stone-stone-300, #D6D3D1)'
-         }
+            'home-review':
+               '0px 2px 30px 0px var(--tailwind-stone-stone-300, #D6D3D1)',
+            'tea-brewing-guide':
+               '0px 0px 10px 0px var(--tailwind-stone-stone-200, #E7E5E4)',
+            search:
+               '0px 2px 20px 0px rgba(214,211,209,1),0px 0px 30px 0px rgba(255,255,255,1)',
+         },
       },
    },
    plugins: [

@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
-function BottomNav() {
+export default function BottomNav() {
    const location = useLocation();
    const { pathname } = location;
 
@@ -12,10 +12,15 @@ function BottomNav() {
          >
             <Link to={'/'} className="focus-green" aria-label="메인 페이지">
                {pathname === '/' ? (
-                  // 아리아히든~
-                  <span className="fi fi-sr-home text-stone-500" />
+                  <span
+                     className="fi fi-sr-home text-stone-500"
+                     aria-hidden={true}
+                  />
                ) : (
-                  <span className="fi fi-rr-home active: cursor-pointer text-stone-400" />
+                  <span
+                     className="fi fi-rr-home text-stone-400"
+                     aria-hidden={true}
+                  />
                )}
             </Link>
             <Link
@@ -24,9 +29,15 @@ function BottomNav() {
                aria-label="추천 티 페이지"
             >
                {pathname === '/recommend' ? (
-                  <span className="fi fi-sr-star text-stone-500" />
+                  <span
+                     className="fi fi-sr-star text-stone-500"
+                     aria-hidden={true}
+                  />
                ) : (
-                  <span className="fi fi-rr-star text-stone-400" />
+                  <span
+                     className="fi fi-rr-star text-stone-400"
+                     aria-hidden={true}
+                  />
                )}
             </Link>
             <Link
@@ -35,9 +46,15 @@ function BottomNav() {
                aria-label="리뷰 페이지"
             >
                {pathname === '/reviews' ? (
-                  <span className="fi fi-sr-comment text-stone-500" />
+                  <span
+                     className="fi fi-sr-comment text-stone-500"
+                     aria-hidden={true}
+                  />
                ) : (
-                  <span className="fi fi-rr-comment text-stone-400" />
+                  <span
+                     className="fi fi-rr-comment text-stone-400"
+                     aria-hidden={true}
+                  />
                )}
             </Link>
             <Link
@@ -46,15 +63,18 @@ function BottomNav() {
                aria-label="마이 페이지"
             >
                {pathname === '/my-page' ? (
-                  <span className="fi fi-sr-user text-stone-500" />
+                  <span
+                     className="fi fi-sr-user text-stone-500"
+                     aria-hidden={true}
+                  />
                ) : (
-                  <span className="fi fi-rr-user text-stone-400" />
+                  <span
+                     className="fi fi-rr-user text-stone-400"
+                     aria-hidden={true}
+                  />
                )}
             </Link>
          </nav>
       </div>
    );
 }
-
-export default BottomNav;
-// 통일~

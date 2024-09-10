@@ -20,7 +20,7 @@ export default function Layout({ hasBackBtn, hasLogo, title }: LayoutProps) {
    const hideAppBar = HIDE_APP_BAR_PATHS.includes(pathname);
    const hideBottonNav = HIDE_BOTTOM_NAV_PATHS.includes(pathname);
 
-   return (
+    return (
       <>
          {!hideAppBar && (
             <AppBar hasBackBtn={hasBackBtn} hasLogo={hasLogo} title={title} />

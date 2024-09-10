@@ -5,9 +5,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* focus 그린 커스텀 */
+/* 커스텀 스타일 */
+
 @layer components {
    .focus-green {
       @apply p-1 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-green-700;
+   }
+
+   .outline-default {
+      @apply ring-1 ring-stone-950 focus:ring-stone-950;
+   }
+
+   .outline-success {
+      @apply text-green-700 ring-2 ring-green-700 focus:ring-2 focus:ring-green-700;
+   }
+
+   .outline-error {
+      @apply text-red-600 ring-2 ring-red-600 focus:ring-2 focus:ring-red-600;
    }
 }
