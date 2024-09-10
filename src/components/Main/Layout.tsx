@@ -25,7 +25,7 @@ export default function Layout({ hasBackBtn, hasLogo, title }: LayoutProps) {
          {!hideAppBar && (
             <AppBar hasBackBtn={hasBackBtn} hasLogo={hasLogo} title={title} />
          )}
-         <main className="content py-16">
+         <main className="content py-16 bg-stone-100">
             <Outlet />
          </main>
          {!hideBottonNav && <BottomNav />}
