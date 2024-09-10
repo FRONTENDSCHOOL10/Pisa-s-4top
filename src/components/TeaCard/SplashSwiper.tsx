@@ -18,6 +18,9 @@ export default function App() {
    return (
       <div>
          <SplashSwiper images={imageUrls} />
+         ---> 정방향
+         <SplashSwiper images={imageUrls} reverse={true} />
+         ---> 역방향
       </div>
    );
 }
@@ -31,9 +34,13 @@ import 'swiper/css/free-mode';
 
 interface SplashSwiperProps {
    images: string[];
+   reverse?: boolean; // reverse 프롭 추가
 }
 
-export default function SplashSwiper({ images }: SplashSwiperProps) {
+export default function SplashSwiper({
+   images,
+   reverse = false,
+}: SplashSwiperProps) {
    const slideStyle = { width: '144px', height: '144px' };
    const slideClassName = 'rounded-2xl bg-stone-200';
 
@@ -43,7 +50,11 @@ export default function SplashSwiper({ images }: SplashSwiperProps) {
          slidesPerView="auto"
          freeMode={true}
          loop={true}
-         autoplay={{ delay: 0, disableOnInteraction: false }}
+         autoplay={{
+            delay: 0,
+            disableOnInteraction: false,
+            reverseDirection: reverse,
+         }}
          centeredSlides={true}
          style={{ overflow: 'visible' }}
          modules={[Autoplay, FreeMode]}
