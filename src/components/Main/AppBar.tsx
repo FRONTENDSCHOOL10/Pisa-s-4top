@@ -14,7 +14,7 @@ export interface AppBarProps {
    title?: string;
 }
 
-function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
+export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
    const navigate = useNavigate();
 
    return (
@@ -27,7 +27,10 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
                   aria-label="뒤로가기"
                   onClick={() => navigate(-1)}
                >
-                  <span className="fi fi-rs-angle-left text-xs text-green-700" />
+                  <span
+                     className="fi fi-rs-angle-left text-xs text-green-700"
+                     aria-hidden={true}
+                  />
                </button>
             ) : hasLogo ? (
                <button
@@ -45,7 +48,10 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
                      aria-label="뒤로가기"
                      onClick={() => navigate(-1)}
                   >
-                     <span className="fi fi-rs-angle-left text-xs text-green-700" />
+                     <span
+                        className="fi fi-rs-angle-left text-xs text-green-700"
+                        aria-hidden={true}
+                     />
                   </button>
                   <span className="text-green-700">{title}</span>
                </>
@@ -56,13 +62,13 @@ function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
                   aria-label="뒤로가기"
                   onClick={() => navigate(-1)}
                >
-                  <span className="fi fi-rs-angle-left text-xs text-green-700" />
+                  <span
+                     className="fi fi-rs-angle-left text-xs text-green-700"
+                     aria-hidden={true}
+                  />
                </button>
             )}
          </nav>
       </header>
    );
 }
-
-export default AppBar;
-// 통일~
