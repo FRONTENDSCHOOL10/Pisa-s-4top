@@ -4,7 +4,6 @@
 export interface UserActivityProps {
    title: string;
    count: number;
-   className?: string;
    [props: string]: any;
 }
 
@@ -16,11 +15,10 @@ const countClass: string = 'text-[2rem] font-bold leading-9 text-lime-700';
 export function UserActivity({
    title = '찜 개수',
    count = 0,
-   className = '',
    ...restProps
 }: UserActivityProps) {
    return (
-      <div className={`${containerClass} ${className}`} {...restProps}>
+      <div className={containerClass} {...restProps}>
          <p className={titleClass}>{title}</p>
          <span className={countClass}>{count}</span>
       </div>
