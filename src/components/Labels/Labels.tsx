@@ -71,7 +71,9 @@ export const LabelButton = memo(
             type="button"
             onClick={handleClick}
             aria-pressed={isActive}
-            aria-label={isActive ? `${content} 버튼 활성화` : `${content} 버튼 비활성화`}
+            aria-label={
+               isActive ? `${content} 버튼 활성화` : `${content} 버튼 비활성화`
+            }
          >
             {content}
          </button>
@@ -79,14 +81,42 @@ export const LabelButton = memo(
    }
 );
 
+/* LabelGroup 사용법
+
+---- 사용법 예시 ----
+
+import { LabelGroup } from './path_to_component/LabelGroup';
+
+export default function App() {
+   const labelData = [
+      { label: '라벤더' },
+      { label: '풀향' },
+      { label: '우유' },
+   ];
+
+   return (
+      <div>
+         <LabelGroup labels={labelData} size="large" />
+         <LabelGroup labels={labelData} size="small" />
+      </div>
+   );
+}
+
+*/
+
 interface LabelGroupProps {
    labels: { label: string }[];
    size?: 'small' | 'large';
+   className?: string;
 }
 
-export function LabelGroup({ labels = [], size = 'large' }: LabelGroupProps) {
+export function LabelGroup({
+   size = 'large',
+   className = '',
+}: LabelGroupProps) {
+   const labels = [{ content: '라벤더' }, { content: '꿀' }];
    return (
-      <div className="flex flex-wrap gap-1">
+      <div className={`flex flex-wrap gap-1 ${className}`}>
          {labels.map((labelProps, index) => (
             <Label key={index} {...labelProps} size={size} />
          ))}
