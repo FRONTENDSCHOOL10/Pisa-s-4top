@@ -54,9 +54,16 @@ export default function TeaRecommendSwiper({
          centeredSlides={true}
          autoplay={true}
          style={{ overflow: 'visible' }}
+         role="list"
+         aria-label="추천하는 티 슬라이드"
       >
          {teaRecommendations.map((recommendation, index) => (
-            <SwiperSlide key={index} style={{ width: 'auto' }}>
+            <SwiperSlide
+               key={index}
+               style={{ width: 'auto' }}
+               role="listitem"
+               aria-label={`${recommendation.teaName} - ${recommendation.brand} 티 추천 카드`}
+            >
                <TeaRecommendCard {...recommendation} />
             </SwiperSlide>
          ))}

@@ -49,16 +49,20 @@ export default function SplashSwiper({ images }: SplashSwiperProps) {
          modules={[Autoplay, FreeMode]}
          speed={5000}
          className="w-full"
+         role="list"
+         aria-label="당신에게 추천하는 티"
       >
          {images.map((image, index) => (
             <SwiperSlide
                key={index}
                style={slideStyle}
                className={slideClassName}
+               role="listitem"
+               aria-label={`당신에게 추천하는 티 ${index + 1}`} // [todo] 데이터베이스 연결 시 티 이름으로 변경하기
             >
                <img
                   src={image}
-                  alt={`Slide ${index}`}
+                  alt={`당신에게 추천하는 티 ${index + 1}`} // [todo] 데이터베이스 연결 시 티 이름으로 변경하기
                   className="h-full w-full object-cover"
                />
             </SwiperSlide>
