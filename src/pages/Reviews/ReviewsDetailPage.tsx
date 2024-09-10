@@ -1,7 +1,6 @@
-import { ButtonFullWidth } from '@/components/Buttons/Buttons';
-import { ButtonError } from '@/components/Buttons/Buttons';
+import { Button } from '@/components/Buttons/Buttons';
 import { StarRatingAverage } from '@/components/Review/StarRate';
-import { LabelGroup } from '@/components/Labels/LabelGroup';
+import { LabelGroup } from '@/components/Labels/Labels';
 
 function ReviewsDetailPage() {
    const labels = [
@@ -32,10 +31,19 @@ function ReviewsDetailPage() {
             <p>reviewContent</p>
          </div>
          <div className="mb-2 w-full">
-            <ButtonFullWidth text="리뷰 수정하기" />
+            <Button
+               size="fullWidth"
+               content="리뷰 수정하기"
+               handleClick={() => console.log('리뷰 수정하기 버튼 클릭됨')}
+            />
          </div>
          <div className="w-full">
-            <ButtonError text="삭제" />
+            <Button
+               size="fullWidth"
+               isError={true}
+               content="삭제"
+               handleClick={() => console.log('리뷰 삭제 버튼 클릭됨')}
+            />
          </div>
       </main>
    );
