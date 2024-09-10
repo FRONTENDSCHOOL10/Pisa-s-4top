@@ -1,13 +1,20 @@
 /* 체크박스 input */
 
+/* 사용법
+
+<CheckBox label='자동 로그인' />
+<CheckBox label='약관에 동의합니다.' />
+
+*/
+
 import { useId } from 'react';
 
-interface Props {
+export interface Props {
    label: string;
    [property: string]: any;
 }
 
-function CheckBox({ label, ...restProps }: Props) {
+export default function CheckBox({ label, ...restProps }: Props) {
    const checkId: string = useId();
 
    return (
@@ -24,5 +31,3 @@ function CheckBox({ label, ...restProps }: Props) {
       </div>
    );
 }
-
-export default CheckBox;
