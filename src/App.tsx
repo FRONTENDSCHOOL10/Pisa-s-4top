@@ -54,7 +54,7 @@ const routes = [
             element: <SearchPage />,
          },
          {
-            path: 'detail/:id',
+            path: 'detail', // DB 연결 후 수정 예정
             element: <TeaDetailPage />,
          },
          {

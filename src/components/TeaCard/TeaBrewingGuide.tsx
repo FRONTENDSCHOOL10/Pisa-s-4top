@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+
+// 사용법
+// 필수 속성만 지정(단위 지정 X)
+// <TeaBrewingGuide teaAmount={3} waterAmount={200} temperature={92} brewingTime={3} />
+// 옵션 속성도 지정(단위 지정 O + ariaLabel)
+// <TeaBrewingGuide teaAmount={3} waterAmount={200} temperature={92} brewingTime={3} teaUnit='mg' waterUnit='l' tempUnit='°C' timeUnit='sec' ariaLabel='얼그레이 티 우리기 가이드' />
 
 export interface TeaBrewingGuideProps {
    teaAmount: number;
    waterAmount: number;
    temperature: number;
-   time: number;
+   brewingTime: number;
    teaUnit?: string;
    waterUnit?: string;
    tempUnit?: string;
    timeUnit?: string;
-   ariaLabel: string;
+   ariaLabel?: string;
    [props: string]: any;
 }
 
 const sectionClass: string =
-   'shadow-tea-brewing-guide flex justify-between rounded-2xl bg-stone-50 px-6 py-6 select-none';
+   'shadow-tea-brewing-guide w-full flex justify-between rounded-2xl bg-stone-50 px-6 py-6 select-none';
 const containerClass: string = 'flex flex-col items-center';
 const iconClass: string =
    'text-lime-600 text-3xl flex justify-center items-center';
 const valueClass: string = 'text-lime-600 text-sm font-extrabold mt-2';
-const unitClass: string = 'text-stone-300 text-[.625rem] leading-3 font-medium';
+const unitClass: string =
+   'text-stone-300 text-[.625rem] leading-3 font-medium';
 
 interface BrewingDetailProps {
    iconClassName: string;
@@ -37,7 +44,10 @@ function BrewingDetail({
    return (
       <dl className={containerClass}>
          <dt>
-            <span className={`${iconClassName} ${iconClass}`} aria-hidden="true"></span>
+            <span
+               className={`${iconClassName} ${iconClass}`}
+               aria-hidden="true"
+            ></span>
             <span className="sr-only">{srLabel}</span>
          </dt>
          <dd className={containerClass}>
@@ -52,7 +62,7 @@ export function TeaBrewingGuide({
    teaAmount,
    waterAmount,
    temperature,
-   time,
+   brewingTime,
    teaUnit = 'g',
    waterUnit = 'ml',
    tempUnit = '°C',
@@ -60,32 +70,44 @@ export function TeaBrewingGuide({
    ariaLabel = '최적의 티 우리기 가이드',
    ...restProps
 }: TeaBrewingGuideProps) {
-   const brewingDetails: BrewingDetailProps[] = [
-      {
-         iconClassName: 'fi fi-rr-leaf',
-         value: teaAmount,
-         unit: teaUnit,
-         srLabel: '최적의 티의 양',
-      },
-      {
-         iconClassName: 'fi fi-rr-mug-alt',
-         value: waterAmount,
-         unit: waterUnit,
-         srLabel: '최적의 물의 양',
-      },
-      {
-         iconClassName: 'fi fi-rr-thermometer-half',
-         value: temperature,
-         unit: tempUnit,
-         srLabel: '최적의 물 온도',
-      },
-      {
-         iconClassName: 'fi fi-rr-hourglass-end',
-         value: time,
-         unit: timeUnit,
-         srLabel: '최적의 티 우리는 시간',
-      },
-   ];
+   const brewingDetails = useMemo(
+      () => [
+         {
+            iconClassName: 'fi fi-rr-leaf',
+            value: teaAmount,
+            unit: teaUnit,
+            srLabel: '최적의 티의 양',
+         },
+         {
+            iconClassName: 'fi fi-rr-mug-alt',
+            value: waterAmount,
+            unit: waterUnit,
+            srLabel: '최적의 물의 양',
+         },
+         {
+            iconClassName: 'fi fi-rr-thermometer-half',
+            value: temperature,
+            unit: tempUnit,
+            srLabel: '최적의 물 온도',
+         },
+         {
+            iconClassName: 'fi fi-rr-hourglass-end',
+            value: brewingTime,
+            unit: timeUnit,
+            srLabel: '최적의 티 우리는 시간',
+         },
+      ],
+      [
+         teaAmount,
+         waterAmount,
+         temperature,
+         brewingTime,
+         teaUnit,
+         waterUnit,
+         tempUnit,
+         timeUnit,
+      ]
+   );
 
    return (
       <section className={sectionClass} {...restProps} aria-label={ariaLabel}>
