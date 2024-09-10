@@ -243,7 +243,7 @@ export function TeaReviewCard({
                </div>
             </div>
          </div>
-         <p className="border-t border-t-stone-200 pt-3 text-xs font-medium text-stone-600">
+         <p className="border-t border-t-stone-200 pt-3 text-sm font-medium text-stone-600">
             {reviewContent}
          </p>
       </CardLayout>
