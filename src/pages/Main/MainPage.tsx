@@ -1,10 +1,10 @@
 import SearchInput from '@/components/Input/SearchInput';
-// import RootLayout from '@/layouts/RootLayout';
+import AppBar from '@/components/Main/AppBar';
 
 export default function MainPage() {
    return (
       <>
-         {/* <RootLayout hasLogo /> */}
+         <AppBar hasLogo />
          <SearchInput isButton={true} />
       </>
    );
