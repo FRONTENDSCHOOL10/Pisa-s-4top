@@ -23,7 +23,7 @@ export default function RootLayout({
             <AppBar hasBackBtn={hasBackBtn} hasLogo={hasLogo} title={title} />
          )} */}
 
-         <main className="content h-screen overflow-y-scroll bg-stone-100 px-8">
+         <main className="content min-h-[calc(100vh-3.75rem)] overflow-y-scroll bg-stone-100 px-8 py-4">
             <Outlet />
          </main>
          <BottomNav />
