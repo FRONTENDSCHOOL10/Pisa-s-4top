@@ -112,7 +112,7 @@ export function ButtonHeart({ onToggle, ...restProps }: ButtonHeartProps) {
 // <ButtonHeart totalLike={DB에서 티에 대한 토탈 찜 개수} onToggle={() => console.log('찜 버튼 토글됨')} />
 export interface ButtonHeartwithCountProps {
    totalLike: number;
-   onToggle?: () => void;
+   onToggle: () => void;
    [props: string]: any;
 }
 

@@ -88,7 +88,7 @@ export function LabelGroup({ labels = [], size = 'large' }: LabelGroupProps) {
    return (
       <div className="flex flex-wrap gap-1">
          {labels.map((labelProps, index) => (
-            <Label key={index} {...labelProps} size={size} />
+            <Label key={index} content={labelProps.label} size={size} />
          ))}
       </div>
    );
