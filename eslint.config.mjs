@@ -31,11 +31,11 @@ export default [
          'storybook/no-stories-of': 'error', // Storybook 관련 규칙
          '@typescript-eslint/no-unused-vars': 'error', // 사용되지 않은 변수에 대한 오류
          '@typescript-eslint/explicit-function-return-type': 'off', // 함수 반환 타입을 명시하지 않아도 됨
-         '@typescript-eslint/no-explicit-any': 'warn', // 'any' 타입 사용에 대해 경고
          '@typescript-eslint/consistent-type-definitions': [
             'error',
             'interface',
          ], // 인터페이스 사용 강제
+         '@typescript-eslint/no-explicit-any': 'warn', // 'any' 타입 사용 부분 경고
       },
       settings: {
          react: {
@@ -49,11 +49,11 @@ export default [
       rules: pluginJs.configs.recommended.rules,
    },
    {
-      // TypeScript 파일에 대한 추천 규칙을 수동으로 적용
       files: ['**/*.{ts,tsx}'],
       rules: {
          ...pluginTypescript.configs['eslint-recommended'].overrides[0].rules, // TypeScript 관련 ESLint 추천 규칙
          ...pluginTypescript.configs['recommended'].rules, // TypeScript 플러그인의 추천 규칙
+         '@typescript-eslint/no-explicit-any': 'warn', // 'any' 타입 사용 부분 경고
       },
    },
 ];
