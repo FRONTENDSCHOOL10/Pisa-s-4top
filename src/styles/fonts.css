@@ -3,7 +3,7 @@
    src: url('./assets/fonts/PretendardVariable.woff2');
 }
 
-* {
+body {
    font-family: 'Pretendard', sans-serif;
    color: #0c0a09;
 }
