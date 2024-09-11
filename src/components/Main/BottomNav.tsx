@@ -27,7 +27,6 @@ export default function BottomNav() {
                      className={`fi fi-${pathname === to ? 'sr' : 'rr'}-${icon} ${
                         pathname === to ? 'text-stone-500' : 'text-stone-400'
                      }`}
-                     aria-hidden={true}
                   />
                </Link>
             ))}
