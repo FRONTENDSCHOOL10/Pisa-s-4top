@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 // 사용법
 // 필수 속성만 지정(단위 지정 X)
