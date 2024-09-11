@@ -5,20 +5,20 @@ import UserCollection from '@/components/User/UserCollection';
 interface Activity {
    title: string;
    count: number;
-   style?: React.CSSProperties;
+   className?: string;
 }
 
 const activities: Activity[] = [
    { title: '찜 개수', count: 999 },
    { title: '리뷰 개수', count: 999 },
-   { title: '평균', count: 4.5, style: { gridColumn: 'span 2' } },
+   { title: '평균', count: 4.5, className: 'col-span-2' },
 ];
 
 export function Component() {
    return (
-      <div className="mx-5 mb-10 mt-5 flex flex-col gap-6">
+      <div className="mb-10 mt-5 flex flex-col gap-6">
          <h1 className="sr-only">마이페이지</h1>
-         <div className="mb-3 flex flex-col items-center">
+         <section className="mb-3 flex flex-col items-center">
             <img
                src=""
                alt="프로필"
@@ -35,17 +35,21 @@ export function Component() {
                content="프로필 수정"
                size="small"
             />
-         </div>
-         <div>
+         </section>
+         <section>
             <h2 className="mb-6 text-2xl font-extrabold text-stone-950">
                나의 활동
             </h2>
             <div className="grid grid-cols-2 gap-4">
                {activities.map((activity, index) => (
-                  <UserActivity key={index} {...activity} />
+                  <UserActivity
+                     key={index}
+                     className={activity.className}
+                     {...activity}
+                  />
                ))}
             </div>
-         </div>
+         </section>
          <UserCollection />
          <Button
             content="로그아웃"
