@@ -71,7 +71,9 @@ export const LabelButton = memo(
             type="button"
             onClick={handleClick}
             aria-pressed={isActive}
-            aria-label={isActive ? `${content} 버튼 활성화` : `${content} 버튼 비활성화`}
+            aria-label={
+               isActive ? `${content} 버튼 활성화` : `${content} 버튼 비활성화`
+            }
          >
             {content}
          </button>
@@ -84,12 +86,14 @@ interface LabelGroupProps {
    size?: 'small' | 'large';
 }
 
-export function LabelGroup({ labels = [], size = 'large' }: LabelGroupProps) {
-   return (
-      <div className="flex flex-wrap gap-1">
-         {labels.map((labelProps, index) => (
-            <Label key={index} {...labelProps} size={size} />
-         ))}
-      </div>
-   );
-}
+export const LabelGroup = memo(
+   ({ labels = [], size = 'large' }: LabelGroupProps) => {
+      return (
+         <div className="flex flex-wrap gap-1">
+            {labels.map((labelProps, index) => (
+               <Label key={index} content={labelProps.label} size={size} />
+            ))}
+         </div>
+      );
+   }
+);

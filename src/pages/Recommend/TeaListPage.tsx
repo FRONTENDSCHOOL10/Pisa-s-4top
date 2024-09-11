@@ -39,7 +39,7 @@ export default function MyTastePage() {
          />
          <div className="grid grid-cols-[repeat(auto-fill,_minmax(160px,_1fr))] gap-4">
             {teaData.map((tea: Tea, index: number) => (
-               <div key={index} className="flex items-center justify-center">
+               <div className="flex items-center justify-center">
                   <TeaRecommendCard
                      key={index}
                      imageUrl={tea.imageUrl}
