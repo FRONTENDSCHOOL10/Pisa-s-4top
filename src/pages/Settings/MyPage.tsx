@@ -14,7 +14,7 @@ const activities: Activity[] = [
    { title: '평균', count: 4.5, style: { gridColumn: 'span 2' } },
 ];
 
-export default function MyPage() {
+export function Component() {
    return (
       <div className="mx-5 mb-10 mt-5 flex flex-col gap-6">
          <h1 className="sr-only">마이페이지</h1>

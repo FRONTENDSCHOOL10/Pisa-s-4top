@@ -1,13 +1,11 @@
 import SearchInput from '@/components/Input/SearchInput';
-import Layout from '@/components/Main/Layout';
+// import RootLayout from '@/layouts/RootLayout';
 
-function MainPage() {
+export default function MainPage() {
    return (
       <>
-         <Layout hasLogo />
+         {/* <RootLayout hasLogo /> */}
          <SearchInput isButton={true} />
       </>
    );
 }
-
-export default MainPage;

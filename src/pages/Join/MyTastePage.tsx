@@ -2,7 +2,7 @@ import { Button } from '@/components/Buttons/Buttons';
 import SplashSwiper from '@/components/TeaCard/SplashSwiper';
 import createUrl from '@/utils/createUrl';
 
-function MyTastePage() {
+export function Component() {
    return (
       <>
          <main className="flex flex-col justify-center">
@@ -64,6 +64,4 @@ function MyTastePage() {
          </main>
       </>
    );
-}
 
-export default MyTastePage;
