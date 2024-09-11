@@ -1,5 +1,13 @@
+import SearchInput from '@/components/Input/SearchInput';
+import Layout from '@/components/Main/Layout';
+
 function MainPage() {
-   return <p>메인페이지</p>;
+   return (
+      <>
+         <Layout hasLogo />
+         <SearchInput isButton={true} />
+      </>
+   );
 }
 
 export default MainPage;
