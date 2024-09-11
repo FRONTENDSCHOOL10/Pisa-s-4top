@@ -1,9 +1,12 @@
 // 사용법
 // <UserActivity title="리뷰 개수" count={25} />
+// className 추가 지정 필요할 경우
+// <UserActivity title="리뷰 개수" count={25} className = ' '/>
 
 export interface UserActivityProps {
    title: string;
    count: number;
+   className?: string;
    [props: string]: any;
 }
 
@@ -15,10 +18,11 @@ const countClass: string = 'text-[2rem] font-bold leading-9 text-lime-700';
 export function UserActivity({
    title = '찜 개수',
    count = 0,
+   className = '',
    ...restProps
 }: UserActivityProps) {
    return (
-      <dl className={containerClass} {...restProps}>
+      <dl className={`${containerClass} ${className}`} {...restProps}>
          <dt className={titleClass}>{title}</dt>
          <dd className={countClass}>{count}</dd>
       </dl>

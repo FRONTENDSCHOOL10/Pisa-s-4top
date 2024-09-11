@@ -7,9 +7,13 @@ import { useState, useEffect } from 'react';
 // fullWidth버튼: <Button content="버튼 내용" type="button" size="fullWidth" handleClick={() => console.log('fullWidth 버튼 클릭됨')} />
 // fullWidth-error버튼: <Button content="버튼 내용" type="button" size="fullWidth" isError={true} handleClick={() => console.log('error 버튼 클릭됨')} />
 // large버튼: <Button content="버튼 내용" type="button" size="large" handleClick={() => console.log('large 버튼 클릭됨')} />
+/* class 지정할 경우 */
+// <Button content="버튼 내용" type="button" size="small" handleClick={() => console.log('small 버튼 클릭됨')} className='' />
 
 /* 링크 버튼 사용법 */
 // <Button content="버튼 내용" size="small" isLink={true} href="/" ariaLabel='이동하는 페이지 명' />
+/* class 지정할 경우 */
+// <Button content="버튼 내용" size="small" isLink={true} href="/" ariaLabel='이동하는 페이지 명' className='' />
 
 export interface ButtonProps {
    content: string;
@@ -20,6 +24,7 @@ export interface ButtonProps {
    size?: 'small' | 'fullWidth' | 'large';
    isError?: boolean;
    handleClick?: () => void;
+   className?: string;
    [props: string]: any;
 }
 
@@ -42,17 +47,18 @@ export function Button({
    size = 'small',
    isError = false,
    handleClick,
+   className = '',
    ...restProps
 }: ButtonProps) {
    const appliedSize = isError ? 'fullWidth' : size;
-   const style = `${defaultClass} ${sizeClasses[appliedSize]} ${isError ? errorColor : defaultColor}`;
+   const style = `${defaultClass} ${sizeClasses[appliedSize]} ${isError ? errorColor : defaultColor} ${className}`;
 
    if (isLink && href && ariaLabel) {
       return (
          <Link
             to={href}
-            className={style}
             aria-label={ariaLabel}
+            className={style}
             {...restProps}
          >
             {content}
@@ -62,9 +68,9 @@ export function Button({
 
    return (
       <button
-         className={style}
          type={type}
          onClick={handleClick}
+         className={style}
          {...restProps}
       >
          {content}

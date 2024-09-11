@@ -10,8 +10,8 @@ interface Label {
 interface TeaData {
    img: string;
    category: string;
-   brand: string;
    name: string;
+   brand: string;
    totalLike: number;
    score: 0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
    teaAmount: number;
@@ -24,8 +24,8 @@ interface TeaData {
 const data: TeaData = {
    img: '',
    category: '티 종류',
-   brand: '티 브랜드',
    name: '티 이름',
+   brand: '티 브랜드',
    totalLike: 10,
    score: 3.5,
    teaAmount: 3,
@@ -37,7 +37,7 @@ const data: TeaData = {
 
 export default function TeaInfo() {
    return (
-      <section className="flex flex-col items-center gap-4 px-5">
+      <section className="flex flex-col items-center gap-4">
          <img
             className="h-[9.375rem] w-[9.375rem] rounded-full bg-stone-300"
             src={data.img}
@@ -45,8 +45,8 @@ export default function TeaInfo() {
          />
          <div className="-mb-2 flex flex-col items-center">
             <p className="text-xs font-light">{data.category}</p>
-            <p className="text-xs font-light">{data.brand}</p>
             <h2 className="text-xl font-bold">{data.name}</h2>
+            <p className="text-xs font-light">{data.brand}</p>
          </div>
          <ButtonHeartwithCount
             totalLike={data.totalLike}
