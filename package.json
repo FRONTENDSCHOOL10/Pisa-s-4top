@@ -8,7 +8,7 @@
       "dev": "vite",
       "build": "vite build",
       "preview": "vite preview",
-      "lint": "eslint \"./src/**\" --report-unused-disable-directives --ignore-pattern .gitignore",
+      "lint": "eslint . --report-unused-disable-directives --ignore-pattern .gitignore",
       "storybook": "storybook dev -p 6006",
       "build-storybook": "storybook build"
    },
@@ -31,6 +31,8 @@
       "@types/node": "^22.0.0",
       "@types/react": "^18.3.3",
       "@types/react-dom": "^18.3.0",
+      "@typescript-eslint/eslint-plugin": "^8.5.0",
+      "@typescript-eslint/parser": "^8.5.0",
       "@vitejs/plugin-react": "^4.3.1",
       "autoprefixer": "^10.4.20",
       "axe-core": "^4.10.0",
