@@ -6,7 +6,7 @@ import {
 import TeaInfo from '@/components/TeaDetail/TeaInfo';
 import TeaReviewList from '@/components/TeaDetail/TeaReviewList';
 
-export default function TeaDetailPage() {
+export function Component() {
    return (
       <div className="mx-5 mb-10 mt-5 flex flex-col gap-4">
          <h1 className="sr-only">티 상세 페이지</h1>

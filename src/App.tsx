@@ -1,102 +1,15 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Layout from './components/Main/Layout';
-import {
-   LoginPage,
-   JoinPage,
-   MySelectionPage,
-   MyTastePage,
-   MainPage,
-   TeaListPage,
-   SearchPage,
-   TeaDetailPage,
-   ReviewsPage,
-   ReviewsDetailPage,
-   ReviewsWritePage,
-   ReviewsEditPage,
-   MyPage,
-   MyEditPage,
-   MyReviewsPage,
-   MyFavoritesPage,
-} from './pages';
+import { RouterProvider } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from 'react-hot-toast';
+import router from '@/router';
 
-const routes = [
-   {
-      path: '/',
-      element: <Layout />,
-      children: [
-         {
-            index: true,
-            element: <MainPage />,
-         },
-         {
-            path: 'login',
-            element: <LoginPage />,
-         },
-         {
-            path: 'join',
-            element: <JoinPage />,
-         },
-         {
-            path: 'my-selection',
-            element: <MySelectionPage />,
-         },
-         {
-            path: 'my-taste',
-            element: <MyTastePage />,
-         },
-         {
-            path: 'recommend',
-            element: <TeaListPage />,
-         },
-         {
-            path: 'search',
-            element: <SearchPage />,
-         },
-         {
-            path: 'detail', // DB 연결 후 수정 예정
-            element: <TeaDetailPage />,
-         },
-         {
-            path: 'reviews',
-            element: <ReviewsPage />,
-         },
-         {
-            path: 'reviews/detail',
-            element: <ReviewsDetailPage />,
-         },
-         {
-            path: 'reviews/write',
-            element: <ReviewsWritePage />,
-         },
-         {
-            path: 'reviews/edit/:id',
-            element: <ReviewsEditPage />,
-         },
-         {
-            path: 'my-page',
-            element: <MyPage />,
-         },
-         {
-            path: 'my-page/edit',
-            element: <MyEditPage />,
-         },
-         {
-            path: 'my-page/reviews',
-            element: <MyReviewsPage />,
-         },
-         {
-            path: 'my-page/favorites',
-            element: <MyFavoritesPage />,
-         },
-      ],
-   },
-];
-
-const router = createBrowserRouter(routes);
-
-const App = () => {
-   return <RouterProvider router={router} />;
-};
+function App() {
+   return (
+      <HelmetProvider>
+         <RouterProvider router={router} />
+         <Toaster />
+      </HelmetProvider>
+   );
+}
 
 export default App;

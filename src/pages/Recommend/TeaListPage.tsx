@@ -19,7 +19,7 @@ const teaData: Tea[] = [
    { imageUrl: '', teaName: '루이보스', brand: '브랜드8' },
 ];
 
-export default function MyTastePage() {
+export function Component() {
    // const [selectedTab, setSelectedTab] = useState<string>('홍차');
    // const handleTabSelect = (tab: string) => {
    //    setSelectedTab(tab);
