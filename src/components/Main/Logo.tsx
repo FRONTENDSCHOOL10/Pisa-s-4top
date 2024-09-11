@@ -17,13 +17,13 @@ export default function Logo({ small, large, alt }: LogoProps) {
    return (
       <>
          {small ? (
-            <img src={createUrl('typeLogo-sm')} />
+            <img src={createUrl('typeLogo-sm')} alt="" />
          ) : large ? (
-            <img src={createUrl('typeLogo-lg')} />
+            <img src={createUrl('typeLogo-lg')} alt="" />
          ) : alt ? (
             <img src={createUrl('totd-logo')} alt={alt} />
          ) : (
-            <img src={createUrl('totd-logo')} />
+            <img src={createUrl('totd-logo')} alt="" />
          )}
       </>
    );
