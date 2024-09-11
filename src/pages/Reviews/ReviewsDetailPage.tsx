@@ -2,7 +2,7 @@ import { Button } from '@/components/Buttons/Buttons';
 import { StarRatingAverage } from '@/components/Review/StarRate';
 import { LabelGroup } from '@/components/Labels/Labels';
 
-function ReviewsDetailPage() {
+export function Component() {
    const labels = [
       { label: 'Bitter' },
       { label: 'Peanuts' },
@@ -48,5 +48,3 @@ function ReviewsDetailPage() {
       </main>
    );
 }
-
-export default ReviewsDetailPage;
