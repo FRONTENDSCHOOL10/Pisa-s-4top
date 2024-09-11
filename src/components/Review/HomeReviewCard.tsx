@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import StarRating from './StarRate';
+import { StarRating } from './StarRate';
 
 /* 홈 리뷰 카드 컴포넌트 */
 // 사용법
