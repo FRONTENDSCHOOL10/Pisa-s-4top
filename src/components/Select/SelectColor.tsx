@@ -18,10 +18,10 @@ export default function App() {
 
 import { useState, useCallback } from 'react';
 
-type ColorOption = {
+interface ColorOption {
    label: string;
    value: string;
-};
+}
 
 const options: ColorOption[] = [
    { label: '초록', value: 'bg-lime-600' },
