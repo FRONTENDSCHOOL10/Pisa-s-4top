@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { LabelGroup } from '@/components/Labels/Labels';
 import { fetchTasteNoteData } from '@/utils/fetchData';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import { NotFoundPage } from '../Main';
 
 export function Component() {
    const [tasteNoteData, setTasteNoteData] = useState<string[]>([]);
@@ -26,11 +28,11 @@ export function Component() {
    }, []);
 
    if (loading) {
-      return <p>로딩 중...</p>;
+      <LoadingSpinner />;
    }
 
    if (error) {
-      return <p>{error}</p>;
+      return <NotFoundPage />;
    }
 
    return (
