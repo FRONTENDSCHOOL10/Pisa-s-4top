@@ -1,39 +1,22 @@
 import { useState, useEffect } from 'react';
 import { LabelGroup } from '@/components/Labels/Labels';
 import { fetchTasteNoteData } from '@/utils/fetchData';
-import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
-import { NotFoundPage } from '../Main';
 
 export function Component() {
    const [tasteNoteData, setTasteNoteData] = useState<string[]>([]);
-   const [loading, setLoading] = useState<boolean>(true);
-   const [error, setError] = useState<string | null>(null);
 
    useEffect(() => {
       const loadTasteNoteData = async () => {
-         setLoading(true);
-         setError(null);
          try {
             const labelData = await fetchTasteNoteData();
             setTasteNoteData(labelData);
          } catch (error) {
             console.error('Failed to fetch tastenote data:', error);
-            setError('데이터를 불러오는데 실패했습니다.');
-         } finally {
-            setLoading(false);
          }
       };
 
       loadTasteNoteData();
    }, []);
-
-   if (loading) {
-      <LoadingSpinner />;
-   }
-
-   if (error) {
-      return <NotFoundPage />;
-   }
 
    return (
       <main>
