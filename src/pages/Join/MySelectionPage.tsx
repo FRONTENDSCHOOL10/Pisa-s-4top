@@ -37,7 +37,7 @@ export function Component() {
             <strong className="font-extrabold">선호하는 맛</strong>을<br />
             선택해주세요.
          </h1>
-         <p className="mt-2">취향에 맞는 차를 추천해드려요!</p>
+         <p className="mt-2 text-stone-500">취향에 맞는 차를 추천해드려요!</p>
 
          <LabelGroup
             labels={tasteNoteData}
