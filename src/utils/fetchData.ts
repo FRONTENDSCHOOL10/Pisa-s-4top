@@ -72,6 +72,11 @@ export async function fetchTeaData() {
    return fetchDataFromTable('tea');
 }
 
+// 티 카테고리 함수
+export async function fetchTeaCategoryData() {
+   return fetchDataFromTable('teacategory');
+}
+
 // 유저 데이터 함수
 export async function fetchUsersData() {
    return fetchDataFromTable('users');
