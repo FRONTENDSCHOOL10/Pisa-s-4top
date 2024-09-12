@@ -19,7 +19,7 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
 
    return (
       <header>
-         <nav className="flex h-[3.25rem] w-full items-center bg-stone-100 py-[0.88rem] text-base">
+         <nav className="fixed top-0 z-20 flex h-[3.25rem] w-full max-w-[48rem] items-center bg-stone-100 text-base">
             {hasBackBtn ? (
                <button
                   type="button"

@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import RootLayout from './layouts/RootLayout';
-import { JoinPage, LoginPage, MainPage } from './pages';
+import { JoinPage, LoginPage, MainPage, NotFoundPage } from './pages';
 
 export const routes: RouteObject[] = [
    {
@@ -37,41 +37,52 @@ export const routes: RouteObject[] = [
             lazy: () => import('@/pages/Main/SearchPage'),
          },
          {
-            path: 'detail', // DB 연결 후 수정 예정
+            path: 'detail', // TODO: DB 연결 후 ':id' 수정 예정?
             lazy: () => import('@/pages/Recommend/TeaDetailPage'),
          },
          {
             path: 'reviews',
-            lazy: () => import('@/pages/Reviews/ReviewsPage'),
-         },
-         {
-            path: 'reviews/detail',
-            lazy: () => import('@/pages/Reviews/ReviewsDetailPage'),
-         },
-         {
-            path: 'reviews/write',
-            lazy: () => import('@/pages/Reviews/ReviewsWritePage'),
-         },
-         {
-            path: 'reviews/edit/:id',
-            lazy: () => import('@/pages/Reviews/ReviewsEditPage'),
+            children: [
+               {
+                  index: true,
+                  lazy: () => import('@/pages/Reviews/ReviewsPage'),
+               },
+               {
+                  path: 'detail', // TODO: DB 연결 후 ':id' 수정 예정?
+                  lazy: () => import('@/pages/Reviews/ReviewsDetailPage'),
+               },
+               {
+                  path: 'write',
+                  lazy: () => import('@/pages/Reviews/ReviewsWritePage'),
+               },
+               {
+                  path: 'edit/:id',
+                  lazy: () => import('@/pages/Reviews/ReviewsEditPage'),
+               },
+            ],
          },
          {
             path: 'my-page',
-            lazy: () => import('@/pages/Settings/MyPage'),
+            children: [
+               {
+                  index: true,
+                  lazy: () => import('@/pages/Settings/MyPage'),
+               },
+               {
+                  path: 'edit',
+                  lazy: () => import('@/pages/Settings/MyEditPage'),
+               },
+               {
+                  path: 'reviews',
+                  lazy: () => import('@/pages/Settings/MyReviewsPage'),
+               },
+               {
+                  path: 'favorites',
+                  lazy: () => import('@/pages/Settings/MyFavoritesPage'),
+               },
+            ],
          },
-         {
-            path: 'my-page/edit',
-            lazy: () => import('@/pages/Settings/MyEditPage'),
-         },
-         {
-            path: 'my-page/reviews',
-            lazy: () => import('@/pages/Settings/MyReviewsPage'),
-         },
-         {
-            path: 'my-page/favorites',
-            lazy: () => import('@/pages/Settings/MyFavoritesPage'),
-         },
+         { path: '*', element: <NotFoundPage /> },
       ],
    },
 ];
@@ -79,4 +90,5 @@ export const routes: RouteObject[] = [
 const router = createBrowserRouter(routes, {
    basename: import.meta.env.BASE_URL,
 });
+
 export default router;
