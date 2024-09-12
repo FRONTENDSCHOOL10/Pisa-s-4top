@@ -55,11 +55,11 @@ export const LabelButton = memo(
       }
 
       const defaultClass: string =
-         'select-none inline-flex items-center justify-center rounded-[1.375rem] hover:border-2 hover:border-stone-400 hover:bg-stone-200';
+         'select-none inline-flex items-center justify-center rounded-[1.375rem] hover:ring-2 hover:ring-stone-400 hover:bg-stone-200';
       const sizeClass: string = size === 'large' ? largeClass : smallClass;
 
       const activeClass: string =
-         'border-2 bg-lime-50 border-lime-700 text-lime-700';
+         'ring-2 bg-lime-50 ring-lime-700 text-lime-700 border';
       const inactiveClass: string =
          'border bg-stone-50 border-stone-300 text-stone-600';
 
@@ -82,17 +82,30 @@ export const LabelButton = memo(
 );
 
 interface LabelGroupProps {
-   labels: { label: string }[];
+   labels: string[];
+   types: 'label' | 'button'; // 단일 값으로 처리
    size?: 'small' | 'large';
+   className?: string;
 }
 
 export const LabelGroup = memo(
-   ({ labels = [], size = 'large' }: LabelGroupProps) => {
+   ({
+      labels = [],
+      types = 'label',
+      size = 'large',
+      className = '',
+   }: LabelGroupProps) => {
       return (
-         <div className="flex flex-wrap gap-1">
-            {labels.map((label, index) => (
-               <Label key={index} content={label} size={size} />
-            ))}
+         <div className={`flex flex-wrap gap-2 ${className}`}>
+            {labels.map((label, index) => {
+               if (types === 'label') {
+                  return <Label key={index} content={label} size={size} />;
+               } else if (types === 'button') {
+                  return (
+                     <LabelButton key={index} content={label} size={size} />
+                  );
+               }
+            })}
          </div>
       );
    }
