@@ -17,6 +17,7 @@ const viteConfig = defineConfig({
    },
    optimizeDeps: {
       include: ['@storybook/builder-vite', '@storybook/react'],
+      exclude: ['fsevents'], // fsevents를 번들에서 제외
    },
 });
 

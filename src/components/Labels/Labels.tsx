@@ -44,22 +44,23 @@ export const Label = memo(
 interface LabelButtonProps {
    content?: string;
    size?: 'small' | 'large';
+   isActive: boolean;
+   handleClick: () => void;
 }
 
 export const LabelButton = memo(
-   ({ content = '라벨 버튼', size = 'small' }: LabelButtonProps) => {
-      const [isActive, setIsActive] = useState(false);
-
-      function handleClick() {
-         setIsActive((prevState) => !prevState);
-      }
-
+   ({
+      content = '라벨 버튼',
+      size = 'small',
+      isActive,
+      handleClick,
+   }: LabelButtonProps) => {
       const defaultClass: string =
-         'select-none inline-flex items-center justify-center rounded-[1.375rem] hover:border-2 hover:border-stone-400 hover:bg-stone-200';
+         'select-none inline-flex items-center justify-center rounded-[1.375rem] hover:ring-2 hover:ring-stone-400 hover:bg-stone-200';
       const sizeClass: string = size === 'large' ? largeClass : smallClass;
 
       const activeClass: string =
-         'border-2 bg-lime-50 border-lime-700 text-lime-700';
+         'ring-2 bg-lime-50 ring-lime-700 text-lime-700 border';
       const inactiveClass: string =
          'border bg-stone-50 border-stone-300 text-stone-600';
 
@@ -105,21 +106,43 @@ export default function App() {
 */
 
 interface LabelGroupProps {
-   labels: { label: string }[];
+   labels: string[];
+   types: 'label' | 'button';
    size?: 'small' | 'large';
    className?: string;
+
+   selectedLabels: boolean[];
+   handleToggleLabel: (index: number) => void;
 }
 
-export function LabelGroup({
-   size = 'large',
-   className = '',
-}: LabelGroupProps) {
-   const labels = [{ content: '라벤더' }, { content: '꿀' }];
-   return (
-      <div className={`flex flex-wrap gap-1 ${className}`}>
-         {labels.map((labelProps, index) => (
-            <Label key={index} {...labelProps} size={size} />
-         ))}
-      </div>
-   );
-}
+export const LabelGroup = memo(
+   ({
+      labels = [],
+      types = 'label',
+      size = 'large',
+      className = '',
+      selectedLabels,
+      handleToggleLabel,
+   }: LabelGroupProps) => {
+      return (
+         <div className={`flex flex-wrap gap-2 ${className}`}>
+            {labels.map((label, index) => {
+               if (types === 'label') {
+                  return <Label key={index} content={label} size={size} />;
+               } else if (types === 'button') {
+                  return (
+                     <LabelButton
+                        key={index}
+                        content={label}
+                        size={size}
+                        isActive={selectedLabels[index]}
+                        handleClick={() => handleToggleLabel(index)}
+                     />
+                  );
+               }
+               return null;
+            })}
+         </div>
+      );
+   }
+);

@@ -1,11 +1,22 @@
-@import url('./fonts.css');
-@import '@flaticon/flaticon-uicons/css/all/all';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* 커스텀 스타일 */
+
+#root {
+   position: relative;
+   width: 100%;
+   min-width: 20rem;
+   max-width: 48rem;
+   height: 100dvh;
+   background-color: #f5f5f4;
+   overflow-y: auto;
+}
+
+main {
+   padding: 5.25rem 2rem;
+}
 
 @layer components {
    .focus-green {

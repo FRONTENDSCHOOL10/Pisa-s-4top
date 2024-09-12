@@ -19,7 +19,7 @@ const teaData: Tea[] = [
    { imageUrl: '', teaName: '루이보스', brand: '브랜드8' },
 ];
 
-export default function MyTastePage() {
+export function Component() {
    // const [selectedTab, setSelectedTab] = useState<string>('홍차');
    // const handleTabSelect = (tab: string) => {
    //    setSelectedTab(tab);
@@ -29,7 +29,7 @@ export default function MyTastePage() {
    // const filteredTeaData = teaData.filter((tea: Tea) => tea.teaName === selectedTab);
 
    return (
-      <div className="mx-5 mb-10 flex flex-col gap-5">
+      <main className="flex flex-col gap-5">
          <h1 className="sr-only">추천 티 리스트 페이지</h1>
          <TabButton
             tabs={['홍차', '우롱차', '녹차', '허브차']}
@@ -37,11 +37,10 @@ export default function MyTastePage() {
                console.log('탭 전환');
             }}
          />
-         <div className="grid grid-cols-[repeat(auto-fill,_minmax(160px,_1fr))] gap-4">
+         <div className="grid grid-cols-[repeat(auto-fill,_minmax(158px,_1fr))] gap-4">
             {teaData.map((tea: Tea, index: number) => (
-               <div key={index} className="flex items-center justify-center">
+               <div key={index} className="flex justify-center">
                   <TeaRecommendCard
-                     key={index}
                      imageUrl={tea.imageUrl}
                      teaName={tea.teaName}
                      brand={tea.brand}
@@ -49,6 +48,6 @@ export default function MyTastePage() {
                </div>
             ))}
          </div>
-      </div>
+      </main>
    );
 }

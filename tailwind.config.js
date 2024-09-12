@@ -11,9 +11,22 @@ export default {
             search:
                '0px 2px 20px 0px rgba(214,211,209,1),0px 0px 30px 0px rgba(255,255,255,1)',
          },
+         maxWidth: {
+            layout: '768px',
+         },
+         minWidth: {
+            layout: '320px',
+         },
       },
    },
    plugins: [
+      function ({ addComponents }) {
+         addComponents({
+            '.layout-container': {
+               '@apply max-w-layout min-w-layout mx-auto': {}, // max-width, min-width, 중앙 정렬 적용
+            },
+         });
+      },
       function ({ addUtilities }) {
          const newUtilities = {
             '.text-shadow-sm': {

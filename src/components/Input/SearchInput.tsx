@@ -80,9 +80,7 @@ export default function SearchInput({
    return (
       <>
          {isButton ? (
-            <BrowserRouter>
-               <Link to="search">{renderInput(isButton)}</Link>
-            </BrowserRouter>
+            <Link to="/search">{renderInput(isButton)}</Link>
          ) : (
             <form>{renderInput(isButton)}</form>
          )}

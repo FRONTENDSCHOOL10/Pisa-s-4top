@@ -114,7 +114,6 @@ export function CardLayout({
 }: CardLayoutProps) {
    const content = (
       <article
-         role="article"
          className={`relative w-full rounded-2xl border border-stone-300 bg-white p-5 shadow-xl ${className}`}
          aria-label={ariaLabel}
       >

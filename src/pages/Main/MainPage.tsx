@@ -1,5 +1,11 @@
-function MainPage() {
-   return <p>메인페이지</p>;
-}
+import SearchInput from '@/components/Input/SearchInput';
+import AppBar from '@/components/Main/AppBar';
 
-export default MainPage;
+export default function MainPage() {
+   return (
+      <>
+         <AppBar hasLogo />
+         <SearchInput isButton={true} />
+      </>
+   );
+}
