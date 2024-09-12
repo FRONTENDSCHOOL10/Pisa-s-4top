@@ -10,7 +10,7 @@ export function Component() {
    return (
       <main className="flex flex-col gap-4">
          <h1 className="sr-only">티 상세 페이지</h1>
-         <div className='mx-8'>
+         <div className="mx-8">
             <TeaInfo />
             <Button
                isLink={true}
@@ -18,7 +18,7 @@ export function Component() {
                ariaLabel="리뷰 작성 페이지"
                content="리뷰 쓰기"
                size="fullWidth"
-               className='mt-4 mb-2'
+               className="mb-2 mt-4"
             />
          </div>
          <TeaDescriptionCard description="이 티는 레몬과 오렌지, 꿀이 들어간 상쾌한 향이 특징입니다." />
