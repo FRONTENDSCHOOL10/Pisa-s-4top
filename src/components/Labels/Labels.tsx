@@ -45,7 +45,7 @@ interface LabelButtonProps {
    content?: string;
    size?: 'small' | 'large';
    isActive: boolean;
-   onClick: () => void;
+   handleClick: () => void;
 }
 
 export const LabelButton = memo(
@@ -53,7 +53,7 @@ export const LabelButton = memo(
       content = '라벨 버튼',
       size = 'small',
       isActive,
-      onClick,
+      handleClick,
    }: LabelButtonProps) => {
       const defaultClass: string =
          'select-none inline-flex items-center justify-center rounded-[1.375rem] hover:ring-2 hover:ring-stone-400 hover:bg-stone-200';
@@ -70,7 +70,7 @@ export const LabelButton = memo(
          <button
             className={buttonClass}
             type="button"
-            onClick={onClick}
+            onClick={handleClick}
             aria-pressed={isActive}
             aria-label={
                isActive ? `${content} 버튼 활성화` : `${content} 버튼 비활성화`
@@ -88,7 +88,7 @@ interface LabelGroupProps {
    size?: 'small' | 'large';
    className?: string;
    selectedLabels: boolean[];
-   onToggleLabel: (index: number) => void;
+   handleToggleLabel: (index: number) => void;
 }
 
 export const LabelGroup = memo(
@@ -98,7 +98,7 @@ export const LabelGroup = memo(
       size = 'large',
       className = '',
       selectedLabels,
-      onToggleLabel,
+      handleToggleLabel,
    }: LabelGroupProps) => {
       return (
          <div className={`flex flex-wrap gap-2 ${className}`}>
@@ -112,7 +112,7 @@ export const LabelGroup = memo(
                         content={label}
                         size={size}
                         isActive={selectedLabels[index]}
-                        onClick={() => onToggleLabel(index)}
+                        handleClick={() => handleToggleLabel(index)}
                      />
                   );
                }

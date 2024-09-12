@@ -44,7 +44,7 @@ export function Component() {
             types="button"
             className="mt-6 flex w-full justify-center"
             selectedLabels={selectedLabels}
-            onToggleLabel={toggleLabelSelection}
+            handleToggleLabel={toggleLabelSelection}
          />
 
          <Button
@@ -58,7 +58,7 @@ export function Component() {
             size="fullWidth"
             className="mt-2"
             isError={true}
-            onClick={resetSelection}
+            handleClick={resetSelection}
          />
       </main>
    );
