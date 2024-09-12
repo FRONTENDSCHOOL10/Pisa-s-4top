@@ -54,6 +54,7 @@
    },
    "dependencies": {
       "@flaticon/flaticon-uicons": "^3.3.1",
+      "axios": "^1.7.7",
       "cox-postposition": "^1.4.1",
       "pocketbase": "^0.21.4",
       "react": "^18.3.1",
