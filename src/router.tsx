@@ -37,7 +37,7 @@ export const routes: RouteObject[] = [
             lazy: () => import('@/pages/Main/SearchPage'),
          },
          {
-            path: 'detail', // TODO: DB 연결 후 ':id' 수정 예정?
+            path: 'detail/:id',
             lazy: () => import('@/pages/Recommend/TeaDetailPage'),
          },
          {

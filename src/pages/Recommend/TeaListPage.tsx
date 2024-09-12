@@ -29,7 +29,7 @@ export function Component() {
    // const filteredTeaData = teaData.filter((tea: Tea) => tea.teaName === selectedTab);
 
    return (
-      <div className="mb-10 flex flex-col gap-5">
+      <main className="flex flex-col gap-5">
          <h1 className="sr-only">추천 티 리스트 페이지</h1>
          <TabButton
             tabs={['홍차', '우롱차', '녹차', '허브차']}
@@ -48,6 +48,6 @@ export function Component() {
                </div>
             ))}
          </div>
-      </div>
+      </main>
    );
 }

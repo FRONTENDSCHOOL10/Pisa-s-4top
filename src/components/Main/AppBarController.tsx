@@ -16,7 +16,7 @@ export default function AppBarController() {
       case '/search':
          return <AppBar title="검색" />;
 
-      case '/detail:id':
+      case '/detail/:id':
          return <AppBar title="티 상세" />; // TODO: 추후 어떤 티인지, 티 이름 동적으로 받기?
 
       case '/reviews':
@@ -28,7 +28,7 @@ export default function AppBarController() {
       case '/reviews/edit/:id':
          return <AppBar title="티 리뷰 수정" />;
 
-      case '/reviews/detail:id':
+      case '/reviews/detail/:id':
          return <AppBar title="티 리뷰 상세" />;
 
       case '/recommend':

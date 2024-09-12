@@ -91,9 +91,8 @@ export default function DuplicateCheckInput({
       }
    };
 
-   // ! 버튼 컴포넌트로 변경
    return (
-      <div className="flex gap-1.5 bg-white">
+      <div className="flex gap-1.5">
          <Input
             title={title}
             type={type}
