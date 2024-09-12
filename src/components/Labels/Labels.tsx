@@ -90,8 +90,8 @@ export const LabelGroup = memo(
    ({ labels = [], size = 'large' }: LabelGroupProps) => {
       return (
          <div className="flex flex-wrap gap-1">
-            {labels.map((labelProps, index) => (
-               <Label key={index} content={labelProps.label} size={size} />
+            {labels.map((label, index) => (
+               <Label key={index} content={label} size={size} />
             ))}
          </div>
       );
