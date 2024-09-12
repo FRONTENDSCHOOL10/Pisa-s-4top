@@ -44,16 +44,17 @@ export const Label = memo(
 interface LabelButtonProps {
    content?: string;
    size?: 'small' | 'large';
+   isActive: boolean;
+   onClick: () => void;
 }
 
 export const LabelButton = memo(
-   ({ content = '라벨 버튼', size = 'small' }: LabelButtonProps) => {
-      const [isActive, setIsActive] = useState(false);
-
-      function handleClick() {
-         setIsActive((prevState) => !prevState);
-      }
-
+   ({
+      content = '라벨 버튼',
+      size = 'small',
+      isActive,
+      onClick,
+   }: LabelButtonProps) => {
       const defaultClass: string =
          'select-none inline-flex items-center justify-center rounded-[1.375rem] hover:ring-2 hover:ring-stone-400 hover:bg-stone-200';
       const sizeClass: string = size === 'large' ? largeClass : smallClass;
@@ -69,7 +70,7 @@ export const LabelButton = memo(
          <button
             className={buttonClass}
             type="button"
-            onClick={handleClick}
+            onClick={onClick}
             aria-pressed={isActive}
             aria-label={
                isActive ? `${content} 버튼 활성화` : `${content} 버튼 비활성화`
@@ -83,9 +84,11 @@ export const LabelButton = memo(
 
 interface LabelGroupProps {
    labels: string[];
-   types: 'label' | 'button'; // 단일 값으로 처리
+   types: 'label' | 'button';
    size?: 'small' | 'large';
    className?: string;
+   selectedLabels: boolean[];
+   onToggleLabel: (index: number) => void;
 }
 
 export const LabelGroup = memo(
@@ -94,6 +97,8 @@ export const LabelGroup = memo(
       types = 'label',
       size = 'large',
       className = '',
+      selectedLabels,
+      onToggleLabel,
    }: LabelGroupProps) => {
       return (
          <div className={`flex flex-wrap gap-2 ${className}`}>
@@ -102,9 +107,16 @@ export const LabelGroup = memo(
                   return <Label key={index} content={label} size={size} />;
                } else if (types === 'button') {
                   return (
-                     <LabelButton key={index} content={label} size={size} />
+                     <LabelButton
+                        key={index}
+                        content={label}
+                        size={size}
+                        isActive={selectedLabels[index]}
+                        onClick={() => onToggleLabel(index)}
+                     />
                   );
                }
+               return null;
             })}
          </div>
       );
