@@ -1,36 +1,25 @@
 import { Button } from '@/components/Buttons/Buttons';
 import { StarRatingAverage } from '@/components/Review/StarRate';
-import { LabelGroup } from '@/components/Labels/Labels';
+import {
+   TeaColorCard,
+   TeaReviewDetailCard,
+   TeaTasteCard,
+} from '@/components/TeaCard/CardComponents';
 
-function ReviewsDetailPage() {
-   const labels = [
-      { label: 'Bitter' },
-      { label: 'Peanuts' },
-      { label: 'Peanuts' },
-      { label: 'Peanuts' },
-      { label: 'Peanuts' },
-      { label: 'Peanuts' },
-   ];
+export function Component() {
+   const labels = ['Bitter', 'Nutty', 'Fruity'];
 
    return (
       <main className="flex flex-col items-center px-6">
-         <div className="h-8 w-full rounded-full bg-stone-300">
+         <div className="h-80 w-80 rounded-2xl bg-stone-300">
             <img className="object-cover" src="" alt="" />
          </div>
          <p className="my-4">nickname</p>
          <StarRatingAverage score={3} />
-         <article className="mt-4">
-            <h2>맛</h2>
-            <LabelGroup labels={labels} size="large" />
-         </article>
-         <article>
-            <h2>수색</h2>
-         </article>
-         <div>
-            <h1>reviewTitle</h1>
-            <p>reviewContent</p>
-         </div>
-         <div className="mb-2 w-full">
+         <TeaTasteCard labels={labels} className="mb-2 mt-8" />
+         <TeaColorCard className="mb-2" />
+         <TeaReviewDetailCard title="리뷰 제목" contents="리뷰 내용" />
+         <div className="mb-2 mt-6 w-full">
             <Button
                size="fullWidth"
                content="리뷰 수정하기"
@@ -48,5 +37,3 @@ function ReviewsDetailPage() {
       </main>
    );
 }
-
-export default ReviewsDetailPage;

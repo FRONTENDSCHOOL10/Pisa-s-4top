@@ -256,11 +256,14 @@ export function TeaReviewCard({
 }
 
 // 티 수색 선택 카드
+interface TeaColorCardProps {
+   className?: string;
+}
 
-export function TeaColorCard() {
+export function TeaColorCard({ className = '' }: TeaColorCardProps) {
    return (
-      <CardLayout ariaLabel="티 수색 선택 카드">
-         <CardTitle className="mb-2 !text-stone-500">수색</CardTitle>
+      <CardLayout ariaLabel="티 수색 카드" className={className}>
+         <CardTitle className="mb-2">수색</CardTitle>
          <SelectColor />
       </CardLayout>
    );
@@ -268,12 +271,36 @@ export function TeaColorCard() {
 
 // 티 맛 선택 카드
 
-export function TeaTasteCard() {
-   const labels = [{ label: '라벤더' }, { label: '풀향' }, { label: '우유' }];
+interface TeaTasteCardProps {
+   labels: { label: string }[];
+   className?: string;
+}
+
+export function TeaTasteCard({ labels, className = '' }: TeaTasteCardProps) {
    return (
-      <CardLayout ariaLabel="티 맛 선택 카드">
-         <CardTitle className="mb-2 !text-stone-500">맛</CardTitle>
-         <LabelGroup labels={labels} className="justify-center" />
+      <CardLayout ariaLabel="티 맛 카드" className={className}>
+         <CardTitle className="mb-2">맛</CardTitle>
+         <LabelGroup labels={labels} />
+      </CardLayout>
+   );
+}
+
+// 티 리뷰 카드
+interface TeaReviewDetailCardProps {
+   title: string;
+   contents: string;
+   className?: string;
+}
+
+export function TeaReviewDetailCard({
+   title,
+   contents,
+   className = '',
+}: TeaReviewDetailCardProps) {
+   return (
+      <CardLayout ariaLabel="티 리뷰 디테일 카드" className={className}>
+         <CardTitle className="mb-2">{title}</CardTitle>
+         <p>{contents}</p>
       </CardLayout>
    );
 }
