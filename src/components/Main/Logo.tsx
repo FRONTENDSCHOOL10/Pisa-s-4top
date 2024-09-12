@@ -10,16 +10,24 @@ interface LogoProps {
    small?: boolean;
    large?: boolean;
    alt?: string;
+   className?: string;
 }
-export default function Logo({ small, large, alt = '' }: LogoProps) {
+export default function Logo({
+   small,
+   large,
+   alt = '',
+   className = '',
+}: LogoProps) {
+   const styles: string = `select-none ${className}`.trim();
+
    return (
       <>
          {small ? (
-            <img src={createUrl('typeLogo-sm')} alt={alt} />
+            <img src={createUrl('typeLogo-sm')} alt={alt} className={styles} />
          ) : large ? (
-            <img src={createUrl('typeLogo-lg')} alt={alt} />
+            <img src={createUrl('typeLogo-lg')} alt={alt} className={styles} />
          ) : (
-            <img src={createUrl('totd-logo')} alt={alt} />
+            <img src={createUrl('totd-logo')} alt={alt} className={styles} />
          )}
       </>
    );
