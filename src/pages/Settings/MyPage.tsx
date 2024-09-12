@@ -16,7 +16,7 @@ const activities: Activity[] = [
 
 export function Component() {
    return (
-      <div className="mb-10 mt-5 flex flex-col gap-6">
+      <main className="flex flex-col gap-6">
          <h1 className="sr-only">마이페이지</h1>
          <section className="mb-3 flex flex-col items-center">
             <img
@@ -56,6 +56,6 @@ export function Component() {
             size="fullWidth"
             handleClick={() => console.log('로그아웃 버튼 클릭됨')}
          />
-      </div>
+      </main>
    );
 }
