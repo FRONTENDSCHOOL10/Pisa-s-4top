@@ -59,6 +59,7 @@ import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
 import { SelectColor } from '../Select/SelectColor';
+import { LabelGroup } from '../Labels/Labels';
 
 // 공통 UI 컴포넌트
 interface ImageProps {
@@ -254,12 +255,51 @@ export function TeaReviewCard({
 }
 
 // 티 수색 선택 카드
+interface TeaColorCardProps {
+   className?: string;
+}
 
-export function TeaColorCard() {
+export function TeaColorCard({ className = '' }: TeaColorCardProps) {
    return (
-      <CardLayout ariaLabel="티 설명 카드">
-         <CardTitle>수색</CardTitle>
+      <CardLayout ariaLabel="티 수색 카드" className={className}>
+         <CardTitle className="mb-2">수색</CardTitle>
          <SelectColor />
+      </CardLayout>
+   );
+}
+
+// 티 맛 선택 카드
+
+interface TeaTasteCardProps {
+   labels: { label: string }[];
+   className?: string;
+}
+
+export function TeaTasteCard({ labels, className = '' }: TeaTasteCardProps) {
+   return (
+      <CardLayout ariaLabel="티 맛 카드" className={className}>
+         <CardTitle className="mb-2">맛</CardTitle>
+         <LabelGroup labels={labels} />
+      </CardLayout>
+   );
+}
+
+// 티 리뷰 카드
+interface TeaReviewDetailCardProps {
+   title: string;
+   contents: string;
+   className?: string;
+}
+
+export function TeaReviewDetailCard({
+   title,
+   contents,
+   className = '',
+}: TeaReviewDetailCardProps) {
+   return (
+      <CardLayout ariaLabel="티 리뷰 디테일 카드" className={className}>
+         <CardTitle className="mb-2">{title}</CardTitle>
+         <p>{contents}</p>
       </CardLayout>
    );
 }

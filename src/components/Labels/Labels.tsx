@@ -82,11 +82,35 @@ export const LabelButton = memo(
    }
 );
 
+/* LabelGroup 사용법
+
+---- 사용법 예시 ----
+
+import { LabelGroup } from './path_to_component/LabelGroup';
+
+export default function App() {
+   const labelData = [
+      { label: '라벤더' },
+      { label: '풀향' },
+      { label: '우유' },
+   ];
+
+   return (
+      <div>
+         <LabelGroup labels={labelData} size="large" />
+         <LabelGroup labels={labelData} size="small" />
+      </div>
+   );
+}
+
+*/
+
 interface LabelGroupProps {
    labels: string[];
    types: 'label' | 'button';
    size?: 'small' | 'large';
    className?: string;
+
    selectedLabels: boolean[];
    handleToggleLabel: (index: number) => void;
 }
