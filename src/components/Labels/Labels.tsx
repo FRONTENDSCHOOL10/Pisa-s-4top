@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 /* label 컴포넌트 */
 // 컴포넌트 사용법

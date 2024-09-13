@@ -271,7 +271,7 @@ export function TeaColorCard({ className = '' }: TeaColorCardProps) {
 // 티 맛 선택 카드
 
 interface TeaTasteCardProps {
-   labels: { label: string }[];
+   labels: string[];
    className?: string;
 }
 
@@ -279,7 +279,7 @@ export function TeaTasteCard({ labels, className = '' }: TeaTasteCardProps) {
    return (
       <CardLayout ariaLabel="티 맛 카드" className={className}>
          <CardTitle className="mb-2">맛</CardTitle>
-         <LabelGroup labels={labels} />
+         <LabelGroup labels={labels} className="flex w-full justify-center" />
       </CardLayout>
    );
 }
