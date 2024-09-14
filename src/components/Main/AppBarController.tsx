@@ -1,52 +1,57 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, matchPath } from 'react-router-dom';
 import AppBar from './AppBar';
+import { useTeaData } from '@/hooks/useTeaData';
+import { ComponentProps } from 'react';
+
+interface RouteConfig {
+   path: string;
+   props: ComponentProps<typeof AppBar>;
+}
+
+const routes: RouteConfig[] = [
+   { path: '/', props: { hasLogo: true } },
+   { path: '/join', props: { hasBackBtn: true } },
+   { path: '/search', props: { title: '검색' } },
+   { path: '/reviews', props: { title: '티 리뷰 리스트' } },
+   { path: '/reviews/write', props: { title: '티 리뷰 작성' } },
+   { path: '/recommend', props: { title: '추천 티 리스트' } },
+   { path: '/my-page', props: { title: '마이페이지' } },
+   { path: '/my-page/edit', props: { title: '마이페이지 수정' } },
+   { path: '/my-page/favorites', props: { title: '나의 찜' } },
+   { path: '/my-page/reviews', props: { title: '나의 리뷰' } },
+];
 
 export default function AppBarController() {
    const location = useLocation();
 
-   // 경로에 따른 조건 처리
-   switch (location.pathname) {
-      case '/':
-         return <AppBar hasLogo />;
+   const detailMatch = matchPath('/detail/:id', location.pathname);
+   const reviewEditMatch = matchPath('/reviews/edit/:id', location.pathname);
+   const reviewDetailMatch = matchPath(
+      '/reviews/detail/:id',
+      location.pathname
+   );
 
-      case '/join':
-         return <AppBar hasBackBtn />;
+   const tea = useTeaData(detailMatch?.params?.id);
 
-      case '/search':
-         return <AppBar title="검색" />;
+   const matchedRoute = routes.find(
+      (route) => location.pathname === route.path
+   );
 
-      case '/detail/:id':
-         return <AppBar title="티 상세" />; // TODO: 추후 어떤 티인지, 티 이름 동적으로 받기?
-
-      case '/reviews':
-         return <AppBar title="티 리뷰 리스트" />;
-
-      case '/reviews/write':
-         return <AppBar title="티 리뷰 작성" />;
-
-      case '/reviews/edit/:id':
-         return <AppBar title="티 리뷰 수정" />;
-
-      case '/reviews/detail/:id':
-         return <AppBar title="티 리뷰 상세" />;
-
-      case '/recommend':
-         return <AppBar title="추천 티 리스트" />;
-
-      case '/my-page':
-         return <AppBar title="마이페이지" />;
-
-      case '/my-page/edit':
-         return <AppBar title="마이페이지 수정" />;
-
-      case '/my-page/favorites':
-         return <AppBar title="나의 찜" />;
-
-      case '/my-page/reviews':
-         return <AppBar title="나의 리뷰" />;
-
-      default:
-         return null;
+   if (matchedRoute) {
+      return <AppBar {...matchedRoute.props} />;
    }
+
+   if (detailMatch) {
+      return <AppBar title={tea?.tea_name ?? '티 상세'} />;
+   }
+
+   if (reviewEditMatch) {
+      return <AppBar title="티 리뷰 수정" />;
+   }
+
+   if (reviewDetailMatch) {
+      return <AppBar title="티 리뷰 상세" />;
+   }
+
+   return <AppBar hasBackBtn />;
 }

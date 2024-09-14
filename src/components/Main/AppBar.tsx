@@ -17,57 +17,51 @@ export interface AppBarProps {
 export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
    const navigate = useNavigate();
 
+   function renderBackButton() {
+      return (
+         <button
+            type="button"
+            className="focus-green m-4"
+            aria-label="뒤로가기"
+            onClick={() => navigate(-1)}
+         >
+            <span
+               className="fi fi-rs-angle-left text-xs text-green-700"
+               aria-hidden={true}
+            />
+         </button>
+      );
+   }
+
+   function renderContent() {
+      if (hasLogo) {
+         return (
+            <span className="focus-green mx-auto">
+               <Logo />
+            </span>
+         );
+      }
+
+      if (title) {
+         return (
+            <>
+               {renderBackButton()}
+               <p className="text-green-700">{title}</p>
+            </>
+         );
+      }
+
+      if (hasBackBtn || (!hasBackBtn && !hasLogo && !title)) {
+         return renderBackButton();
+      }
+
+      return null;
+   }
+
    return (
       <header className="my-6 h-10">
          <nav className="fixed top-0 z-20 flex w-full max-w-[48rem] items-center bg-stone-100 py-3 text-base">
-            {hasBackBtn ? (
-               <button
-                  type="button"
-                  className="focus-green m-4"
-                  aria-label="뒤로가기"
-                  onClick={() => navigate(-1)}
-               >
-                  <span
-                     className="fi fi-rs-angle-left text-xs text-green-700"
-                     aria-hidden={true}
-                  />
-               </button>
-            ) : hasLogo ? (
-               <button
-                  className="focus-green mx-auto"
-                  onClick={() => navigate('/')}
-                  type="button"
-               >
-                  <Logo alt="메인 페이지로 이동" />
-               </button>
-            ) : title ? (
-               <>
-                  <button
-                     type="button"
-                     className="focus-green m-4"
-                     aria-label="뒤로가기"
-                     onClick={() => navigate(-1)}
-                  >
-                     <span
-                        className="fi fi-rs-angle-left text-xs text-green-700"
-                        aria-hidden={true}
-                     />
-                  </button>
-                  <span className="text-green-700">{title}</span>
-               </>
-            ) : (
-               <button
-                  type="button"
-                  className="focus-green m-4"
-                  aria-label="뒤로가기"
-                  onClick={() => navigate(-1)}
-               >
-                  <span
-                     className="fi fi-rs-angle-left text-xs text-green-700"
-                     aria-hidden={true}
-                  />
-               </button>
-            )}
+            {renderContent()}
          </nav>
       </header>
    );
