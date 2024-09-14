@@ -32,6 +32,7 @@ export function Component() {
 
    return (
       <main className="flex flex-col items-center px-6">
+         <h1 className="sr-only">리뷰 수정 페이지</h1>
          <div className="h-80 w-80 rounded-3xl bg-stone-300">
             <img className="object-cover" src="" alt="" />
          </div>
