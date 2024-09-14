@@ -1,28 +1,14 @@
-import { useLocation, matchPath, PathMatch } from 'react-router-dom';
+import { useLocation, matchPath } from 'react-router-dom';
 import AppBar from './AppBar';
 import { useTeaData } from '@/hooks/useTeaData';
-import { ComponentProps } from 'react';
-
-type AppBarProps = ComponentProps<typeof AppBar>;
+import type { ComponentProps } from 'react';
 
 interface RouteConfig {
    path: string;
-   props: AppBarProps;
+   props: ComponentProps<typeof AppBar>;
 }
 
-type Route =
-   | '/'
-   | '/join'
-   | '/search'
-   | '/reviews'
-   | '/reviews/write'
-   | '/recommend'
-   | '/my-page'
-   | '/my-page/edit'
-   | '/my-page/favorites'
-   | '/my-page/reviews';
-
-const routes: readonly RouteConfig[] = [
+const routes: RouteConfig[] = [
    { path: '/', props: { hasLogo: true } },
    { path: '/join', props: { hasBackBtn: true } },
    { path: '/search', props: { title: '검색' } },
@@ -33,27 +19,22 @@ const routes: readonly RouteConfig[] = [
    { path: '/my-page/edit', props: { title: '마이페이지 수정' } },
    { path: '/my-page/favorites', props: { title: '나의 찜' } },
    { path: '/my-page/reviews', props: { title: '나의 리뷰' } },
-] as const;
+];
 
-const noAppBarRoutes = ['/login', '/my-selection', '/my-taste'] as const;
-type NoAppBarRoute = (typeof noAppBarRoutes)[number];
+// AppBar를 표시하지 않을 페이지들의 경로
+const noAppBarRoutes = ['/login', '/my-selection', '/my-taste'];
 
 export default function AppBarController() {
    const location = useLocation();
 
-   if (noAppBarRoutes.includes(location.pathname as NoAppBarRoute)) {
+   // AppBar를 표시하지 않을 페이지들에서는 null을 반환합니다.
+   if (noAppBarRoutes.includes(location.pathname)) {
       return null;
    }
 
-   const detailMatch: PathMatch<'id'> | null = matchPath(
-      '/detail/:id',
-      location.pathname
-   );
-   const reviewEditMatch: PathMatch<'id'> | null = matchPath(
-      '/reviews/edit/:id',
-      location.pathname
-   );
-   const reviewDetailMatch: PathMatch<'id'> | null = matchPath(
+   const detailMatch = matchPath('/detail/:id', location.pathname);
+   const reviewEditMatch = matchPath('/reviews/edit/:id', location.pathname);
+   const reviewDetailMatch = matchPath(
       '/reviews/detail/:id',
       location.pathname
    );
@@ -61,8 +42,7 @@ export default function AppBarController() {
    const tea = useTeaData(detailMatch?.params?.id);
 
    const matchedRoute = routes.find(
-      (route): route is (typeof routes)[number] =>
-         location.pathname === route.path
+      (route) => location.pathname === route.path
    );
 
    if (matchedRoute) {
