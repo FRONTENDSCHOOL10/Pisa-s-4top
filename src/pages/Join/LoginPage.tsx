@@ -50,7 +50,7 @@ export default function LoginPage() {
    };
 
    return (
-      <main className="flex h-[100dvh] flex-col items-center justify-center">
+      <main className="center-layout">
          <h1 className="sr-only">로그인</h1>
 
          <Logo large />
