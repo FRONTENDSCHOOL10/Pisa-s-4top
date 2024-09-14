@@ -70,7 +70,7 @@ export default function JoinPage() {
                content="회원가입"
                type="submit"
                size="fullWidth"
-               disabled={true}
+               disabled={false}
             />
          </form>
       </main>
