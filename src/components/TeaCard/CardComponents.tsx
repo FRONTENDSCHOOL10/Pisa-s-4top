@@ -122,7 +122,7 @@ export function CardLayout({
    );
 
    return to ? (
-      <Link to={to} className="w-ful relative" aria-label={ariaLabel}>
+      <Link to={to} aria-label={ariaLabel}>
          {content}
       </Link>
    ) : (
