@@ -46,7 +46,7 @@ export default function JoinPage() {
    };
 
    return (
-      <main className="flex h-[100dvh] flex-col items-center justify-center">
+      <main className="center-layout">
          <Logo small className="mx-auto" />
 
          <h1 className="mt-[0.6875rem] text-center font-bold">회원가입</h1>

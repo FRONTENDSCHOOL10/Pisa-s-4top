@@ -35,6 +35,10 @@ button:disabled {
       @apply p-1 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-green-700;
    }
 
+   .center-layout {
+      @apply flex h-[100dvh] flex-col items-center justify-center;
+   }
+
    .outline-default {
       @apply ring-1 ring-stone-950 focus:ring-stone-950;
    }
