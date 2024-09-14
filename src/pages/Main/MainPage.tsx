@@ -53,7 +53,7 @@ export default function MainPage() {
    return (
       <main>
          <h1 className="sr-only">메인 페이지</h1>
-         <SearchInput />
+         <SearchInput isButton={true} />
          <h2 className="mb-6 mt-12 text-4xl font-thin text-stone-950">
             상큼한
             <br />
