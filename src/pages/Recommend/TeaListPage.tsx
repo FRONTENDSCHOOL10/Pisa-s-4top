@@ -1,10 +1,10 @@
-
 import { TabButton } from '@/components/Buttons/TabButton';
 import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
 import { fetchTeaData, fetchTeaCategoryData } from '@/utils/fetchData';
 import { useEffect, useState } from 'react';
 
 interface Tea {
+   id: string;
    tea_image: string;
    tea_name: string;
    tea_brand: string;
@@ -27,9 +27,8 @@ export function Component() {
             const categoryData = await fetchTeaCategoryData();
             setCategories(categoryData);
 
-            // 첫 번째 카테고리로 자동 선택
             if (categoryData.length > 0) {
-               setSelectedCategory(categoryData[0].id);
+               setSelectedCategory(categoryData[0].category);
             }
          } catch (error) {
             console.error('Failed to fetch tea category data:', error);
@@ -60,25 +59,25 @@ export function Component() {
    return (
       <main className="flex flex-col gap-5">
          <h1 className="sr-only">추천 티 리스트 페이지</h1>
-
          <TabButton
             tabs={categories.map((category) => category.category)}
             onTabSelect={(categoryName) => {
                setSelectedCategory(categoryName);
             }}
+            activeTab={selectedCategory}
          />
-
-         <div className="grid grid-cols-[repeat(auto-fill,_minmax(158px,_1fr))] gap-4">
-            {teaData.map((tea: Tea, index: number) => (
-               <div key={index} className="flex justify-center">
+         <ul className="grid grid-cols-[repeat(auto-fill,_minmax(158px,_1fr))] gap-4">
+            {teaData.map((tea: Tea) => (
+               <li key={tea.id} className="flex justify-center">
                   <TeaRecommendCard
+                     id={tea.id}
                      imageUrl={tea.tea_image}
                      teaName={tea.tea_name}
                      brand={tea.tea_brand}
                   />
-               </div>
+               </li>
             ))}
-         </div>
+         </ul>
       </main>
    );
 }

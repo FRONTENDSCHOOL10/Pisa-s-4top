@@ -122,7 +122,7 @@ export function CardLayout({
    );
 
    return to ? (
-      <Link to={to} aria-label={ariaLabel}>
+      <Link to={to} className="w-ful relative" aria-label={ariaLabel}>
          {content}
       </Link>
    ) : (
@@ -173,18 +173,21 @@ export function TeaRecipeCard({ title, imageUrl, steps }: TeaRecipeCardProps) {
 
 // 티 추천 카드
 export interface TeaRecommendCardProps {
+   id: string;
    imageUrl: string;
    teaName: string;
    brand: string;
 }
 
 export function TeaRecommendCard({
+   id,
    imageUrl,
    teaName,
    brand,
 }: TeaRecommendCardProps) {
    return (
       <CardLayout
+         to={`/detail/${id}`}
          className="!w-40 cursor-pointer bg-gradient-to-b from-white from-70% to-stone-100 to-100%"
          ariaLabel={`${teaName} 추천 카드`}
       >
@@ -298,7 +301,6 @@ export function TeaTasteCard({
       </CardLayout>
    );
 }
-
 // 티 리뷰 카드
 interface TeaReviewDetailCardProps {
    title: string;
