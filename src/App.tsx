@@ -3,13 +3,11 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import router from '@/router';
 
-function App() {
+export default function App() {
    return (
       <HelmetProvider>
          <RouterProvider router={router} />
-         <Toaster />
+         <Toaster position="bottom-center" reverseOrder={false} />
       </HelmetProvider>
    );
 }
-
-export default App;

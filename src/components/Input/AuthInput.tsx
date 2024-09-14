@@ -3,6 +3,7 @@
 /* 사용법
 
 0. 사용 시 <form></form> 태그를 직접 넣어주어야 합니다.
+1. 추가해야 할 속성이 있다면 restProps이 설정되어 있으니 알아서 넣어주세요!
 
 <form onSubmit={(e: FormEvent<HTMLFormElement>) => { e.preventDefault(); }}>
    <AuthInput title="이메일" type="email" />
@@ -20,9 +21,10 @@ import { isValidEmail, isValidPassword } from '@/utils/isValidCheck';
 export interface Props {
    title: string;
    type: string;
+   [property: string]: any;
 }
 
-export default function AuthInput({ title, type }: Props) {
+export default function AuthInput({ title, type, ...restProps }: Props) {
    const [outlineColor, setOutlineColor] = useState<string>('outline-default');
 
    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +48,7 @@ export default function AuthInput({ title, type }: Props) {
          defaultValue=""
          onChange={handleChange}
          focusOutlineColor={outlineColor}
+         {...restProps}
       />
    );
 }
