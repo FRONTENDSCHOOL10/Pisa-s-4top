@@ -51,7 +51,7 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
          );
       }
 
-      if (hasBackBtn || (!hasBackBtn && !hasLogo && !title)) {
+      if (hasBackBtn) {
          return renderBackButton();
       }
 
