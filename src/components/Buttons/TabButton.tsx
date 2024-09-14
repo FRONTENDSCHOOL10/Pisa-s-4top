@@ -7,9 +7,15 @@ export interface TabButtonProps {
    tabs: string[];
    onTabSelect: (tab: string) => void;
    [props: string]: any;
+   className?: string;
 }
 
-export function TabButton({ tabs, onTabSelect, ...restProps }: TabButtonProps) {
+export function TabButton({
+   tabs,
+   onTabSelect,
+   className,
+   ...restProps
+}: TabButtonProps) {
    const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
    function handleTabClick(tab: string) {
@@ -18,7 +24,7 @@ export function TabButton({ tabs, onTabSelect, ...restProps }: TabButtonProps) {
    }
 
    return (
-      <ul className="flex select-none gap-1" {...restProps}>
+      <ul className={`flex select-none gap-1 ${className}`} {...restProps}>
          {tabs.map((tab) => (
             <li key={tab}>
                <button
