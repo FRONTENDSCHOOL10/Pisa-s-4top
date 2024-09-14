@@ -56,7 +56,7 @@ export const routes: RouteObject[] = [
                   lazy: () => import('@/pages/Reviews/ReviewsWritePage'),
                },
                {
-                  path: 'edit/:id',
+                  path: 'edit', // TODO: DB 연결 후 ':id' 수정 예정?
                   lazy: () => import('@/pages/Reviews/ReviewsEditPage'),
                },
             ],
