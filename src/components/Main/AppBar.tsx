@@ -18,8 +18,8 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
    const navigate = useNavigate();
 
    return (
-      <header>
-         <nav className="fixed top-0 z-20 flex h-[3.25rem] w-full max-w-[48rem] items-center bg-stone-100 text-base">
+      <header className="my-5 h-10">
+         <nav className="fixed top-0 z-20 flex w-full max-w-[48rem] items-center bg-stone-100 py-5 text-base">
             {hasBackBtn ? (
                <button
                   type="button"
