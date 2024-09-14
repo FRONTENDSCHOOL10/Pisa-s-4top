@@ -133,3 +133,6 @@ dist
 build
 dist
 *storybook.log
+
+# env
+.env
