@@ -5,21 +5,21 @@ export function Component() {
       <main>
          <h1 className="sr-only">나의 찜 페이지</h1>
          <article className="grid">
-            <ul className="sm:grid-col-2 grid gap-5 md:grid-cols-3 lg:grid-cols-4">
+            <ul className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                <li className="flex justify-center">
-                  <TeaRecommendCard />
+                  <TeaRecommendCard imageUrl="" teaName="" brand="" />
                </li>
                <li className="flex justify-center">
-                  <TeaRecommendCard />
+                  <TeaRecommendCard imageUrl="" teaName="" brand="" />
                </li>
                <li className="flex justify-center">
-                  <TeaRecommendCard />
+                  <TeaRecommendCard imageUrl="" teaName="" brand="" />
                </li>
                <li className="flex justify-center">
-                  <TeaRecommendCard />
+                  <TeaRecommendCard imageUrl="" teaName="" brand="" />
                </li>
                <li className="flex justify-center">
-                  <TeaRecommendCard />
+                  <TeaRecommendCard imageUrl="" teaName="" brand="" />
                </li>
             </ul>
          </article>
