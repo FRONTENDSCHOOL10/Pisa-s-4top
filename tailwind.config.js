@@ -2,6 +2,12 @@
 export default {
    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
    theme: {
+      screens: {
+         xs: '320px',
+         sm: '400px',
+         md: '568px',
+         lg: '720px',
+      },
       extend: {
          boxShadow: {
             'home-review':
