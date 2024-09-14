@@ -1,17 +1,88 @@
 import { Button } from '@/components/Buttons/Buttons';
-import {
-   TeaDescriptionCard,
-   TeaRecipeCard,
-} from '@/components/TeaCard/CardComponents';
+import { TeaDescriptionCard } from '@/components/TeaCard/CardComponents';
 import TeaInfo from '@/components/TeaDetail/TeaInfo';
 import TeaReviewList from '@/components/TeaDetail/TeaReviewList';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { fetchTeaData, fetchTeaTastingNotes } from '@/utils/fetchData';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+
+interface Tea {
+   id: string;
+   tea_name: string;
+   tea_category: string;
+   tea_brand: string;
+   tea_image: string;
+   tea_amount: number;
+   tea_water_amount: number;
+   tea_temperature: number;
+   tea_brew_time: number;
+   tea_detail: string;
+   total_like: number;
+   score: number; //review 데이터 추가 후 수정 예정
+}
 
 export function Component() {
+   const { id } = useParams<{ id: string }>();
+   const [tea, setTea] = useState<Tea | null>(null);
+   const [labels, setLabels] = useState<string[]>([]);
+
+   useEffect(() => {
+      const getTeaData = async () => {
+         try {
+            if (!id) return;
+
+            const teaData = await fetchTeaData();
+            const selectedTea = teaData.find((item: Tea) => item.id === id);
+            setTea(selectedTea || null);
+
+            if (selectedTea) {
+               const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
+
+               setLabels(tastingNotes);
+            }
+         } catch (error) {
+            console.error('Failed to fetch tea data:', error);
+         }
+      };
+
+      getTeaData();
+   }, [id]);
+
+   if (!tea) {
+      return <LoadingSpinner />;
+   }
+
    return (
       <main className="flex flex-col gap-4">
          <h1 className="sr-only">티 상세 페이지</h1>
          <div className="mx-8">
-            <TeaInfo />
+            <TeaInfo
+               img={tea.tea_image}
+               category={tea.tea_category}
+               name={tea.tea_name}
+               brand={tea.tea_brand}
+               totalLike={tea.total_like}
+               score={
+                  tea.score as
+                     | 0
+                     | 0.5
+                     | 1
+                     | 1.5
+                     | 2
+                     | 2.5
+                     | 3
+                     | 3.5
+                     | 4
+                     | 4.5
+                     | 5
+               } // review 데이터 추가 후 수정 예정
+               teaAmount={tea.tea_amount}
+               waterAmount={tea.tea_water_amount}
+               temperature={tea.tea_temperature}
+               brewingTime={tea.tea_brew_time}
+               labels={labels}
+            />
             <Button
                isLink={true}
                href="/reviews/write"
@@ -21,17 +92,8 @@ export function Component() {
                className="mb-2 mt-4"
             />
          </div>
-         <TeaDescriptionCard description="이 티는 레몬과 오렌지, 꿀이 들어간 상쾌한 향이 특징입니다." />
-         <TeaRecipeCard
-            title="이렇게도 드실 수 있어요!"
-            imageUrl=""
-            steps={[
-               '1. 레몬을 얇게 썬다.',
-               '2. 오렌지와 꿀을 섞는다.',
-               '3. 뜨거운 물을 부어 잘 저어준다.',
-            ]}
-         />
-         <TeaReviewList />
+         <TeaDescriptionCard description={tea.tea_detail} />
+         <TeaReviewList /> // review 데이터 추가 후 수정 예정
       </main>
    );
 }
