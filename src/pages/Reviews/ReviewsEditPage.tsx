@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/Buttons/Buttons';
-import { fetchTasteNoteData } from '@/utils/fetchData';
+import { loadTasteNoteData } from '@/utils/fetchData';
 import { StarRatingAverage } from '@/components/Review/StarRate';
 import {
    TeaColorCard,
@@ -10,19 +10,25 @@ import {
 
 export function Component() {
    const [tasteNoteData, setTasteNoteData] = useState<string[]>([]);
+   const [selectedLabels, setSelectedLabels] = useState<boolean[]>([]);
 
    useEffect(() => {
-      const loadTasteNoteData = async () => {
+      const fetchData = async () => {
          try {
-            const labelData = await fetchTasteNoteData();
-            setTasteNoteData(labelData);
+            await loadTasteNoteData(setTasteNoteData, setSelectedLabels);
          } catch (error) {
             console.error('Failed to fetch tastenote data:', error);
          }
       };
 
-      loadTasteNoteData();
+      fetchData();
    }, []);
+
+   const toggleLabelSelection = (index: number) => {
+      setSelectedLabels((prevSelected) =>
+         prevSelected.map((selected, i) => (i === index ? !selected : selected))
+      );
+   };
 
    return (
       <main className="flex flex-col items-center px-6">
@@ -31,7 +37,15 @@ export function Component() {
          </div>
          <p className="my-4">nickname</p>
          <StarRatingAverage score={3} />
-         <TeaTasteCard labels={tasteNoteData} className="mb-2 mt-8" />
+
+         <TeaTasteCard
+            labels={tasteNoteData}
+            className="mb-2 mt-8"
+            selectedLabels={selectedLabels}
+            handleToggleLabel={toggleLabelSelection}
+            types="button"
+         />
+
          <TeaColorCard className="mb-2" />
          <TeaReviewDetailCard title="리뷰 제목" contents="리뷰 내용" />
 
