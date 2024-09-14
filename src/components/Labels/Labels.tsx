@@ -110,9 +110,8 @@ interface LabelGroupProps {
    types: 'label' | 'button';
    size?: 'small' | 'large';
    className?: string;
-
-   selectedLabels: boolean[];
-   handleToggleLabel: (index: number) => void;
+   selectedLabels?: boolean[];
+   handleToggleLabel?: (index: number) => void;
 }
 
 export const LabelGroup = memo(
@@ -130,6 +129,12 @@ export const LabelGroup = memo(
                if (types === 'label') {
                   return <Label key={index} content={label} size={size} />;
                } else if (types === 'button') {
+                  if (!selectedLabels || !handleToggleLabel) {
+                     console.error(
+                        'selectedLabels and handleToggleLabel are required for button type'
+                     );
+                     return null;
+                  }
                   return (
                      <LabelButton
                         key={index}
