@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LabelGroup } from '@/components/Labels/Labels';
-import { fetchTasteNoteData } from '@/utils/fetchData';
+import { loadTasteNoteData } from '@/utils/fetchData';
 import { Button } from '@/components/Buttons/Buttons';
 
 export function Component() {
@@ -8,17 +8,15 @@ export function Component() {
    const [selectedLabels, setSelectedLabels] = useState<boolean[]>([]);
 
    useEffect(() => {
-      const loadTasteNoteData = async () => {
+      const fetchData = async () => {
          try {
-            const labelData = await fetchTasteNoteData();
-            setTasteNoteData(labelData);
-            setSelectedLabels(new Array(labelData.length).fill(false));
+            await loadTasteNoteData(setTasteNoteData, setSelectedLabels);
          } catch (error) {
             console.error('Failed to fetch tastenote data:', error);
          }
       };
 
-      loadTasteNoteData();
+      fetchData();
    }, []);
 
    const toggleLabelSelection = (index: number) => {

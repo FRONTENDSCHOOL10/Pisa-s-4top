@@ -271,15 +271,30 @@ export function TeaColorCard({ className = '' }: TeaColorCardProps) {
 // 티 맛 선택 카드
 
 interface TeaTasteCardProps {
-   labels: { label: string }[];
+   labels: string[];
    className?: string;
+   selectedLabels: boolean[];
+   handleToggleLabel: (index: number) => void;
+   types: 'label' | 'button';
 }
 
-export function TeaTasteCard({ labels, className = '' }: TeaTasteCardProps) {
+export function TeaTasteCard({
+   labels,
+   className = '',
+   selectedLabels,
+   handleToggleLabel,
+   types = 'label',
+}: TeaTasteCardProps) {
    return (
       <CardLayout ariaLabel="티 맛 카드" className={className}>
          <CardTitle className="mb-2">맛</CardTitle>
-         <LabelGroup labels={labels} />
+         <LabelGroup
+            labels={labels}
+            types={types}
+            className="flex w-full justify-center"
+            selectedLabels={selectedLabels}
+            handleToggleLabel={handleToggleLabel}
+         />
       </CardLayout>
    );
 }

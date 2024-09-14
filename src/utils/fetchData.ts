@@ -88,19 +88,27 @@ export async function fetchLikeData() {
 }
 
 // 테이스팅 노트 데이터 함수
-export async function fetchTasteNoteData() {
+export const loadTasteNoteData = async (
+   setTasteNoteData: (data: string[]) => void,
+   setSelectedLabels: (data: boolean[]) => void
+) => {
    try {
       const response = await supabaseAxios.get(
          `/rest/v1/tastingnote?select=taste_name`
       );
 
+      if (!Array.isArray(response.data)) {
+         throw new Error('Unexpected response format: expected an array');
+      }
+
       const tasteNoteArray = response.data.map(
          (item: { taste_name: string }) => item.taste_name
       );
-      console.log('Taste note array:', tasteNoteArray);
-      return tasteNoteArray;
+
+      setTasteNoteData(tasteNoteArray);
+      setSelectedLabels(new Array(tasteNoteArray.length).fill(false));
    } catch (error) {
       console.error('Error fetching taste note data:', error);
-      throw error;
+      throw new Error('Failed to load tasting notes. Please try again later.');
    }
-}
+};
