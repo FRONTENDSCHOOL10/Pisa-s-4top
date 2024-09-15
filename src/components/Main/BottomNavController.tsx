@@ -1,12 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, matchPath } from 'react-router-dom';
 import BottomNav from './BottomNav';
 
 export default function BottomNavController() {
    const location = useLocation();
 
-   // 바텀 내비게이션 보여질 경로
-   // TODO: 추후 ':id' 는 동적으로 받기?
    const showRoutes = [
       '/',
       '/recommend',
@@ -22,9 +20,9 @@ export default function BottomNavController() {
       '/my-page/favorites',
    ];
 
-   if (showRoutes.includes(location.pathname)) {
-      return <BottomNav />;
-   } else {
-      return null;
-   }
+   const shouldShow = showRoutes.some((route) =>
+      matchPath(route, location.pathname)
+   );
+
+   return shouldShow ? <BottomNav /> : null;
 }

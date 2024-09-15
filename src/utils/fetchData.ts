@@ -112,3 +112,14 @@ export const loadTasteNoteData = async (
       throw new Error('Failed to load tasting notes. Please try again later.');
    }
 };
+
+// 티 테이스팅 노트 데이터 함수
+export async function fetchTeaTastingNotes(teaId: string) {
+   try {
+      const response = await supabaseAxios.get(`/rest/v1/teatastingnote?tea=eq.${teaId}&select=tastingnote`);
+      return response.data.map((item: { tastingnote: string }) => item.tastingnote);
+   } catch (error) {
+      console.error('Error fetching tea tasting notes:', error);
+      throw error;
+   }
+}
