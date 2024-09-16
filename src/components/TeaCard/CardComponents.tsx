@@ -79,7 +79,7 @@ export function CardImage({
       <img
          src={src}
          alt={decorative ? '' : alt}
-         className={`w-full rounded-md object-cover ${className}`}
+         className={`w-full rounded-md object-contain ${className}`}
          aria-hidden={decorative}
       />
    );
@@ -92,7 +92,9 @@ interface TitleProps {
 
 export function CardTitle({ children, className }: TitleProps) {
    return (
-      <h3 className={`text-xl font-extrabold text-stone-950 ${className}`}>
+      <h3
+         className={`h-14 w-full truncate text-wrap pr-4 text-lg font-extrabold leading-6 text-stone-950 ${className}`}
+      >
          {children}
       </h3>
    );
@@ -114,7 +116,7 @@ export function CardLayout({
 }: CardLayoutProps) {
    const content = (
       <article
-         className={`relative w-full rounded-2xl border border-stone-300 bg-white p-5 shadow-xl ${className}`}
+         className={`relative w-full rounded-2xl border border-stone-300 bg-white p-5 ${className}`}
          aria-label={ariaLabel}
       >
          {children}
@@ -185,21 +187,21 @@ export function TeaRecommendCard({
 }: TeaRecommendCardProps) {
    return (
       <CardLayout
-         className="!w-40 cursor-pointer bg-gradient-to-b from-white from-70% to-stone-100 to-100%"
+         className="!w-48 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100%"
          ariaLabel={`${teaName} 추천 카드`}
       >
-         <div className="absolute left-0 top-0 w-[158px] overflow-hidden rounded-t-2xl bg-stone-200">
+         <div className="absolute left-0 top-0 w-48 rounded-t-2xl">
             <CardImage
                src={imageUrl}
                alt={`${teaName} 미리보기`}
                className="h-36"
             />
          </div>
-         <div className="absolute bottom-10 right-5">
-            <ButtonHeart />
-         </div>
-         <div className="mt-36">
+         <div className="relative mt-36">
             <CardTitle className="mb-1 text-base">{teaName}</CardTitle>
+            <div className="absolute right-0 top-0.5">
+               <ButtonHeart />
+            </div>
             <p className="text-sm text-stone-400">{brand}</p>
          </div>
       </CardLayout>

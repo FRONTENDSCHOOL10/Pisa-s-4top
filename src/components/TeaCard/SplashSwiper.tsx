@@ -25,8 +25,8 @@ export default function SplashSwiper({
             disableOnInteraction: false,
             reverseDirection: reverse,
          }}
-         centeredSlides={true}
          modules={[Autoplay]}
+         centeredSlides={true}
          speed={5000}
          className="w-full"
          role="list"
