@@ -175,18 +175,21 @@ export function TeaRecipeCard({ title, imageUrl, steps }: TeaRecipeCardProps) {
 
 // 티 추천 카드
 export interface TeaRecommendCardProps {
+   id: string;
    imageUrl: string;
    teaName: string;
    brand: string;
 }
 
 export function TeaRecommendCard({
+   id,
    imageUrl,
    teaName,
    brand,
 }: TeaRecommendCardProps) {
    return (
       <CardLayout
+         to={`/detail/${id}`}
          className="!w-48 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100%"
          ariaLabel={`${teaName} 추천 카드`}
       >
@@ -273,19 +276,33 @@ export function TeaColorCard({ className = '' }: TeaColorCardProps) {
 // 티 맛 선택 카드
 
 interface TeaTasteCardProps {
-   labels: { label: string }[];
+   labels: string[];
    className?: string;
+   selectedLabels: boolean[];
+   handleToggleLabel: (index: number) => void;
+   types: 'label' | 'button';
 }
 
-export function TeaTasteCard({ labels, className = '' }: TeaTasteCardProps) {
+export function TeaTasteCard({
+   labels,
+   className = '',
+   selectedLabels,
+   handleToggleLabel,
+   types = 'label',
+}: TeaTasteCardProps) {
    return (
       <CardLayout ariaLabel="티 맛 카드" className={className}>
          <CardTitle className="mb-2">맛</CardTitle>
-         <LabelGroup labels={labels} />
+         <LabelGroup
+            labels={labels}
+            types={types}
+            className="flex w-full justify-center"
+            selectedLabels={selectedLabels}
+            handleToggleLabel={handleToggleLabel}
+         />
       </CardLayout>
    );
 }
-
 // 티 리뷰 카드
 interface TeaReviewDetailCardProps {
    title: string;

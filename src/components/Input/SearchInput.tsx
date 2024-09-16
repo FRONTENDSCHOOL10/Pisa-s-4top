@@ -11,7 +11,7 @@
 */
 
 import { MouseEventHandler, useId, useState } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export interface Props {
    isButton?: boolean;

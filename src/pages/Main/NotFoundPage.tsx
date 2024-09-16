@@ -5,7 +5,7 @@ export default function NotFoundPage() {
    const location = useLocation();
 
    return (
-      <main className="flex h-[100dvh] flex-col items-center justify-center">
+      <main className="center-layout">
          <h1 className="sr-only">잘못된 경로 진입</h1>
 
          <p className="text-9xl font-bold">

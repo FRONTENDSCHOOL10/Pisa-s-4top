@@ -18,9 +18,25 @@ main {
    padding: 1rem;
 }
 
+button:disabled {
+   --button-disabled: #d6d3d1;
+
+   color: inherit;
+   background-color: var(--button-disabled);
+   cursor: not-allowed;
+
+   &:hover {
+      background-color: var(--button-disabled);
+   }
+}
+
 @layer components {
    .focus-green {
       @apply p-1 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-green-700;
+   }
+
+   .center-layout {
+      @apply flex h-[100dvh] flex-col items-center justify-center;
    }
 
    .outline-default {
