@@ -123,3 +123,16 @@ export async function fetchTeaTastingNotes(teaId: string) {
       throw error;
    }
 }
+
+// 리뷰 데이터 함수
+export async function fetchReviewData() {
+   const data = await fetchDataFromTable('review');
+   // 데이터 구조를 일관되게 하기 위해 필요한 속성에 기본값 추가
+   return data.map((review) => ({
+      id: review.id || '', // 필요한 속성
+      review_title: review.review_title || '제목 없음',
+      review_comment: review.review_comment || '코멘트 없음',
+      review_user: review.review_user || '익명',
+      tea_rate: review.tea_rate || '',
+   }));
+}

@@ -36,7 +36,9 @@ export default function App() {
 */
 
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
+import 'swiper/css/autoplay';
 import { TeaRecommendCard, TeaRecommendCardProps } from './CardComponents';
 
 interface TeaRecommendSwiperProps {
@@ -48,12 +50,16 @@ export default function TeaRecommendSwiper({
 }: TeaRecommendSwiperProps) {
    return (
       <Swiper
-         spaceBetween={16}
+         spaceBetween={8}
          slidesPerView="auto"
          loop={true}
          centeredSlides={true}
-         autoplay={true}
-         style={{ overflow: 'visible' }}
+         speed={5000}
+         autoplay={{
+            delay: 0,
+            disableOnInteraction: false,
+         }}
+         modules={[Autoplay]}
          role="list"
          aria-label="추천하는 티 슬라이드"
       >
