@@ -1,18 +1,36 @@
 import { TabButton } from '@/components/Buttons/TabButton';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
-import { fetchTeaCategoryData } from '@/utils/fetchData';
+import { fetchTeaCategoryData, fetchReviewData } from '@/utils/fetchData';
 import { useEffect, useState } from 'react';
+
 interface TeaCategory {
    id: string;
    category: string;
 }
+
+interface Review {
+   id: string;
+   review_user: string;
+   review_title: string;
+   review_comment: string;
+   tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
+   tea: {
+      id: string;
+      tea_name: string;
+      category: string;
+   };
+}
+
 export function Component() {
    const [categories, setCategories] = useState<TeaCategory[]>([]);
    const [selectedCategory, setSelectedCategory] = useState<string>('');
-   // const [reviewData, setReviewData] = useState([]);
+   const [reviewData, setReviewData] = useState<Review[]>([]);
+   const [isLoading, setIsLoading] = useState(true);
 
    useEffect(() => {
-      const getCategories = async () => {
+      const fetchData = async () => {
+         setIsLoading(true);
          try {
             const categoryData = await fetchTeaCategoryData();
             setCategories(categoryData);
@@ -20,30 +38,26 @@ export function Component() {
             if (categoryData.length > 0) {
                setSelectedCategory(categoryData[0].category);
             }
+
+            const data = await fetchReviewData();
+            setReviewData(data);
          } catch (error) {
-            console.error('Failed to fetch tea category data:', error);
+            console.error('Failed to fetch data:', error);
+         } finally {
+            setIsLoading(false);
          }
       };
 
-      getCategories();
+      fetchData();
    }, []);
 
-   // useEffect(() => {
-   //    const getReviews = async () => {
-   //       try {
-   //          const reviewData = await fetchReviewData();
-   //          setReviewData(reviewData);
+   const filteredReviews = reviewData.filter(
+      (review) => review.tea.category === selectedCategory
+   );
 
-   //          if (reviewData.length > 0) {
-   //             setReviewData(reviewData[0].category);
-   //          }
-   //       } catch (error) {
-   //          console.error('Failed to fetch tea category data:', error);
-   //       }
-   //    };
-
-   //    getReviews();
-   // }, [])
+   if (isLoading) {
+      return <LoadingSpinner />;
+   }
 
    return (
       <main className="flex flex-col gap-5">
@@ -57,31 +71,17 @@ export function Component() {
          />
 
          <section className="flex flex-col gap-2">
-            {/* HomeReviewCard에 임시 데이터 전달 */}
-            <HomeReviewCard
-               id="1"
-               profileImg="/default-profile.png"
-               title="Sample Review Title 1"
-               nickname="Sample User 1"
-               comment="This is a sample review comment."
-               score={4}
-            />
-            <HomeReviewCard
-               id="2"
-               profileImg="/default-profile.png"
-               title="Sample Review Title 2"
-               nickname="Sample User 2"
-               comment="This is another sample review comment."
-               score={5}
-            />
-            <HomeReviewCard
-               id="3"
-               profileImg="/default-profile.png"
-               title="Sample Review Title 3"
-               nickname="Sample User 3"
-               comment="Yet another sample review comment."
-               score={3}
-            />
+            {filteredReviews.map((review: Review) => (
+               // 프로필 이미지 데이터 연결 안함
+               <HomeReviewCard
+                  key={review.id}
+                  id={review.id}
+                  nickname={review.review_user}
+                  title={review.review_title}
+                  comment={review.review_comment}
+                  score={review.tea_rate}
+               />
+            ))}
          </section>
       </main>
    );
