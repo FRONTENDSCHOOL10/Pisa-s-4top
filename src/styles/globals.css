@@ -39,15 +39,19 @@ button:disabled {
       @apply flex h-[100dvh] flex-col items-center justify-center;
    }
 
+   .outline-base {
+      @apply w-full rounded border-none bg-stone-100 p-3 text-base font-normal placeholder-current outline-none focus:ring-2;
+   }
+
    .outline-default {
-      @apply ring-1 ring-stone-950 focus:ring-stone-950;
+      @apply outline-base ring-1 ring-stone-950 focus:ring-stone-950;
    }
 
    .outline-success {
-      @apply text-green-700 ring-2 ring-green-700 focus:ring-2 focus:ring-green-700;
+      @apply outline-base text-green-700 ring-2 ring-green-700 focus:ring-green-700;
    }
 
    .outline-error {
-      @apply text-red-600 ring-2 ring-red-600 focus:ring-2 focus:ring-red-600;
+      @apply outline-base text-red-600 ring-2 ring-red-600 focus:ring-red-600;
    }
 }
