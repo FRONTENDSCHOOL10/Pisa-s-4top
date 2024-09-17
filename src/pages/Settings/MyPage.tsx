@@ -1,6 +1,9 @@
+import supabase from '@/api/supabase';
 import { Button } from '@/components/Buttons/Buttons';
 import { UserActivity } from '@/components/User/UserActivity';
 import UserCollection from '@/components/User/UserCollection';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface Activity {
    title: string;
@@ -15,6 +18,21 @@ const activities: Activity[] = [
 ];
 
 export function Component() {
+   const navigate = useNavigate();
+
+   const handleLogout = async () => {
+      const { error } = await supabase.auth.signOut();
+
+      toast.success('로그아웃하였습니다');
+      navigate('/login');
+      localStorage.removeItem('@auth/login');
+
+      if (error) {
+         toast.error('로그아웃에 실패하였습니다');
+         console.error('로그아웃 오류: ', error.message);
+      }
+   };
+
    return (
       <main className="flex flex-col gap-6">
          <h1 className="sr-only">마이페이지</h1>
@@ -54,7 +72,7 @@ export function Component() {
          <Button
             content="로그아웃"
             size="fullWidth"
-            handleClick={() => console.log('로그아웃 버튼 클릭됨')}
+            handleClick={handleLogout}
          />
       </main>
    );

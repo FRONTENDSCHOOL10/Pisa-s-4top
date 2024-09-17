@@ -10,15 +10,16 @@
 import { useId } from 'react';
 
 export interface Props {
+   className?: string;
    label: string;
    [property: string]: any;
 }
 
-export default function CheckBox({ label, ...restProps }: Props) {
+export default function CheckBox({ className='', label, ...restProps }: Props) {
    const checkId: string = useId();
 
    return (
-      <div className="checkbox-group flex items-center gap-2">
+      <div className={`checkbox-group flex items-center gap-2 ${className}`.trim()}>
          <label className="select-none text-sm font-normal" htmlFor={checkId}>
             {label}
          </label>
