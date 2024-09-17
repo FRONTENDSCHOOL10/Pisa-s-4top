@@ -19,7 +19,7 @@ export function Component() {
             content="홈으로 이동하기"
             size="large"
             isLink={true}
-            href="/"
+            href="/main"
             ariaLabel="홈페이지"
          />
          <SplashSwiper
