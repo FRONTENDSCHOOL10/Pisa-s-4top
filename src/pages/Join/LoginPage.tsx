@@ -46,7 +46,7 @@ export default function LoginPage() {
 
          if (data.user) {
             toast.success('로그인에 성공하였습니다');
-            navigate('/');
+            navigate('/main');
             localStorage.setItem('@auth/login', 'true');
          }
 

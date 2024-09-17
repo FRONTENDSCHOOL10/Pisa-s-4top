@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
-   { to: '/', label: '메인 페이지', icon: 'home' },
+   { to: '/main', label: '메인 페이지', icon: 'home' },
    { to: '/recommend', label: '추천 티 페이지', icon: 'star' },
    { to: '/reviews', label: '리뷰 페이지', icon: 'comment' },
    { to: '/my-page', label: '마이 페이지', icon: 'user' },
