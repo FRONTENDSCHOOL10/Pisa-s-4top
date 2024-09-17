@@ -1,5 +1,6 @@
 import { Button } from '@/components/Buttons/Buttons';
-import DuplicateCheckInput from '@/components/Input/DuplicateCheckInput';
+import DuplicateEmailInput from '@/components/Input/DuplicateEmailInput';
+import DuplicateNicknameInput from '@/components/Input/DuplicateNicknameInput';
 import Input from '@/components/Input/Input';
 
 //! 추후 프로필 이미지는 컴포넌트로 빼기
@@ -29,8 +30,8 @@ export function Component() {
          </div>
 
          <form className="w-full">
-            <DuplicateCheckInput title="이메일" type="email" name="email" />
-            <DuplicateCheckInput title="닉네임" type="text" name="nickname" />
+            <DuplicateEmailInput title="이메일" type="email" name="email" />
+            <DuplicateNicknameInput title="닉네임" type="text" name="nickname" />
             <Input
                title="비밀번호"
                type="password"
