@@ -137,27 +137,32 @@ export async function fetchTeaTastingNotes(teaId: string) {
 }
 
 // 리뷰 데이터 함수
-export async function fetchReviewData(teaId?: string) {
+export async function fetchReviewData(reviewId?: string) {
    try {
       let url =
-         '/rest/v1/review?select=id,review_title,review_comment,tea_rate,tea:review_tea(id,tea_name,tea_image,tea_category(id,category)),user:review_user(nickname,profile_img)';
+         '/rest/v1/review?select=id,review_title,review_comment,review_tasting_note,tea_rate,tea:review_tea(id,tea_name,tea_image,tea_category(id,category)),user:review_user(nickname,profile_img),teacolor:tea_color(id)';
 
-      if (teaId) {
-         url += `&review_tea=eq.${teaId}`;
+      if (reviewId) {
+         url += `&id=eq.${reviewId}`;
       }
 
       const response = await supabaseAxios.get(url);
+      console.log(response);
 
       return response.data.map((review) => ({
          id: review.id || '',
          review_title: review.review_title || '제목 없음',
          review_comment: review.review_comment || '코멘트 없음',
          tea_rate: review.tea_rate || 0,
+         review_tasting_note: review.review_tasting_note || [],
          tea: {
             id: review.tea?.id || '',
             tea_name: review.tea?.tea_name || '',
             tea_image: review.tea?.tea_image || '',
             category: review.tea?.tea_category?.category || '',
+         },
+         teacolor: {
+            tea_color: review.teacolor?.id || '',
          },
          user: {
             nickname: review.user?.nickname || '익명',
