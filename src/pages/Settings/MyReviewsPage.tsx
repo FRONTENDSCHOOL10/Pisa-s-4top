@@ -12,20 +12,19 @@ interface TeaCategory {
 
 interface Review {
    id: string;
-   review_user: string;
    review_title: string;
    review_comment: string;
    tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
    tea: {
       id: string;
       tea_name: string;
+      tea_image: string;
       category: string;
    };
-}
-
-interface UserInfo {
-   nickname: string;
-   profile_img: string;
+   user: {
+      nickname: string;
+      profile_img: string;
+   };
 }
 
 export function Component() {
@@ -34,7 +33,6 @@ export function Component() {
    const [selectedCategory, setSelectedCategory] = useState<string>('');
    const [reviewData, setReviewData] = useState<Review[]>([]);
    const [isLoading, setIsLoading] = useState(true);
-   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
    useEffect(() => {
       const fetchData = async () => {
@@ -46,8 +44,7 @@ export function Component() {
                navigate('/login');
                return;
             }
-            const user: UserInfo = JSON.parse(userString);
-            setUserInfo(user);
+            const user = JSON.parse(userString);
 
             const categoryData = await fetchTeaCategoryData();
             setCategories(categoryData);
@@ -59,7 +56,7 @@ export function Component() {
             const data = await fetchReviewData();
             // 사용자의 리뷰만 필터링
             const userReviews = data.filter(
-               (review) => review.review_user === user.nickname
+               (review: Review) => review.user.nickname === user.nickname
             );
             setReviewData(userReviews);
          } catch (error) {
@@ -97,13 +94,12 @@ export function Component() {
                   <HomeReviewCard
                      key={review.id}
                      id={review.id}
-                     nickname={review.review_user}
+                     teaName={review.tea.tea_name}
+                     teaImg={review.tea.tea_image}
+                     nickname={review.user.nickname}
                      title={review.review_title}
                      comment={review.review_comment}
                      score={review.tea_rate}
-                     profileImg={
-                        userInfo?.profile_img || '/assets/profileDefault.webp'
-                     }
                   />
                ))
             ) : (

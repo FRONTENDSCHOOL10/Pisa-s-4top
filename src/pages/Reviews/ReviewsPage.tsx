@@ -11,14 +11,18 @@ interface TeaCategory {
 
 interface Review {
    id: string;
-   review_user: string;
    review_title: string;
    review_comment: string;
    tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
    tea: {
       id: string;
       tea_name: string;
+      tea_image: string;
       category: string;
+   };
+   user: {
+      nickname: string;
+      profile_img: string;
    };
 }
 
@@ -72,11 +76,12 @@ export function Component() {
 
          <section className="flex flex-col gap-2">
             {filteredReviews.map((review: Review) => (
-               // 프로필 이미지 데이터 연결 안함
                <HomeReviewCard
                   key={review.id}
                   id={review.id}
-                  nickname={review.review_user}
+                  teaName={review.tea.tea_name}
+                  teaImg={review.tea.tea_image}
+                  nickname={review.user.nickname}
                   title={review.review_title}
                   comment={review.review_comment}
                   score={review.tea_rate}
