@@ -21,10 +21,13 @@ interface Activity {
 
 interface Review {
    id: string;
-   review_user: string;
    review_title: string;
    review_comment: string;
    tea_rate: number;
+   user: {
+      nickname: string;
+      profile_img: string;
+   };
 }
 
 const defaultActivities: Activity[] = [
@@ -57,7 +60,7 @@ export function Component() {
             setLoading(true);
             const reviewData: Review[] = await fetchReviewData();
             const userReviews = reviewData.filter(
-               (review) => review.review_user === user.nickname
+               (review) => review.user.nickname === user.nickname
             );
 
             const reviewCount = userReviews.length;
