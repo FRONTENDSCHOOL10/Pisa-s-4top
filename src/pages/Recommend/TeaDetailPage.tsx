@@ -4,8 +4,13 @@ import TeaInfo from '@/components/TeaDetail/TeaInfo';
 import TeaReviewList from '@/components/TeaDetail/TeaReviewList';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchTeaData, fetchTeaTastingNotes } from '@/utils/fetchData';
+import {
+   fetchTeaData,
+   fetchTeaTastingNotes,
+   fetchReviewData,
+} from '@/utils/fetchData';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import { calculateAverageRate } from '@/utils/calculateAverageRate';
 
 interface Tea {
    id: string;
@@ -19,13 +24,32 @@ interface Tea {
    tea_brew_time: number;
    tea_detail: string;
    total_like: number;
-   score: number; //review 데이터 추가 후 수정 예정
+}
+
+interface Review {
+   id: string;
+   review_title: string;
+   review_comment: string;
+   tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
+   tea: {
+      id: string;
+      tea_name: string;
+      category: string;
+   };
+   user: {
+      nickname: string;
+      profile_img: string;
+   };
 }
 
 export function Component() {
    const { id } = useParams<{ id: string }>();
    const [tea, setTea] = useState<Tea | null>(null);
    const [labels, setLabels] = useState<string[]>([]);
+   const [reviews, setReviews] = useState<Review[]>([]);
+   const [averageRate, setAverageRate] = useState<
+      0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5
+   >(0);
 
    useEffect(() => {
       const getTeaData = async () => {
@@ -38,8 +62,11 @@ export function Component() {
 
             if (selectedTea) {
                const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
-
                setLabels(tastingNotes);
+
+               const reviewsData = await fetchReviewData(id); // 여기서 id를 인자로 전달
+               setReviews(reviewsData);
+               setAverageRate(calculateAverageRate(reviewsData));
             }
          } catch (error) {
             console.error('Failed to fetch tea data:', error);
@@ -63,20 +90,7 @@ export function Component() {
                name={tea.tea_name}
                brand={tea.tea_brand}
                totalLike={tea.total_like}
-               score={
-                  tea.score as
-                     | 0
-                     | 0.5
-                     | 1
-                     | 1.5
-                     | 2
-                     | 2.5
-                     | 3
-                     | 3.5
-                     | 4
-                     | 4.5
-                     | 5
-               } // review 데이터 추가 후 수정 예정
+               averageRate={averageRate}
                teaAmount={tea.tea_amount}
                waterAmount={tea.tea_water_amount}
                temperature={tea.tea_temperature}
@@ -93,7 +107,7 @@ export function Component() {
             />
          </div>
          <TeaDescriptionCard description={tea.tea_detail} />
-         <TeaReviewList /> // review 데이터 추가 후 수정 예정
+         <TeaReviewList reviews={reviews} />
       </main>
    );
 }
