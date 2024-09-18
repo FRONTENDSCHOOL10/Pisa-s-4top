@@ -15,9 +15,9 @@ interface HomeReviewCardProps {
 }
 
 export default function HomeReviewCard({
-   id = '리뷰글 id',
+   id = '',
    teaName = '티 이름',
-   teaImg = '티 이미지 URL',
+   teaImg = '',
    nickname = '작성자 닉네임',
    title = '리뷰 타이틀',
    comment = '리뷰 내용',
@@ -32,7 +32,7 @@ export default function HomeReviewCard({
             <img
                src={teaImg}
                className="h-9 w-9 rounded-full object-cover"
-               alt={`${teaName} 이미지`}
+               alt={`${teaName}`}
             />
             <div className="flex w-full flex-col gap-1">
                <h3 className="text-base font-black text-stone-950">{title}</h3>

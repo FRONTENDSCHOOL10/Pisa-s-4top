@@ -57,15 +57,19 @@ export default function MainPage() {
          <h3 className="mb-4 mt-12 text-2xl font-extralight">
             다른 사람들의 <strong className="font-semibold">리뷰</strong>
          </h3>
-         {reviewData.map((review) => (
-            <HomeReviewCard
-               key={review.id}
-               title={review.review_title}
-               comment={review.review_comment}
-               nickname={review.review_user}
-               score={review.tea_rate}
-            />
-         ))}
+         <div className="flex flex-col gap-3">
+            {reviewData.map((review) => (
+               <HomeReviewCard
+                  id={review.id}
+                  teaImg={review.tea.tea_image}
+                  teaName={review.tea.tea_name}
+                  title={review.review_title}
+                  comment={review.review_comment}
+                  nickname={review.review_user}
+                  score={review.tea_rate}
+               />
+            ))}
+         </div>
       </main>
    );
 }
