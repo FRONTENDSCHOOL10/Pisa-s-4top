@@ -47,17 +47,19 @@ export function Component() {
 
    useEffect(() => {
       const fetchUserData = async () => {
-         const userString = localStorage.getItem('@auth/user');
-         if (!userString) {
+         const userData = localStorage.getItem('@auth/user');
+         if (!userData) {
             navigate('/login');
             return;
          }
 
-         const user: UserInfo = JSON.parse(userString);
+         const user: UserInfo = JSON.parse(userData);
          setUserInfo(user);
 
          try {
             setLoading(true);
+            
+            // 유저의 리뷰 데이터 가져오기
             const reviewData: Review[] = await fetchReviewData();
             const userReviews = reviewData.filter(
                (review) => review.user.nickname === user.nickname
@@ -72,9 +74,18 @@ export function Component() {
                     ) / reviewCount
                   : 0;
 
+            // 유저의 찜 데이터 가져오기
+            const { data: likeData, error: likeError } = await supabase
+               .from('likes')
+               .select('*')
+               .eq('user_nickname', user.nickname); // 유저 닉네임으로 필터링
+
+            if (likeError) throw likeError;
+
+            const likeCount = likeData?.length || 0; // 찜 개수
+
             setActivities([
-               // 찜 개수는 아직 구현 전
-               { title: '찜 개수', count: 0 },
+               { title: '찜 개수', count: likeCount },
                { title: '리뷰 개수', count: reviewCount },
                {
                   title: '평균 평점',
@@ -83,7 +94,7 @@ export function Component() {
                },
             ]);
          } catch (err) {
-            toast.error('리뷰 데이터를 가져오는 데 실패했습니다.');
+            toast.error('유저 데이터를 가져오는 데 실패했습니다.');
             console.error('Error fetching user data:', err);
          } finally {
             setLoading(false);

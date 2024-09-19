@@ -1,16 +1,22 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Button } from '@/components/Buttons/Buttons';
 import { TeaDescriptionCard } from '@/components/TeaCard/CardComponents';
 import TeaInfo from '@/components/TeaDetail/TeaInfo';
 import TeaReviewList from '@/components/TeaDetail/TeaReviewList';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import {
    fetchTeaData,
    fetchTeaTastingNotes,
    fetchReviewData,
 } from '@/utils/fetchData';
-import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import { calculateAverageRate } from '@/utils/calculateAverageRate';
+import {
+   addLike,
+   removeLike,
+   checkLikeStatus,
+   fetchTotalLikes,
+} from '@/utils/likeData';
 
 interface Tea {
    id: string;
@@ -42,6 +48,11 @@ interface Review {
    };
 }
 
+interface User {
+   id: string;
+   nickname: string;
+}
+
 export function Component() {
    const { id } = useParams<{ id: string }>();
    const [tea, setTea] = useState<Tea | null>(null);
@@ -50,34 +61,107 @@ export function Component() {
    const [averageRate, setAverageRate] = useState<
       0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5
    >(0);
+   const [currentUser, setCurrentUser] = useState<User | null>(null);
+   const [isLiked, setIsLiked] = useState(false);
+   const [likeCount, setLikeCount] = useState(0);
+   const [isLoading, setIsLoading] = useState(true);
+   const [error, setError] = useState<string | null>(null);
+
+   useEffect(() => {
+      const getCurrentUser = () => {
+         const userData = localStorage.getItem('@auth/user');
+         if (userData) {
+            try {
+               const user = JSON.parse(userData);
+               setCurrentUser(user);
+            } catch (error) {
+               console.error(
+                  'Failed to parse user data from localStorage:',
+                  error
+               );
+            }
+         }
+      };
+
+      getCurrentUser();
+   }, []);
 
    useEffect(() => {
       const getTeaData = async () => {
+         setIsLoading(true);
+         setError(null);
          try {
-            if (!id) return;
+            if (!id) {
+               setError('Tea ID is missing');
+               return;
+            }
 
             const teaData = await fetchTeaData();
             const selectedTea = teaData.find((item: Tea) => item.id === id);
-            setTea(selectedTea || null);
 
-            if (selectedTea) {
-               const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
-               setLabels(tastingNotes);
+            if (!selectedTea) {
+               setError('Tea not found');
+               return;
+            }
 
-               const reviewsData = await fetchReviewData(id); // 여기서 id를 인자로 전달
-               setReviews(reviewsData);
-               setAverageRate(calculateAverageRate(reviewsData));
+            setTea(selectedTea);
+
+            const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
+            setLabels(tastingNotes);
+
+            const reviewsData = await fetchReviewData({ teaId: id });
+            setReviews(reviewsData);
+            setAverageRate(calculateAverageRate(reviewsData));
+
+            const totalLikes = await fetchTotalLikes(selectedTea.id);
+            setLikeCount(totalLikes);
+
+            if (currentUser) {
+               const likeStatus = await checkLikeStatus(
+                  currentUser.nickname,
+                  id
+               );
+               setIsLiked(likeStatus);
             }
          } catch (error) {
             console.error('Failed to fetch tea data:', error);
+            setError('Failed to load tea data. Please try again.');
+         } finally {
+            setIsLoading(false);
          }
       };
 
       getTeaData();
-   }, [id]);
+   }, [id, currentUser]);
 
-   if (!tea) {
+   const handleLikeToggle = async () => {
+      if (!currentUser || !tea) {
+         console.log('User not logged in or tea data not available');
+         return;
+      }
+
+      try {
+         if (isLiked) {
+            await removeLike(currentUser.nickname, tea.id);
+         } else {
+            await addLike(currentUser.nickname, tea.id);
+         }
+         setIsLiked(!isLiked);
+
+         // Update total likes count
+         const updatedTotalLikes = await fetchTotalLikes(tea.id);
+         setLikeCount(updatedTotalLikes);
+      } catch (error) {
+         console.error('Error toggling like:', error);
+      }
+   };
+
+   if (isLoading) {
       return <LoadingSpinner />;
+   }
+
+   if (error || !tea) {
+      return <div>{error || 'An unexpected error occurred'}</div>;
    }
 
    return (
@@ -89,7 +173,9 @@ export function Component() {
                category={tea.tea_category}
                name={tea.tea_name}
                brand={tea.tea_brand}
-               totalLike={tea.total_like}
+               totalLike={likeCount}
+               isLiked={isLiked}
+               handleToggle={handleLikeToggle}
                averageRate={averageRate}
                teaAmount={tea.tea_amount}
                waterAmount={tea.tea_water_amount}

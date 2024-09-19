@@ -1,60 +1,14 @@
 import { TabButton } from '@/components/Buttons/TabButton';
-import { useEffect, useState } from 'react';
-import { fetchTeaCategoryData, fetchTeaData } from '@/utils/fetchData';
 import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
-
-interface TeaCategory {
-   id: string;
-   category: string;
-}
-
-interface Tea {
-   id: string;
-   tea_name: string;
-   tea_brand: string;
-   tea_image: string;
-   tea_category: string;
-}
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import { useTeaLikes } from '@/hooks/useTeaLikes';
 
 export function Component() {
-   const [categories, setCategories] = useState<TeaCategory[]>([]);
-   const [activeTab, setActiveTab] = useState<string>('');
-   const [teaData, setTeaData] = useState<Tea[]>([]);
+   const { categories, selectedCategory, setSelectedCategory, currentUser, filteredTeas, isLoading } = useTeaLikes();
 
-   useEffect(() => {
-      const getCategories = async () => {
-         try {
-            const categoryData = await fetchTeaCategoryData();
-            setCategories(categoryData);
-
-            if (categoryData.length > 0) {
-               setActiveTab(categoryData[0].category);
-            }
-         } catch (error) {
-            console.error('Failed to fetch tea category data:', error);
-         }
-      };
-
-      getCategories();
-   }, []);
-
-   useEffect(() => {
-      const getTeaData = async () => {
-         try {
-            const allTeaData = await fetchTeaData();
-            const filteredTeaData = allTeaData.filter(
-               (tea) => tea.tea_category === activeTab
-            );
-            setTeaData(filteredTeaData);
-         } catch (error) {
-            console.error('Failed to fetch tea data:', error);
-         }
-      };
-
-      if (activeTab) {
-         getTeaData();
-      }
-   }, [activeTab]);
+   if (isLoading) {
+      return <LoadingSpinner />;
+   }
 
    return (
       <main>
@@ -63,24 +17,29 @@ export function Component() {
             <div>
                <TabButton
                   tabs={categories.map((category) => category.category)}
-                  onTabSelect={(categoryName) => {
-                     setActiveTab(categoryName);
-                  }}
+                  onTabSelect={setSelectedCategory}
                   className="mb-8 self-start"
-                  activeTab={activeTab}
+                  activeTab={selectedCategory}
                />
-               <ul className="grid gap-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-                  {teaData.map((tea) => (
-                     <li key={tea.id}>
-                        <TeaRecommendCard
-                           id={tea.id}
-                           imageUrl={tea.tea_image}
-                           teaName={tea.tea_name}
-                           brand={tea.tea_brand}
-                        />
-                     </li>
-                  ))}
-               </ul>
+               {!currentUser ? (
+                  <p className="text-center">로그인이 필요합니다.</p>
+               ) : filteredTeas.length === 0 ? (
+                  <p className="text-center">이 카테고리에 찜한 티가 없습니다.</p>
+               ) : (
+                  <ul className="grid gap-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                     {filteredTeas.map((tea) => (
+                        <li key={tea.id}>
+                           <TeaRecommendCard
+                              id={tea.id}
+                              imageUrl={tea.tea_image}
+                              teaName={tea.tea_name}
+                              brand={tea.tea_brand}
+                              userNickname={currentUser.nickname}
+                           />
+                        </li>
+                     ))}
+                  </ul>
+               )}
             </div>
          </article>
       </main>
