@@ -262,26 +262,30 @@ export function TeaReviewCard({
 // 티 수색 선택 카드
 interface TeaColorCardProps {
    className?: string;
-   initialColor?: string; // 초기 색상 prop
-   onColorChange?: (color: string) => void; // 선택적 색상 변경 핸들러
+   initialColor?: string;
+   onColorChange?: (color: string) => void;
+   disabled?: boolean;
 }
 
 export function TeaColorCard({
    className = '',
    initialColor = '',
    onColorChange,
+   disabled = false,
 }: TeaColorCardProps) {
    const [selectedColor, setSelectedColor] = useState<string | null>(
       initialColor
    );
 
    useEffect(() => {
-      setSelectedColor(initialColor); // initialColor가 변경되면 selectedColor 업데이트
+      setSelectedColor(initialColor);
    }, [initialColor]);
 
    const handleSelectColor = (color: string) => {
-      setSelectedColor(color);
-      onColorChange?.(color);
+      if (!disabled) {
+         setSelectedColor(color);
+         onColorChange?.(color);
+      }
    };
 
    return (
@@ -290,6 +294,7 @@ export function TeaColorCard({
          <SelectColor
             selectedColor={selectedColor}
             onSelect={handleSelectColor}
+            disabled={disabled}
          />
       </CardLayout>
    );
@@ -343,17 +348,44 @@ interface TeaReviewDetailCardProps {
    title: string;
    contents: string;
    className?: string;
+   isEditable?: boolean;
+   onChangeTitle?: (title: string) => void;
+   onChangeContents?: (contents: string) => void;
 }
 
 export function TeaReviewDetailCard({
    title,
    contents,
    className = '',
+   isEditable = false,
+   onChangeTitle,
+   onChangeContents,
 }: TeaReviewDetailCardProps) {
    return (
       <CardLayout ariaLabel="티 리뷰 디테일 카드" className={className}>
-         <CardTitle className="mb-2">{title}</CardTitle>
-         <p>{contents}</p>
+         {isEditable ? (
+            <>
+               <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => onChangeTitle?.(e.target.value)}
+                  className="mb-2 w-full border-b border-stone-300 p-1 text-lg font-bold"
+                  placeholder={title}
+               />
+               <textarea
+                  value={contents}
+                  onChange={(e) => onChangeContents?.(e.target.value)}
+                  className="w-full border-b border-stone-300 p-1"
+                  placeholder={contents}
+                  rows={4}
+               />
+            </>
+         ) : (
+            <>
+               <CardTitle className="mb-2">{title}</CardTitle>
+               <p>{contents}</p>
+            </>
+         )}
       </CardLayout>
    );
 }
