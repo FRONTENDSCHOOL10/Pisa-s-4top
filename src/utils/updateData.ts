@@ -1,4 +1,4 @@
-import supabase from './supabase';
+import supabase from '../api/supabase';
 
 export async function updateReviewData(id: string, updatedReview: any) {
    const { data, error } = await supabase
