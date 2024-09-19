@@ -26,11 +26,9 @@ export function Component() {
          return;
       }
 
-      const reviewId = decodeURIComponent(id);
-
       const loadReviewData = async () => {
          try {
-            const data = await fetchReviewData(reviewId);
+            const data = await fetchReviewData({ reviewId: id });
             if (data && data.length > 0) {
                setReviewData(data[0]);
             } else {
@@ -71,7 +69,7 @@ export function Component() {
          />
          <TeaColorCard
             className="mb-2"
-            initialColor={reviewData.teacolor.tea_color}
+            initialColor={reviewData.teacolor.id}
             disabled={true}
          />
          <TeaReviewDetailCard

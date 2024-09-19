@@ -57,6 +57,20 @@ export default function LoginPage() {
                return;
             }
 
+            // tasteselection 테이블에서 user_nickname 확인
+            const { data: selectionData, error: selectionError } =
+               await supabase
+                  .from('tasteselection')
+                  .select('user_nickname')
+                  .eq('user_nickname', userData.nickname)
+                  .single();
+
+            if (selectionError && selectionError.code !== 'PGRST116') {
+               // 'PGRST116'은 No Rows Found 오류
+               toast.error('사용자 선택 정보를 가져오는데 실패했습니다.');
+               return;
+            }
+
             toast.success('로그인에 성공하였습니다');
             localStorage.setItem('@auth/login', 'true');
             localStorage.setItem(
@@ -68,7 +82,13 @@ export default function LoginPage() {
                   profile_img: userData.profile_img,
                })
             );
-            navigate('/main');
+
+            // user_nickname이 있으면 '/main', 없으면 '/my-selection'으로 리디렉션
+            if (selectionData) {
+               navigate('/main');
+            } else {
+               navigate('/my-selection');
+            }
          }
 
          if (error) {
