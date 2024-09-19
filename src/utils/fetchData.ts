@@ -43,9 +43,8 @@
 
 import axios from 'axios';
 
-const SUPABASE_URL = 'https://yjjphgkgrmyokojwfyzu.supabase.co';
-const SUPABASE_SERVICE_KEY =
-   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlqanBoZ2tncm15b2tvandmeXp1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNTcwNDcwOSwiZXhwIjoyMDQxMjgwNzA5fQ.sjdXS9mMdowCudGucdYYvHIKR991ksBBilg6mzfpBIg';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const supabaseAxios = axios.create({
    baseURL: SUPABASE_URL,
@@ -174,4 +173,9 @@ export async function fetchReviewData(reviewId?: string) {
       console.error('Error fetching review data:', error);
       throw error;
    }
+}
+
+// 테이스팅 노트 카테고리 함수
+export async function fetchTastingNoteCategories() {
+   return fetchDataFromTable('tastingnotecategory');
 }
