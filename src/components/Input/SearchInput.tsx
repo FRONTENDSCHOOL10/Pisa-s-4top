@@ -10,18 +10,18 @@
 
 */
 
-import { MouseEventHandler, useId, useState } from 'react';
+import { FormEventHandler, useId, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export interface Props {
    isButton?: boolean;
-   onClick?: MouseEventHandler<HTMLButtonElement>;
+   onSubmit?: FormEventHandler<HTMLFormElement>;
    [property: string]: any;
 }
 
 export default function SearchInput({
    isButton = false,
-   onClick,
+   onSubmit,
    ...restProps
 }: Props) {
    const [isFocusSearch, setIsFocusSearch] = useState<boolean>(false);
@@ -44,28 +44,29 @@ export default function SearchInput({
          className={`flex h-[3.75rem] rounded-2xl border border-solid border-white bg-white px-6 py-3 shadow-search`}
       >
          <div
-            className={`search-input-group flex flex-grow border-b border-solid ${isButton ? 'text-stone-950' : borderColor}`}
+            className={`search-input-group flex flex-grow border-b border-solid ${borderColor}`}
          >
             <label className="sr-only" htmlFor={searchId}>
                {isButton ? '검색 페이지로 이동' : '검색어 입력'}
             </label>
             <input
-               className={`w-full py-3 text-base font-normal placeholder-stone-950 focus:outline-none ${isButton ? 'cursor-pointer' : 'focus:placeholder-green-700'}`.trim()}
+               className={`w-full py-3 text-base font-normal placeholder-stone-950 focus:outline-none ${isButton ? 'cursor-pointer' : 'focus:placeholder-green-700'}`}
                type="search"
                id={searchId}
-               name="filter"
+               name="value"
                placeholder={getSearchInputTitle}
                title={getSearchInputTitle}
                onFocus={() => setIsFocusSearch(!isFocusSearch)}
                onBlur={() => setIsFocusSearch(!isFocusSearch)}
+               readOnly={isButton} // 메인 페이지에선 읽기 전용으로 보이도록 함
+               tabIndex={isButton ? -1 : 0}
                {...restProps}
-               readOnly={isButton} // ! 메인에선 읽기 전용으로 보이도록 함
             />
             <button
                className="px-2"
                aria-label="검색"
                type={isButton ? 'button' : 'submit'}
-               onClick={onClick}
+               tabIndex={isButton ? -1 : 0}
             >
                <span
                   className={`fi fi-rr-search flex justify-center ${isButton ? 'text-stone-950' : iconColor}`}
@@ -76,13 +77,13 @@ export default function SearchInput({
       </div>
    );
 
-   // 메인에서는 search 페이지로 이동하는 역할, 검색 페이지에서는 검색 역할
+   // 메인 페이지에서는 search 페이지로 이동하는 단순 Link 역할, 검색 페이지에서는 input 역할
    return (
       <>
          {isButton ? (
             <Link to="/search">{renderInput(isButton)}</Link>
          ) : (
-            <form>{renderInput(isButton)}</form>
+            <form onSubmit={onSubmit}>{renderInput(isButton)}</form>
          )}
       </>
    );
