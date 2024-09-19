@@ -85,14 +85,14 @@ export async function fetchUsersData() {
 // export async function fetchLikeData() {
 //    return fetchDataFromTable('like');
 // }
-export async function fetchLikeData() {
-   try {
-      return await fetchDataFromTable('like');
-   } catch (error) {
-      console.error('Error fetching like data:', error);
-      return [];
-   }
-}
+// export async function fetchLikeData() {
+//    try {
+//       return await fetchDataFromTable('like');
+//    } catch (error) {
+//       console.error('Error fetching like data:', error);
+//       return [];
+//    }
+// }
 
 // 테이스팅 노트 데이터 함수
 export const loadTasteNoteData = async (
@@ -123,30 +123,37 @@ export const loadTasteNoteData = async (
 // 티 테이스팅 노트 데이터 함수
 export async function fetchTeaTastingNotes(teaId: string) {
    try {
-      const response = await supabaseAxios.get(
-         `/rest/v1/teatastingnote?tea=eq.${teaId}&select=tastingnote`
-      );
+      const response = await supabaseAxios.get('/rest/v1/teatastingnote', {
+         params: {
+            tea_id: `eq.${teaId}`,
+            select: 'tasting_note',
+         },
+      });
       return response.data.map(
-         (item: { tastingnote: string }) => item.tastingnote
+         (item: { tasting_note: string }) => item.tasting_note
       );
    } catch (error) {
       console.error('Error fetching tea tasting notes:', error);
-      throw error;
+      return [];
    }
 }
 
 // 리뷰 데이터 함수
-export async function fetchReviewData(reviewId?: string) {
+export async function fetchReviewData(options?: {
+   reviewId?: string;
+   teaId?: string;
+}) {
    try {
       let url =
-         '/rest/v1/review?select=id,review_title,review_comment,review_tasting_note,tea_rate,tea:review_tea(id,tea_name,tea_image,tea_category(id,category)),user:review_user(nickname,profile_img),teacolor:tea_color(id)';
+         '/rest/v1/review?select=id,review_title,review_comment,tea_rate,review_tasting_note,tea:review_tea(id,tea_name,tea_image,tea_category(id,category)),user:review_user(nickname,profile_img),teacolor:tea_color(id,tea_color)';
 
-      if (reviewId) {
-         url += `&id=eq.${reviewId}`;
+      if (options?.reviewId) {
+         url += `&id=eq.${options.reviewId}`;
+      } else if (options?.teaId) {
+         url += `&review_tea=eq.${options.teaId}`;
       }
 
       const response = await supabaseAxios.get(url);
-      console.log(response);
 
       return response.data.map((review) => ({
          id: review.id || '',
@@ -160,13 +167,14 @@ export async function fetchReviewData(reviewId?: string) {
             tea_image: review.tea?.tea_image || '',
             category: review.tea?.tea_category?.category || '',
          },
-         teacolor: {
-            tea_color: review.teacolor?.id || '',
-         },
          user: {
             nickname: review.user?.nickname || '익명',
             profile_img:
                review.user?.profile_img || '/assets/profileDefault.webp',
+         },
+         teacolor: {
+            id: review.teacolor?.id || '',
+            tea_color: review.teacolor?.tea_color || '',
          },
       }));
    } catch (error) {
