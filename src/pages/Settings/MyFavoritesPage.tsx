@@ -1,33 +1,15 @@
 import { TabButton } from '@/components/Buttons/TabButton';
-import { useEffect, useState } from 'react';
-import { fetchTeaCategoryData } from '@/utils/fetchData';
 import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import { useTeaLikes } from '@/hooks/useTeaLikes';
 
-interface TeaCategory {
-   id: string;
-   category: string;
-}
 export function Component() {
-   const [categories, setCategories] = useState<TeaCategory[]>([]);
-   const [selectedCategory, setSelectedCategory] = useState<string>('');
-   // const [reviewData, setReviewData] = useState([]);
+   const { categories, selectedCategory, setSelectedCategory, currentUser, filteredTeas, isLoading } = useTeaLikes();
 
-   useEffect(() => {
-      const getCategories = async () => {
-         try {
-            const categoryData = await fetchTeaCategoryData();
-            setCategories(categoryData);
+   if (isLoading) {
+      return <LoadingSpinner />;
+   }
 
-            if (categoryData.length > 0) {
-               setSelectedCategory(categoryData[0].category);
-            }
-         } catch (error) {
-            console.error('Failed to fetch tea category data:', error);
-         }
-      };
-
-      getCategories();
-   }, []);
    return (
       <main>
          <h1 className="sr-only">나의 찜 페이지</h1>
@@ -35,48 +17,29 @@ export function Component() {
             <div>
                <TabButton
                   tabs={categories.map((category) => category.category)}
-                  onTabSelect={(categoryName) => {
-                     setSelectedCategory(categoryName);
-                  }}
+                  onTabSelect={setSelectedCategory}
                   className="mb-8 self-start"
+                  activeTab={selectedCategory}
                />
-               <ul className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                  <li>
-                     <TeaRecommendCard
-                        imageUrl=""
-                        teaName="티 이름"
-                        brand="티 브랜드"
-                     />
-                  </li>
-                  <li>
-                     <TeaRecommendCard
-                        imageUrl=""
-                        teaName="티 이름"
-                        brand="티 브랜드"
-                     />
-                  </li>
-                  <li>
-                     <TeaRecommendCard
-                        imageUrl=""
-                        teaName="티 이름"
-                        brand="티 브랜드"
-                     />
-                  </li>
-                  <li>
-                     <TeaRecommendCard
-                        imageUrl=""
-                        teaName="티 이름"
-                        brand="티 브랜드"
-                     />
-                  </li>
-                  <li>
-                     <TeaRecommendCard
-                        imageUrl=""
-                        teaName="티 이름"
-                        brand="티 브랜드"
-                     />
-                  </li>
-               </ul>
+               {!currentUser ? (
+                  <p className="text-center">로그인이 필요합니다.</p>
+               ) : filteredTeas.length === 0 ? (
+                  <p className="text-center">이 카테고리에 찜한 티가 없습니다.</p>
+               ) : (
+                  <ul className="grid gap-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                     {filteredTeas.map((tea) => (
+                        <li key={tea.id}>
+                           <TeaRecommendCard
+                              id={tea.id}
+                              imageUrl={tea.tea_image}
+                              teaName={tea.tea_name}
+                              brand={tea.tea_brand}
+                              userNickname={currentUser.nickname}
+                           />
+                        </li>
+                     ))}
+                  </ul>
+               )}
             </div>
          </article>
       </main>

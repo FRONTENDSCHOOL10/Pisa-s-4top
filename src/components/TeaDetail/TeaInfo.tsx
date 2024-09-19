@@ -9,7 +9,9 @@ interface TeaInfoProps {
    name: string;
    brand: string;
    totalLike: number;
-   score: 0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
+   isLiked: boolean;
+   handleToggle: () => void;
+   averageRate: 0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
    teaAmount: number;
    waterAmount: number;
    temperature: number;
@@ -23,7 +25,9 @@ export default function TeaInfo({
    name,
    brand,
    totalLike,
-   score,
+   isLiked,
+   handleToggle,
+   averageRate,
    teaAmount,
    waterAmount,
    temperature,
@@ -44,11 +48,12 @@ export default function TeaInfo({
          </div>
          <ButtonHeartwithCount
             totalLike={totalLike}
-            onToggle={() => console.log('찜 버튼 토글됨')}
+            isActive={isLiked}
+            handleToggle={handleToggle}
          />
          <StarRatingAverage
-            score={score}
-            aria-label={`리뷰 평균 별점 ${score}점`}
+            score={averageRate}
+            aria-label={`리뷰 평균 별점 ${averageRate}점`}
          />
          <LabelGroup labels={labels} types="label" size="small" />
          <TeaBrewingGuide

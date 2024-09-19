@@ -104,7 +104,6 @@ export default function MainPage() {
          <div className="flex flex-col gap-3">
             {reviewData.map((review) => (
                <HomeReviewCard
-                  key={review.id}
                   id={review.id}
                   teaImg={review.tea.tea_image}
                   teaName={review.tea.tea_name}

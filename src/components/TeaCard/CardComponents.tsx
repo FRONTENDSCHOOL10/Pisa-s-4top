@@ -54,12 +54,14 @@ TeaReviewCard
 ------------------
 
 */
-
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
 import { SelectColor } from '../Select/SelectColor';
 import { LabelGroup } from '../Labels/Labels';
+// 기능 구현 완료 후 합칠 예정
+import { addLike, checkLikeStatus, removeLike } from '@/utils/likeData';
 
 // 공통 UI 컴포넌트
 interface ImageProps {
@@ -93,7 +95,7 @@ interface TitleProps {
 export function CardTitle({ children, className }: TitleProps) {
    return (
       <h3
-         className={`h-14 w-full truncate text-wrap pr-4 text-lg font-extrabold leading-6 text-stone-950 ${className}`}
+         className={`w-full truncate text-wrap pr-4 text-lg font-extrabold leading-6 text-stone-950 ${className}`}
       >
          {children}
       </h3>
@@ -179,6 +181,7 @@ export interface TeaRecommendCardProps {
    imageUrl: string;
    teaName: string;
    brand: string;
+   userNickname: string;
 }
 
 export function TeaRecommendCard({
@@ -186,7 +189,46 @@ export function TeaRecommendCard({
    imageUrl,
    teaName,
    brand,
+   userNickname,
 }: TeaRecommendCardProps) {
+   const [isLiked, setIsLiked] = useState(false);
+
+   useEffect(() => {
+      const fetchLikeStatus = async () => {
+         try {
+            const status = await checkLikeStatus(userNickname, id);
+            setIsLiked(status);
+         } catch (error) {
+            console.error('Error fetching like status:', error);
+         }
+      };
+
+      if (userNickname) {
+         fetchLikeStatus();
+      }
+   }, [userNickname, id]);
+
+   const handleToggle = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+
+      if (!userNickname) {
+         console.log('User not logged in');
+         return;
+      }
+
+      try {
+         if (isLiked) {
+            await removeLike(userNickname, id);
+            setIsLiked(false);
+         } else {
+            await addLike(userNickname, id);
+            setIsLiked(true);
+         }
+      } catch (error) {
+         console.error('Error toggling like status:', error);
+      }
+   };
+
    return (
       <CardLayout
          to={`/detail/${id}`}
@@ -201,9 +243,9 @@ export function TeaRecommendCard({
             />
          </div>
          <div className="relative mt-36">
-            <CardTitle className="mb-1 text-base">{teaName}</CardTitle>
+            <CardTitle className="mb-1 h-12 text-base">{teaName}</CardTitle>
             <div className="absolute right-0 top-0.5">
-               <ButtonHeart />
+               <ButtonHeart handleToggle={handleToggle} isActive={isLiked} />
             </div>
             <p className="text-sm text-stone-400">{brand}</p>
          </div>
@@ -262,13 +304,40 @@ export function TeaReviewCard({
 // 티 수색 선택 카드
 interface TeaColorCardProps {
    className?: string;
+   initialColor?: string;
+   onColorChange?: (color: string) => void;
+   disabled?: boolean;
 }
 
-export function TeaColorCard({ className = '' }: TeaColorCardProps) {
+export function TeaColorCard({
+   className = '',
+   initialColor = '',
+   onColorChange,
+   disabled = false,
+}: TeaColorCardProps) {
+   const [selectedColor, setSelectedColor] = useState<string | null>(
+      initialColor
+   );
+
+   useEffect(() => {
+      setSelectedColor(initialColor);
+   }, [initialColor]);
+
+   const handleSelectColor = (color: string) => {
+      if (!disabled) {
+         setSelectedColor(color);
+         onColorChange?.(color);
+      }
+   };
+
    return (
       <CardLayout ariaLabel="티 수색 카드" className={className}>
          <CardTitle className="mb-2">수색</CardTitle>
-         <SelectColor />
+         <SelectColor
+            selectedColor={selectedColor}
+            onSelect={handleSelectColor}
+            disabled={disabled}
+         />
       </CardLayout>
    );
 }
@@ -279,8 +348,9 @@ interface TeaTasteCardProps {
    labels: string[];
    className?: string;
    selectedLabels: boolean[];
-   handleToggleLabel: (index: number) => void;
+   handleToggleLabel?: (index: number) => void;
    types: 'label' | 'button';
+   isEditable?: boolean;
 }
 
 export function TeaTasteCard({
@@ -289,36 +359,75 @@ export function TeaTasteCard({
    selectedLabels,
    handleToggleLabel,
    types = 'label',
+   isEditable = true,
 }: TeaTasteCardProps) {
    return (
       <CardLayout ariaLabel="티 맛 카드" className={className}>
          <CardTitle className="mb-2">맛</CardTitle>
-         <LabelGroup
-            labels={labels}
-            types={types}
-            className="flex w-full justify-center"
-            selectedLabels={selectedLabels}
-            handleToggleLabel={handleToggleLabel}
-         />
+         {isEditable ? (
+            <LabelGroup
+               labels={labels}
+               types={types}
+               className="flex w-full justify-center"
+               selectedLabels={selectedLabels}
+               handleToggleLabel={handleToggleLabel!}
+            />
+         ) : (
+            <LabelGroup
+               labels={labels}
+               types={types}
+               className="flex w-full justify-center"
+               selectedLabels={selectedLabels}
+               handleToggleLabel={() => {}}
+            />
+         )}
       </CardLayout>
    );
 }
+
 // 티 리뷰 카드
 interface TeaReviewDetailCardProps {
    title: string;
    contents: string;
    className?: string;
+   isEditable?: boolean;
+   onChangeTitle?: (title: string) => void;
+   onChangeContents?: (contents: string) => void;
 }
 
 export function TeaReviewDetailCard({
    title,
    contents,
    className = '',
+   isEditable = false,
+   onChangeTitle,
+   onChangeContents,
 }: TeaReviewDetailCardProps) {
    return (
       <CardLayout ariaLabel="티 리뷰 디테일 카드" className={className}>
-         <CardTitle className="mb-2">{title}</CardTitle>
-         <p>{contents}</p>
+         {isEditable ? (
+            <>
+               <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => onChangeTitle?.(e.target.value)}
+                  className="mb-2 w-full border-b border-stone-300 p-1 text-lg font-bold"
+                  placeholder={title}
+               />
+               <textarea
+                  value={contents}
+                  onChange={(e) => onChangeContents?.(e.target.value)}
+                  className="w-full border-b border-stone-300 p-1"
+                  placeholder={contents}
+                  rows={4}
+               />
+            </>
+         ) : (
+            <>
+               <CardTitle className="mb-2">{title}</CardTitle>
+               <p>{contents}</p>
+            </>
+         )}
       </CardLayout>
    );
 }

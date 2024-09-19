@@ -9,7 +9,7 @@ interface RouteConfig {
 }
 
 const routes: RouteConfig[] = [
-   { path: '/', props: { hasLogo: true } },
+   { path: '/main', props: { hasLogo: true } },
    { path: '/join', props: { hasBackBtn: true } },
    { path: '/search', props: { title: '검색' } },
    { path: '/reviews', props: { title: '티 리뷰 리스트' } },

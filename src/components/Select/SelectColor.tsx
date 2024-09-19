@@ -31,34 +31,47 @@ const options: ColorOption[] = [
    { label: '갈색', value: 'bg-yellow-900' },
 ];
 
-export function SelectColor() {
+interface SelectColorProps {
+   selectedColor: string | null;
+   onSelect: (color: string) => void;
+   disabled?: boolean;
+}
+
+export function SelectColor({
+   selectedColor,
+   onSelect,
+   disabled = false,
+}: SelectColorProps) {
    const [isOpen, setIsOpen] = useState(false);
-   const [selectedOption, setSelectedOption] = useState<ColorOption | null>(
-      null
-   );
-
    const handleToggle = useCallback(() => {
-      setIsOpen((prev) => !prev);
-   }, []);
+      if (!disabled) {
+         setIsOpen((prev) => !prev);
+      }
+   }, [disabled]);
 
-   const handleSelect = useCallback((option: ColorOption) => {
-      setSelectedOption(option);
-      setIsOpen(false);
-   }, []);
+   const handleSelect = useCallback(
+      (option: ColorOption) => {
+         if (!disabled) {
+            onSelect(option.value);
+            setIsOpen(false);
+         }
+      },
+      [onSelect, disabled]
+   );
 
    const commonButtonClasses =
       'flex cursor-pointer items-center justify-center p-2 hover:bg-stone-100';
-   const selectedColorClass = selectedOption
-      ? selectedOption.value
-      : 'bg-stone-200';
-   const selectedLabel = selectedOption
-      ? selectedOption.label
-      : '색상을 선택하세요';
+   const selectedColorClass = selectedColor ? selectedColor : 'bg-stone-200';
+   const selectedLabel =
+      options.find((option) => option.value === selectedColor)?.label ||
+      '색상을 선택하세요';
 
    return (
       <div className="relative w-full">
          <div
-            className="relative z-20 flex cursor-pointer items-center justify-center rounded-full border border-stone-300 bg-stone-50 p-2"
+            className={`relative z-20 flex items-center justify-center rounded-full border border-stone-300 bg-stone-50 p-2 ${
+               disabled ? 'cursor-default' : 'cursor-pointer'
+            }`}
             onClick={handleToggle}
          >
             <span
@@ -67,7 +80,7 @@ export function SelectColor() {
             <span className="text-base">{selectedLabel}</span>
          </div>
 
-         {isOpen && (
+         {!disabled && isOpen && (
             <ul className="absolute top-0 z-10 flex w-full flex-col gap-4 rounded-3xl border border-stone-300 bg-stone-50 pb-5 pt-12 shadow-lg">
                {options.map((option) => (
                   <li

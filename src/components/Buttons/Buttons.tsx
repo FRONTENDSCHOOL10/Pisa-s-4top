@@ -80,21 +80,18 @@ export function Button({
 
 /* 찜 버튼 컴포넌트 */
 // 사용법
-// <ButtonHeart onToggle={() => console.log('찜 버튼 토글됨')} />
+// <ButtonHeart handleToggle={() => console.log('찜 버튼 토글됨')} />
 export interface ButtonHeartProps {
-   onToggle?: () => void;
+   handleToggle: (e: React.MouseEvent<HTMLButtonElement>) => void;
+   isActive: boolean;
    [props: string]: any;
 }
 
-export function ButtonHeart({ onToggle, ...restProps }: ButtonHeartProps) {
-   const [isActive, setIsActive] = useState(false);
-
-   function handleToggle() {
-      setIsActive((prevState) => !prevState);
-      if (onToggle) {
-         onToggle();
-      }
-   }
+export function ButtonHeart({
+   handleToggle,
+   isActive,
+   ...restProps
+}: ButtonHeartProps) {
    const iconClass: string = `fi flex justify-center items-center ${
       isActive ? 'fi-sr-heart text-red-600' : 'fi-rr-heart text-stone-300'
    }`;
@@ -104,9 +101,10 @@ export function ButtonHeart({ onToggle, ...restProps }: ButtonHeartProps) {
          className="select-none"
          type="button"
          onClick={handleToggle}
-         {...restProps}
-         aria-pressed={isActive}
+         role="checkbox"
+         aria-checked={isActive}
          aria-label={isActive ? '찜 활성화' : '찜 비활성화'}
+         {...restProps}
       >
          <span className={iconClass} aria-hidden="true"></span>
       </button>
@@ -118,35 +116,17 @@ export function ButtonHeart({ onToggle, ...restProps }: ButtonHeartProps) {
 // <ButtonHeart totalLike={DB에서 티에 대한 토탈 찜 개수} onToggle={() => console.log('찜 버튼 토글됨')} />
 export interface ButtonHeartwithCountProps {
    totalLike: number;
-   onToggle: () => void;
+   isActive: boolean;
+   handleToggle: () => void;
    [props: string]: any;
 }
 
 export function ButtonHeartwithCount({
    totalLike = 0,
-   onToggle,
+   isActive,
+   handleToggle,
    ...restProps
 }: ButtonHeartwithCountProps) {
-   const [isActive, setIsActive] = useState(false);
-   const [count, setCount] = useState(totalLike);
-
-   function handleToggle() {
-      setIsActive((prevState) => {
-         const newActive = !prevState;
-         setCount(newActive ? count + 1 : totalLike);
-         return newActive;
-      });
-      if (onToggle) {
-         onToggle();
-      }
-   }
-
-   useEffect(() => {
-      if (!isActive) {
-         setCount(totalLike);
-      }
-   }, [isActive, totalLike]);
-
    const buttonClass: string = `select-none rounded-2xl ${isActive ? 'bg-red-600 px-[.3125rem] py-[.3125rem]' : 'border border-stone-300 px-1 py-1'}`;
    const iconClass: string = `fi flex justify-center items-center ${
       isActive
@@ -155,20 +135,24 @@ export function ButtonHeartwithCount({
    }`;
    const numberClass: string = `ml-1 text-base font-bold ${isActive ? 'text-red-600' : 'text-stone-300'}`;
 
+   // totalLike가 NaN인 경우 0으로 표시
+   const displayCount = isNaN(totalLike) ? 0 : totalLike;
+
    return (
       <div className="flex items-center">
          <button
             className={buttonClass}
             type="button"
             onClick={handleToggle}
-            {...restProps}
-            aria-pressed={isActive}
+            role="checkbox"
+            aria-checked={isActive}
             aria-label={isActive ? '찜 활성화' : '찜 비활성화'}
+            {...restProps}
          >
             <span className={iconClass} aria-hidden="true"></span>
          </button>
          <span className={numberClass} aria-hidden="true">
-            {count}
+            {displayCount}
          </span>
       </div>
    );
