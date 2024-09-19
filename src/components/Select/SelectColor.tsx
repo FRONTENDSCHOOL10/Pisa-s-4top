@@ -34,20 +34,29 @@ const options: ColorOption[] = [
 interface SelectColorProps {
    selectedColor: string | null;
    onSelect: (color: string) => void;
+   disabled?: boolean;
 }
 
-export function SelectColor({ selectedColor, onSelect }: SelectColorProps) {
+export function SelectColor({
+   selectedColor,
+   onSelect,
+   disabled = false,
+}: SelectColorProps) {
    const [isOpen, setIsOpen] = useState(false);
    const handleToggle = useCallback(() => {
-      setIsOpen((prev) => !prev);
-   }, []);
+      if (!disabled) {
+         setIsOpen((prev) => !prev);
+      }
+   }, [disabled]);
 
    const handleSelect = useCallback(
       (option: ColorOption) => {
-         onSelect(option.value); // 부모 컴포넌트로 선택된 색상 전달
-         setIsOpen(false);
+         if (!disabled) {
+            onSelect(option.value);
+            setIsOpen(false);
+         }
       },
-      [onSelect]
+      [onSelect, disabled]
    );
 
    const commonButtonClasses =
@@ -60,7 +69,9 @@ export function SelectColor({ selectedColor, onSelect }: SelectColorProps) {
    return (
       <div className="relative w-full">
          <div
-            className="relative z-20 flex cursor-pointer items-center justify-center rounded-full border border-stone-300 bg-stone-50 p-2"
+            className={`relative z-20 flex items-center justify-center rounded-full border border-stone-300 bg-stone-50 p-2 ${
+               disabled ? 'cursor-default' : 'cursor-pointer'
+            }`}
             onClick={handleToggle}
          >
             <span
@@ -69,7 +80,7 @@ export function SelectColor({ selectedColor, onSelect }: SelectColorProps) {
             <span className="text-base">{selectedLabel}</span>
          </div>
 
-         {isOpen && (
+         {!disabled && isOpen && (
             <ul className="absolute top-0 z-10 flex w-full flex-col gap-4 rounded-3xl border border-stone-300 bg-stone-50 pb-5 pt-12 shadow-lg">
                {options.map((option) => (
                   <li
