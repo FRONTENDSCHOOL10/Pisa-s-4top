@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchReviewData } from '@/utils/fetchData';
 import { Button } from '@/components/Buttons/Buttons';
 import { StarRatingAverage } from '@/components/Review/StarRate';
@@ -8,29 +9,28 @@ import {
    TeaTasteCard,
 } from '@/components/TeaCard/CardComponents';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
-import { useParams } from 'react-router-dom';
 
 export function Component() {
    const [reviewData, setReviewData] = useState<any>(null);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
 
-   // useParams로 URL 파라미터를 받아옴
    const { id } = useParams<{ id: string }>();
+   const navigate = useNavigate();
 
    useEffect(() => {
-      console.log('Raw id from useParams:', id); // 디버깅용 로그
+      // console.log('Raw id from useParams:', id);
       if (!id) {
          setError('리뷰 ID를 찾을 수 없습니다.');
          setLoading(false);
          return;
       }
 
-      const reviewId = decodeURIComponent(id); // id를 디코딩하여 사용
+      const reviewId = decodeURIComponent(id);
 
       const loadReviewData = async () => {
          try {
-            const data = await fetchReviewData(reviewId); // 디코딩된 id 사용
+            const data = await fetchReviewData(reviewId);
             if (data && data.length > 0) {
                setReviewData(data[0]);
             } else {
@@ -45,14 +45,14 @@ export function Component() {
       };
 
       loadReviewData();
-   }, [id]); // id가 변경될 때마다 데이터를 다시 로드
+   }, [id]);
 
    if (loading) {
       return <LoadingSpinner />;
    }
 
    return (
-      <main className="flex flex-col items-center px-6 pb-20">
+      <main className="flex flex-col items-center px-6">
          <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
             <img
                className="object-contain"
@@ -72,6 +72,7 @@ export function Component() {
          <TeaColorCard
             className="mb-2"
             initialColor={reviewData.teacolor.tea_color}
+            disabled={true}
          />
          <TeaReviewDetailCard
             title={reviewData.review_title}
@@ -81,7 +82,7 @@ export function Component() {
             <Button
                size="fullWidth"
                content="리뷰 수정하기"
-               handleClick={() => console.log('리뷰 수정하기 버튼 클릭됨')}
+               handleClick={() => navigate(`/reviews/edit/${id}`)}
             />
          </div>
          <div className="w-full">
