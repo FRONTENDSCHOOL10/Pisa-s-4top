@@ -54,7 +54,7 @@ TeaReviewCard
 ------------------
 
 */
-
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
@@ -93,7 +93,7 @@ interface TitleProps {
 export function CardTitle({ children, className }: TitleProps) {
    return (
       <h3
-         className={`h-14 w-full truncate text-wrap pr-4 text-lg font-extrabold leading-6 text-stone-950 ${className}`}
+         className={`w-full truncate text-wrap pr-4 text-lg font-extrabold leading-6 text-stone-950 ${className}`}
       >
          {children}
       </h3>
@@ -201,7 +201,7 @@ export function TeaRecommendCard({
             />
          </div>
          <div className="relative mt-36">
-            <CardTitle className="mb-1 text-base">{teaName}</CardTitle>
+            <CardTitle className="mb-1 h-12 text-base">{teaName}</CardTitle>
             <div className="absolute right-0 top-0.5">
                <ButtonHeart />
             </div>
@@ -262,13 +262,35 @@ export function TeaReviewCard({
 // 티 수색 선택 카드
 interface TeaColorCardProps {
    className?: string;
+   initialColor?: string; // 초기 색상 prop
+   onColorChange?: (color: string) => void; // 선택적 색상 변경 핸들러
 }
 
-export function TeaColorCard({ className = '' }: TeaColorCardProps) {
+export function TeaColorCard({
+   className = '',
+   initialColor = '',
+   onColorChange,
+}: TeaColorCardProps) {
+   const [selectedColor, setSelectedColor] = useState<string | null>(
+      initialColor
+   );
+
+   useEffect(() => {
+      setSelectedColor(initialColor); // initialColor가 변경되면 selectedColor 업데이트
+   }, [initialColor]);
+
+   const handleSelectColor = (color: string) => {
+      setSelectedColor(color);
+      onColorChange?.(color);
+   };
+
    return (
       <CardLayout ariaLabel="티 수색 카드" className={className}>
          <CardTitle className="mb-2">수색</CardTitle>
-         <SelectColor />
+         <SelectColor
+            selectedColor={selectedColor}
+            onSelect={handleSelectColor}
+         />
       </CardLayout>
    );
 }
@@ -279,8 +301,9 @@ interface TeaTasteCardProps {
    labels: string[];
    className?: string;
    selectedLabels: boolean[];
-   handleToggleLabel: (index: number) => void;
+   handleToggleLabel?: (index: number) => void;
    types: 'label' | 'button';
+   isEditable?: boolean;
 }
 
 export function TeaTasteCard({
@@ -289,20 +312,32 @@ export function TeaTasteCard({
    selectedLabels,
    handleToggleLabel,
    types = 'label',
+   isEditable = true,
 }: TeaTasteCardProps) {
    return (
       <CardLayout ariaLabel="티 맛 카드" className={className}>
          <CardTitle className="mb-2">맛</CardTitle>
-         <LabelGroup
-            labels={labels}
-            types={types}
-            className="flex w-full justify-center"
-            selectedLabels={selectedLabels}
-            handleToggleLabel={handleToggleLabel}
-         />
+         {isEditable ? (
+            <LabelGroup
+               labels={labels}
+               types={types}
+               className="flex w-full justify-center"
+               selectedLabels={selectedLabels}
+               handleToggleLabel={handleToggleLabel!}
+            />
+         ) : (
+            <LabelGroup
+               labels={labels}
+               types={types}
+               className="flex w-full justify-center"
+               selectedLabels={selectedLabels}
+               handleToggleLabel={() => {}}
+            />
+         )}
       </CardLayout>
    );
 }
+
 // 티 리뷰 카드
 interface TeaReviewDetailCardProps {
    title: string;

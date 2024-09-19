@@ -31,29 +31,31 @@ const options: ColorOption[] = [
    { label: '갈색', value: 'bg-yellow-900' },
 ];
 
-export function SelectColor() {
-   const [isOpen, setIsOpen] = useState(false);
-   const [selectedOption, setSelectedOption] = useState<ColorOption | null>(
-      null
-   );
+interface SelectColorProps {
+   selectedColor: string | null;
+   onSelect: (color: string) => void;
+}
 
+export function SelectColor({ selectedColor, onSelect }: SelectColorProps) {
+   const [isOpen, setIsOpen] = useState(false);
    const handleToggle = useCallback(() => {
       setIsOpen((prev) => !prev);
    }, []);
 
-   const handleSelect = useCallback((option: ColorOption) => {
-      setSelectedOption(option);
-      setIsOpen(false);
-   }, []);
+   const handleSelect = useCallback(
+      (option: ColorOption) => {
+         onSelect(option.value); // 부모 컴포넌트로 선택된 색상 전달
+         setIsOpen(false);
+      },
+      [onSelect]
+   );
 
    const commonButtonClasses =
       'flex cursor-pointer items-center justify-center p-2 hover:bg-stone-100';
-   const selectedColorClass = selectedOption
-      ? selectedOption.value
-      : 'bg-stone-200';
-   const selectedLabel = selectedOption
-      ? selectedOption.label
-      : '색상을 선택하세요';
+   const selectedColorClass = selectedColor ? selectedColor : 'bg-stone-200';
+   const selectedLabel =
+      options.find((option) => option.value === selectedColor)?.label ||
+      '색상을 선택하세요';
 
    return (
       <div className="relative w-full">

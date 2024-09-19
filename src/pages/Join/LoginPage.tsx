@@ -45,9 +45,30 @@ export default function LoginPage() {
          });
 
          if (data.user) {
+            // 사용자 정보 가져오기
+            const { data: userData, error: userError } = await supabase
+               .from('users')
+               .select('nickname, profile_img')
+               .eq('id', data.user.id)
+               .single();
+
+            if (userError) {
+               toast.error('사용자 정보를 가져오는데 실패했습니다.');
+               return;
+            }
+
             toast.success('로그인에 성공하였습니다');
-            navigate('/');
             localStorage.setItem('@auth/login', 'true');
+            localStorage.setItem(
+               '@auth/user',
+               JSON.stringify({
+                  id: data.user.id,
+                  email: data.user.email,
+                  nickname: userData.nickname,
+                  profile_img: userData.profile_img,
+               })
+            );
+            navigate('/main');
          }
 
          if (error) {

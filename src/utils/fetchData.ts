@@ -82,8 +82,16 @@ export async function fetchUsersData() {
 }
 
 // 찜 데이터 함수
+// export async function fetchLikeData() {
+//    return fetchDataFromTable('like');
+// }
 export async function fetchLikeData() {
-   return fetchDataFromTable('like');
+   try {
+      return await fetchDataFromTable('like');
+   } catch (error) {
+      console.error('Error fetching like data:', error);
+      return [];
+   }
 }
 
 // 테이스팅 노트 데이터 함수
@@ -115,8 +123,12 @@ export const loadTasteNoteData = async (
 // 티 테이스팅 노트 데이터 함수
 export async function fetchTeaTastingNotes(teaId: string) {
    try {
-      const response = await supabaseAxios.get(`/rest/v1/teatastingnote?tea=eq.${teaId}&select=tastingnote`);
-      return response.data.map((item: { tastingnote: string }) => item.tastingnote);
+      const response = await supabaseAxios.get(
+         `/rest/v1/teatastingnote?tea=eq.${teaId}&select=tastingnote`
+      );
+      return response.data.map(
+         (item: { tastingnote: string }) => item.tastingnote
+      );
    } catch (error) {
       console.error('Error fetching tea tasting notes:', error);
       throw error;
@@ -124,16 +136,43 @@ export async function fetchTeaTastingNotes(teaId: string) {
 }
 
 // 리뷰 데이터 함수
-export async function fetchReviewData() {
-   const data = await fetchDataFromTable('review');
-   // 데이터 구조를 일관되게 하기 위해 필요한 속성에 기본값 추가
-   return data.map((review) => ({
-      id: review.id || '', // 필요한 속성
-      review_title: review.review_title || '제목 없음',
-      review_comment: review.review_comment || '코멘트 없음',
-      review_user: review.review_user || '익명',
-      tea_rate: review.tea_rate || '',
-   }));
+export async function fetchReviewData(reviewId?: string) {
+   try {
+      let url =
+         '/rest/v1/review?select=id,review_title,review_comment,review_tasting_note,tea_rate,tea:review_tea(id,tea_name,tea_image,tea_category(id,category)),user:review_user(nickname,profile_img),teacolor:tea_color(id)';
+
+      if (reviewId) {
+         url += `&id=eq.${reviewId}`;
+      }
+
+      const response = await supabaseAxios.get(url);
+      console.log(response);
+
+      return response.data.map((review) => ({
+         id: review.id || '',
+         review_title: review.review_title || '제목 없음',
+         review_comment: review.review_comment || '코멘트 없음',
+         tea_rate: review.tea_rate || 0,
+         review_tasting_note: review.review_tasting_note || [],
+         tea: {
+            id: review.tea?.id || '',
+            tea_name: review.tea?.tea_name || '',
+            tea_image: review.tea?.tea_image || '',
+            category: review.tea?.tea_category?.category || '',
+         },
+         teacolor: {
+            tea_color: review.teacolor?.id || '',
+         },
+         user: {
+            nickname: review.user?.nickname || '익명',
+            profile_img:
+               review.user?.profile_img || '/assets/profileDefault.webp',
+         },
+      }));
+   } catch (error) {
+      console.error('Error fetching review data:', error);
+      throw error;
+   }
 }
 
 // 테이스팅 노트 카테고리 함수

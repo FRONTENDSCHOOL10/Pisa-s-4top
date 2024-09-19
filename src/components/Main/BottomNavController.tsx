@@ -6,7 +6,7 @@ export default function BottomNavController() {
    const location = useLocation();
 
    const showRoutes = [
-      '/',
+      '/main',
       '/recommend',
       '/search',
       '/detail/:id',
