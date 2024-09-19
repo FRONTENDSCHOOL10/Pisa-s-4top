@@ -61,6 +61,7 @@ export function Component() {
 
       if (searchTerm.trim() === '') {
          toast.error('검색어를 입력하세요');
+         setIsSearched(false);
       } else {
          setIsSearched(true);
          const teaData = await getSearchTeaData(teaSearch(searchTerm)); // 티 데이터 가져오기
