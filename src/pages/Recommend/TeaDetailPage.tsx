@@ -185,7 +185,7 @@ export function Component() {
             />
             <Button
                isLink={true}
-               href="/reviews/write"
+               href={`/reviews/write?teaId=${tea.id}`}
                ariaLabel="리뷰 작성 페이지"
                content="리뷰 쓰기"
                size="fullWidth"
