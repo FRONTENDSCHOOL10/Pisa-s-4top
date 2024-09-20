@@ -1,46 +1,3 @@
-/*
-  ----- 사용법 -----
-
-   const [teaData, setTeaData] = useState([]);
-   const [usersData, setUsersData] = useState([]);
-   const [likeData, setLikeData] = useState([]);
-
-   useEffect(() => {
-      ----- tea 데이터를 가져오는 함수 호출
-      const getTeaData = async () => {
-         try {
-            const data = await fetchTeaData();
-            setTeaData(data);
-         } catch (error) {
-            console.error('Failed to fetch tea data:', error);
-         }
-      };
-
-      ----- users 데이터를 가져오는 함수 호출
-      const getUsersData = async () => {
-         try {
-            const data = await fetchUsersData();
-            setUsersData(data);
-         } catch (error) {
-            console.error('Failed to fetch users data:', error);
-         }
-      };
-
-      ----- like 데이터를 가져오는 함수 호출
-      const getLikeData = async () => {
-         try {
-            const data = await fetchLikeData();
-            setLikeData(data);
-         } catch (error) {
-            console.error('Failed to fetch like data:', error);
-         }
-      };
-
-      getTeaData();
-      getUsersData();
-      getLikeData();
- */
-
 import axios from 'axios';
 
 const SUPABASE_URL = 'https://yjjphgkgrmyokojwfyzu.supabase.co';
@@ -138,6 +95,79 @@ export async function fetchTeaTastingNotes(teaId: string) {
 
 // 리뷰 데이터 함수
 export async function fetchReviewData(reviewId?: string) {
+   let query = supabase.from('review').select(
+      `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
+         tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
+         user:review_user(nickname, profile_img)`
+   );
+
+   if (reviewId) {
+      query = query.eq('id', reviewId);
+   }
+
+   const { data, error } = await query.single();
+
+   if (error) {
+      console.error('Error fetching review data:', error);
+      return null; // 에러 발생 시 null 반환
+   }
+
+   return {
+      id: data.id || '',
+      review_title: data.review_title || '제목 없음',
+      review_comment: data.review_comment || '코멘트 없음',
+      tea_rate: data.tea_rate || 0,
+      review_tasting_note: Array.isArray(data.review_tasting_note)
+         ? data.review_tasting_note
+         : [],
+      tea_color: data.tea_color || 'default',
+      tea: {
+         id: data.tea?.id || '',
+         tea_name: data.tea?.tea_name || '',
+         tea_image: data.tea?.tea_image || '',
+         category: data.tea?.tea_category?.category || '',
+      },
+      user: {
+         nickname: data.user?.nickname || '익명',
+         profile_img: data.user?.profile_img || '/assets/profileDefault.webp',
+      },
+   };
+}
+
+// 테이스팅 노트 카테고리 함수
+export async function fetchTastingNoteCategories() {
+   return fetchDataFromTable('tastingnotecategory') || [];
+}
+
+// 유저 입맛 데이터 함수
+export async function fetchUserTaste(userNickname: string) {
+   const trimmedNickname = userNickname.trim();
+
+   // 사용자 닉네임으로 데이터베이스에서 직접 필터링
+   const { data, error } = await supabase
+      .from('tasteselection')
+      .select('user_taste')
+      .eq('user_nickname', trimmedNickname)
+      .single(); // 단일 항목을 가져옵니다.
+
+   if (error) {
+      console.error('Error fetching user taste:', error);
+      return null;
+   }
+
+   if (!data) {
+      console.log('No matching data found for userNickname:', trimmedNickname);
+      return null;
+   }
+
+   const userTaste = data.user_taste;
+   // console.log('User Taste Result from fetchUserTaste:', userTaste);
+
+   return userTaste;
+}
+
+// 테이스팅 노트 -> 티 데이터 함수
+export async function fetchTeasByUserSelection(userNickname: string) {
    try {
       let url =
          '/rest/v1/review?select=id,review_title,review_comment,review_tasting_note,tea_rate,tea:review_tea(id,tea_name,tea_image,tea_category(id,category)),user:review_user(nickname,profile_img),teacolor:tea_color(id)';

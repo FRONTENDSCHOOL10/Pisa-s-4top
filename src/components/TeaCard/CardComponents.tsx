@@ -352,8 +352,29 @@ export function TeaReviewDetailCard({
 }: TeaReviewDetailCardProps) {
    return (
       <CardLayout ariaLabel="티 리뷰 디테일 카드" className={className}>
-         <CardTitle className="mb-2">{title}</CardTitle>
-         <p>{contents}</p>
+         {isEditable ? (
+            <>
+               <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => onChangeTitle?.(e.target.value)}
+                  className="mb-2 w-full border-b border-stone-300 p-1 text-lg font-bold"
+                  placeholder="리뷰 제목을 입력하세요."
+               />
+               <textarea
+                  value={contents}
+                  onChange={(e) => onChangeContents?.(e.target.value)}
+                  className="w-full border-b border-stone-300 p-1"
+                  placeholder="리뷰 내용을 입력하세요."
+                  rows={4}
+               />
+            </>
+         ) : (
+            <>
+               <CardTitle className="mb-2">{title}</CardTitle>
+               <p>{contents}</p>
+            </>
+         )}
       </CardLayout>
    );
 }
