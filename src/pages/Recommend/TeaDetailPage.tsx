@@ -99,7 +99,9 @@ export function Component() {
 
          try {
             const teaData = await fetchTeaData();
-            const selectedTea = teaData.find((item: Tea) => item.id === id);
+            const selectedTea = (teaData as Tea[]).find(
+               (item) => item.id === id
+            );
 
             if (!selectedTea) {
                setError('Tea not found');
@@ -112,8 +114,8 @@ export function Component() {
             setLabels(tastingNotes);
 
             const reviewsData = await fetchMultipleReviews(id);
-            setReviews(reviewsData);
-            
+            setReviews(reviewsData as Review[]);
+
             setAverageRate(calculateAverageRate(reviewsData));
 
             const totalLikes = await fetchTotalLikes(selectedTea.id);
