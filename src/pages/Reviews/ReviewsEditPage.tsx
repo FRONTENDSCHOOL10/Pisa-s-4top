@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Buttons/Buttons';
-import { loadTasteNoteData, fetchReviewData } from '@/utils/fetchData';
+import { fetchSingleReview, loadTasteNoteData } from '@/utils/fetchData';
 import { updateReviewData } from '@/utils/updateData';
 import { StarRating } from '@/components/Review/StarRate';
 import {
@@ -49,7 +49,7 @@ export function Component() {
       if (!id || tasteNoteData.length === 0) return;
 
       const fetchReview = async () => {
-         const review = await fetchReviewData(id);
+         const review = await fetchSingleReview(id);
          if (review) {
             setReviewData(review);
             setReviewTitle(review.review_title);

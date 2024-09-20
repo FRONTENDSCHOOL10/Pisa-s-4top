@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import supabase from '@/api/supabase';
 import { Button } from '@/components/Buttons/Buttons';
 import { UserActivity } from '@/components/User/UserActivity';
 import UserCollection from '@/components/User/UserCollection';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import { fetchReviewData } from '@/utils';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import { fetchMultipleReviews } from '@/utils/fetchData';
 
 interface UserInfo {
    nickname: string;
@@ -19,16 +19,16 @@ interface Activity {
    className?: string;
 }
 
-interface Review {
-   id: string;
-   review_title: string;
-   review_comment: string;
-   tea_rate: number;
-   user: {
-      nickname: string;
-      profile_img: string;
-   };
-}
+// interface Review {
+//    id: string;
+//    review_title: string;
+//    review_comment: string;
+//    tea_rate: number;
+//    user: {
+//       nickname: string;
+//       profile_img: string;
+//    };
+// }
 
 const defaultActivities: Activity[] = [
    { title: '찜 개수', count: 0 },
@@ -58,12 +58,14 @@ export function Component() {
 
          try {
             setLoading(true);
-            
+
             // 유저의 리뷰 데이터 가져오기
-            const reviewData: Review[] = await fetchReviewData();
-            const userReviews = reviewData.filter(
-               (review) => review.user.nickname === user.nickname
-            );
+            const reviewData = await fetchMultipleReviews();
+            const userReviews = reviewData
+               ? reviewData.filter(
+                    (review) => review.user.nickname === user.nickname
+                 )
+               : [];
 
             const reviewCount = userReviews.length;
             const averageRating =

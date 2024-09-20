@@ -1,24 +1,30 @@
+import { useEffect, useState } from 'react';
+
 import { TabButton } from '@/components/Buttons/TabButton';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
-import { fetchTeaCategoryData, fetchReviewData } from '@/utils/fetchData';
-import { useEffect, useState } from 'react';
+import { fetchTeaCategoryData, fetchMultipleReviews } from '@/utils/fetchData';
 
-interface TeaCategory {
+export interface TeaCategory {
    id: string;
    category: string;
 }
 
-interface Review {
+export interface Review {
    id: string;
    review_title: string;
    review_comment: string;
+   tea_color: string;
+   review_tasting_note: string[];
    tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
    tea: {
       id: string;
       tea_name: string;
       tea_image: string;
-      category: string;
+      tea_category: {
+         id: string;
+         category: string;
+      };
    };
    user: {
       nickname: string;
@@ -36,15 +42,16 @@ export function Component() {
       const fetchData = async () => {
          setIsLoading(true);
          try {
-            const categoryData = await fetchTeaCategoryData();
+            const categoryData =
+               (await fetchTeaCategoryData()) as TeaCategory[];
             setCategories(categoryData);
 
             if (categoryData.length > 0) {
                setSelectedCategory(categoryData[0].category);
             }
 
-            const data = await fetchReviewData();
-            setReviewData(data);
+            const data = await fetchMultipleReviews();
+            setReviewData(data as any);
          } catch (error) {
             console.error('Failed to fetch data:', error);
          } finally {
@@ -55,9 +62,9 @@ export function Component() {
       fetchData();
    }, []);
 
-   const filteredReviews = reviewData.filter(
-      (review) => review.tea.category === selectedCategory
-   );
+   const filteredReviews = reviewData.filter((review) => {
+      return review.tea?.tea_category?.category === selectedCategory;
+   });
 
    if (isLoading) {
       return <LoadingSpinner />;
@@ -75,18 +82,22 @@ export function Component() {
          />
 
          <section className="flex flex-col gap-2">
-            {filteredReviews.map((review: Review) => (
-               <HomeReviewCard
-                  key={review.id}
-                  id={review.id}
-                  teaName={review.tea.tea_name}
-                  teaImg={review.tea.tea_image}
-                  nickname={review.user.nickname}
-                  title={review.review_title}
-                  comment={review.review_comment}
-                  score={review.tea_rate}
-               />
-            ))}
+            {filteredReviews.length > 0 ? (
+               filteredReviews.map((review: Review) => (
+                  <HomeReviewCard
+                     key={review.id}
+                     id={review.id}
+                     teaName={review.tea?.tea_name || ''}
+                     teaImg={review.tea?.tea_image || ''}
+                     nickname={review.user?.nickname || '익명'}
+                     title={review.review_title}
+                     comment={review.review_comment}
+                     score={review.tea_rate || 0}
+                  />
+               ))
+            ) : (
+               <p>해당 카테고리에 리뷰 데이터가 없습니다.</p>
+            )}
          </section>
       </main>
    );

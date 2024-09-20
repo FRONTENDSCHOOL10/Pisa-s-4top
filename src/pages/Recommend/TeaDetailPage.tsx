@@ -8,7 +8,7 @@ import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import {
    fetchTeaData,
    fetchTeaTastingNotes,
-   fetchReviewData,
+   fetchMultipleReviews,
 } from '@/utils/fetchData';
 import { calculateAverageRate } from '@/utils/calculateAverageRate';
 import {
@@ -106,14 +106,14 @@ export function Component() {
                return;
             }
 
-            console.log('Selected tea data:', selectedTea);
             setTea(selectedTea);
 
             const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
             setLabels(tastingNotes);
 
-            const reviewsData = await fetchReviewData({ teaId: id });
+            const reviewsData = await fetchMultipleReviews(id);
             setReviews(reviewsData);
+            
             setAverageRate(calculateAverageRate(reviewsData));
 
             const totalLikes = await fetchTotalLikes(selectedTea.id);
