@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom'; // useSearchParams 사용
 import { Button } from '@/components/Buttons/Buttons';
-import { loadTasteNoteData } from '@/utils/fetchData';
+import { loadTasteNoteData, fetchTeaData } from '@/utils/fetchData';
 import { createReviewData } from '@/utils/createData';
-import { StarRatingAverage } from '@/components/Review/StarRate';
+import { StarRating, StarRatingAverage } from '@/components/Review/StarRate';
 import {
    TeaColorCard,
    TeaTasteCard,
@@ -20,8 +20,15 @@ export function Component() {
    const [reviewColor, setReviewColor] = useState<string>('');
    const [teaRate, setTeaRate] = useState<number>(0);
    const [currentUser, setCurrentUser] = useState<string | null>(null);
-   const { id } = useParams<{ id: string }>();
+   const [teaInfo, setTeaInfo] = useState<any>(null);
+   const [rating, setRating] = useState(3); // 기본 별점 3점
+   const [isEditable, setIsEditable] = useState(true); // editable 상태
+
+   // useSearchParams를 사용하여 쿼리 스트링에서 teaId 가져오기
+   const [searchParams] = useSearchParams();
+   const teaId = searchParams.get('teaId'); // teaId를 가져옴
    const navigate = useNavigate();
+
    useEffect(() => {
       // 유저 정보 가져오기
       const userData = localStorage.getItem('@auth/user');
@@ -37,6 +44,21 @@ export function Component() {
          }
       }
    }, []);
+
+   // 차 정보 가져오기
+   useEffect(() => {
+      const fetchTeaInfo = async () => {
+         if (!teaId) return; // teaId가 없으면 리턴
+         try {
+            const teaData = await fetchTeaData();
+            const selectedTea = teaData.find((tea) => tea.id === teaId);
+            setTeaInfo(selectedTea); // 차 정보 저장
+         } catch (error) {
+            console.error('Failed to fetch tea info:', error);
+         }
+      };
+      fetchTeaInfo();
+   }, [teaId]);
 
    useEffect(() => {
       const fetchTasteNoteData = async () => {
@@ -59,7 +81,7 @@ export function Component() {
    };
 
    const handleCreateReview = async () => {
-      if (!id || !currentUser) {
+      if (!teaId || !currentUser) {
          console.error('No tea ID or user information found');
          return;
       }
@@ -68,20 +90,20 @@ export function Component() {
          (_, index) => selectedLabels[index]
       );
 
+      // teaRate를 rating 값으로 설정
       const newReview = {
-         review_tea: id,
+         review_tea: teaId,
          review_title: reviewTitle,
          review_comment: reviewContent,
          review_tasting_note: selectedTastingNotes,
          tea_color: reviewColor,
-         tea_rate: teaRate,
+         tea_rate: rating, // teaRate를 rating 값으로 설정
          review_user: currentUser,
       };
 
-      console.log('Creating review for tea ID:', id);
+      console.log('Creating review for tea ID:', teaId);
       console.log('New review data:', newReview);
 
-      // 생성된 리뷰의 ID를 가져오기
       const reviewId = await createReviewData(newReview);
 
       if (reviewId) {
@@ -103,16 +125,32 @@ export function Component() {
             <title>TOTD, 티 리뷰 작성 페이지</title>
          </Helmet>
          <h1 className="sr-only">리뷰 작성 페이지</h1>
-         <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
-            <img
-               className="object-contain"
-               src="/default-tea-image.jpg" // 기본 이미지 사용
-               alt="차 이미지"
-            />
-         </div>
-         <h2>티 이름 및 정보</h2>
-         <p className="my-4 text-stone-600">작성자 닉네임</p>
-         <StarRatingAverage score={teaRate} onChangeScore={setTeaRate} />
+
+         {/* 차 정보 표시 */}
+         {teaInfo ? (
+            <>
+               <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
+                  <img
+                     className="object-contain"
+                     src={teaInfo.tea_image || '/default-tea-image.jpg'}
+                     alt={teaInfo.tea_name || '차 이미지'}
+                  />
+               </div>
+               <h2 className="mt-6 text-xl font-bold">{teaInfo.tea_name}</h2>
+               <p className="text-stone-500">{teaInfo.tea_brand}</p>
+            </>
+         ) : (
+            <p>티 정보를 불러오는 중입니다...</p>
+         )}
+
+         <p className="mb-3 mt-1 text-stone-600">
+            {currentUser || '작성자 닉네임'}
+         </p>
+         <StarRating
+            score={rating}
+            setScore={setRating}
+            editable={isEditable}
+         />
          <TeaTasteCard
             labels={tasteNoteData}
             className="mb-2 mt-8"
