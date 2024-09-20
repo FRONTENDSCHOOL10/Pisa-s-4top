@@ -13,7 +13,7 @@ export default function BottomNav() {
    return (
       <nav
          aria-label="하단 내비게이션"
-         className="fixed bottom-0 flex h-[3.75rem] w-full min-w-80 max-w-3xl items-center justify-around border-t-[1px] bg-stone-50 text-xl bg-blend-multiply [box-shadow:0px_-10px_30px_0px_var(--tailwind-stone-stone-300,_#D6D3D1),_0px_0px_30px_0px_var(--tailwind-white-white,_#FFF)_inset]"
+         className="fixed bottom-0 z-50 flex h-[3.75rem] w-full min-w-80 max-w-3xl items-center justify-around border-t-[1px] bg-stone-50 text-xl bg-blend-multiply [box-shadow:0px_-10px_30px_0px_var(--tailwind-stone-stone-300,_#D6D3D1),_0px_0px_30px_0px_var(--tailwind-white-white,_#FFF)_inset]"
       >
          {navItems.map(({ to, label, icon }) => (
             <Link key={to} to={to} className="focus-green" aria-label={label}>
