@@ -35,17 +35,24 @@ export function useTeaLikes() {
                const user = JSON.parse(userData);
                setCurrentUser(user);
             } catch (error) {
-               console.error('Failed to parse user data from localStorage:', error);
+               console.error(
+                  'Failed to parse user data from localStorage:',
+                  error
+               );
             }
          }
       };
 
+      getCurrentUser();
+   }, []);
+
+   useEffect(() => {
       const getCategories = async () => {
          try {
             const categoryData = await fetchTeaCategoryData();
             setCategories(categoryData);
 
-            if (categoryData.length > 0) {
+            if (categoryData.length > 0 && !selectedCategory) {
                setSelectedCategory(categoryData[0].category);
             }
          } catch (error) {
@@ -53,7 +60,6 @@ export function useTeaLikes() {
          }
       };
 
-      getCurrentUser();
       getCategories();
    }, []);
 
@@ -65,12 +71,17 @@ export function useTeaLikes() {
 
             if (currentUser) {
                const likedTeaPromises = allTeaData.map(async (tea: Tea) => {
-                  const isLiked = await checkLikeStatus(currentUser.nickname, tea.id);
+                  const isLiked = await checkLikeStatus(
+                     currentUser.nickname,
+                     tea.id
+                  );
                   return isLiked ? tea : null;
                });
 
                const likedTeaResults = await Promise.all(likedTeaPromises);
-               const filteredLikedTeas = likedTeaResults.filter((tea): tea is Tea => tea !== null);
+               const filteredLikedTeas = likedTeaResults.filter(
+                  (tea): tea is Tea => tea !== null
+               );
                setLikedTeas(filteredLikedTeas);
             }
          } catch (error) {
@@ -87,7 +98,9 @@ export function useTeaLikes() {
       }
    }, [currentUser]);
 
-   const filteredTeas = likedTeas.filter((tea) => tea.tea_category === selectedCategory);
+   const filteredTeas = likedTeas.filter(
+      (tea) => tea.tea_category === selectedCategory
+   );
 
    return {
       categories,
@@ -95,6 +108,6 @@ export function useTeaLikes() {
       setSelectedCategory,
       currentUser,
       filteredTeas,
-      isLoading
+      isLoading,
    };
 }
