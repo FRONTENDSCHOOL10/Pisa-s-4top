@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { StarRating } from './StarRate';
+import { CardStarRating } from './StarRate';
 
 /* 홈 리뷰 카드 컴포넌트 */
 // 사용법
@@ -39,7 +39,7 @@ export default function HomeReviewCard({
                <p className="text-sm font-medium text-stone-400">{nickname}</p>
                <p className="text-sm font-light text-stone-950">{comment}</p>
                <div className="self-end">
-                  <StarRating score={score} aria-label={`별점 ${score}점`} />
+                  <CardStarRating score={score} altText={`별점 ${score}점`} />
                </div>
             </div>
          </article>

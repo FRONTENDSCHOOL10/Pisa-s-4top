@@ -32,6 +32,24 @@ export default function App() {
 
 import { useState } from 'react';
 
+interface CardStarRatingProps {
+   score: number;
+   altText: string;
+}
+
+export function CardStarRating({ score, altText }: CardStarRatingProps) {
+   const src = `/assets/starRate.svg#gray-rateScore-${Math.floor(score * 10)}`;
+
+   return (
+      <div className="w-20">
+         <img
+            className="h-5 object-cover"
+            src={src}
+            alt={`${altText} ${score}`}
+         />
+      </div>
+   );
+}
 interface StarRatingProps {
    score: number;
    setScore: (newScore: number) => void;
