@@ -60,6 +60,7 @@ import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
 import { SelectColor } from '../Select/SelectColor';
 import { LabelGroup } from '../Labels/Labels';
+import { LoadingSpinner } from '../Main/LoadingSpinner';
 // 기능 구현 완료 후 합칠 예정
 import { addLike, checkLikeStatus, removeLike } from '@/utils/likeData';
 
@@ -192,14 +193,20 @@ export function TeaRecommendCard({
    userNickname,
 }: TeaRecommendCardProps) {
    const [isLiked, setIsLiked] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
 
    useEffect(() => {
       const fetchLikeStatus = async () => {
-         try {
-            const status = await checkLikeStatus(userNickname, id);
-            setIsLiked(status);
-         } catch (error) {
-            console.error('Error fetching like status:', error);
+         if (userNickname) {
+            try {
+               setIsLoading(true);
+               const status = await checkLikeStatus(userNickname, id);
+               setIsLiked(status);
+            } catch (error) {
+               console.error('Error fetching like status:', error);
+            } finally {
+               setIsLoading(false);
+            }
          }
       };
       fetchLikeStatus();
@@ -214,6 +221,7 @@ export function TeaRecommendCard({
       }
 
       try {
+         setIsLoading(true);
          if (isLiked) {
             await removeLike(userNickname, id);
             setIsLiked(false);
@@ -223,14 +231,10 @@ export function TeaRecommendCard({
          }
       } catch (error) {
          console.error('Error toggling like status:', error);
+      } finally {
+         setIsLoading(false);
       }
    };
-
-   // console.log('TeaRecommendCard ID:', id);
-
-   if (!id) {
-      return null;
-   }
 
    return (
       <CardLayout
@@ -250,7 +254,13 @@ export function TeaRecommendCard({
                {teaName}
             </CardTitle>
             <div className="absolute right-0 top-0.5">
-               <ButtonHeart handleToggle={handleToggle} isActive={isLiked} />
+               {isLoading ? (
+                  <div className="h-6 w-6">
+                     <LoadingSpinner />
+                  </div>
+               ) : (
+                  <ButtonHeart handleToggle={handleToggle} isActive={isLiked} />
+               )}
             </div>
             <p className="text-sm text-stone-400">{brand}</p>
          </div>

@@ -11,9 +11,15 @@ export interface TeaCategory {
 export interface Tea {
    id: string;
    tea_name: string;
+   tea_category: string;
    tea_brand: string;
    tea_image: string;
-   tea_category?: TeaCategory; // TeaCategory와의 관계 표현
+   tea_amount: number;
+   tea_water_amount: number;
+   tea_temperature: number;
+   tea_brew_time: number;
+   tea_detail: string;
+   total_like: number;
 }
 
 export interface Review {
@@ -22,6 +28,7 @@ export interface Review {
    review_comment: string;
    tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
    review_tasting_note: string[];
+   tea_color: string;
    tea: {
       id: string;
       tea_name: string;
@@ -34,10 +41,10 @@ export interface Review {
       nickname: string;
       profile_img: string;
    };
-   teacolor: {
-      id: string;
-      tea_color: string;
-   };
+   // teacolor: {
+   //    id: string;
+   //    tea_color: string;
+   // };
 }
 
 export interface TeaColor {

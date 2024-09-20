@@ -1,5 +1,5 @@
 import supabase from '@/api/supabase';
-import { TeaCategory } from '@/types/types';
+import { Review, Tea, TeaCategory } from '@/types/types';
 
 // 테이블 이름에 따라 데이터를 가져오는 함수
 export async function fetchDataFromTable<T>(
@@ -14,10 +14,10 @@ export async function fetchDataFromTable<T>(
 }
 
 // 티 데이터 함수
-export async function fetchTeaData() {
-   return fetchDataFromTable('tea') || [];
+export async function fetchTeaData(): Promise<Tea[]> {
+   const data = await fetchDataFromTable<Tea>('tea');
+   return data || [];
 }
-
 // 유저 데이터 기반한 티 데이터 함수
 export async function fetchFilteredTeaData(
    selectedCategory: string,
@@ -130,7 +130,7 @@ export async function fetchTeaTastingNotes(teaId: string) {
 }
 
 // 리뷰 데이터 함수 (단일 데이터)
-export async function fetchSingleReview(reviewId?: string) {
+export async function fetchSingleReview(reviewId?: string): Promise<Review | null> {
    let query = supabase.from('review').select(
       `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
          tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
@@ -148,7 +148,7 @@ export async function fetchSingleReview(reviewId?: string) {
       return null;
    }
 
-   return data;
+   return data as any;
 }
 
 // 리뷰 데이터 함수 (여러 데이터)
