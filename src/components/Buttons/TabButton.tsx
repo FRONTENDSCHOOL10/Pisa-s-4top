@@ -26,8 +26,9 @@ export function TabButton({
             <li key={tab}>
                <button
                   type="button"
-                  className={`flex rounded-full border border-lime-700 px-[.625rem] py-[.3125rem] text-center text-xs font-normal text-lime-700 ${activeTab === tab ? 'bg-lime-50' : 'bg-stone-100'}`}
+                  className={`flex rounded-full border px-[.625rem] py-[.3125rem] text-center text-xs font-normal ${activeTab === tab ? 'border-lime-700 bg-lime-50 text-lime-700' : 'border-stone-200 bg-stone-100 text-stone-500'}`}
                   onClick={() => handleTabClick(tab)}
+                  aria-selected={activeTab === tab}
                >
                   {tab}
                </button>
