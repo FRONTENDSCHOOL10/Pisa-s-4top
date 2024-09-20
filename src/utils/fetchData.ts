@@ -69,15 +69,15 @@ export async function loadTasteNoteData(
 export async function fetchTeaTastingNotes(teaId: string) {
    const { data, error } = await supabase
       .from('teatastingnote')
-      .select('tastingnote')
-      .eq('tea', teaId);
+      .select('tasting_note')
+      .eq('tea_id', teaId);
 
    if (error) {
       console.error('Error fetching tea tasting notes:', error);
       return []; // 에러 발생 시 빈 배열 반환
    }
 
-   return data.map((item: { tastingnote: string }) => item.tastingnote);
+   return data.map((item: { tasting_note: string }) => item.tasting_note);
 }
 
 // 리뷰 데이터 함수 (단일 데이터)

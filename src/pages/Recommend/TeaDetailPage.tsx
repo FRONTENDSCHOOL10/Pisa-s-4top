@@ -90,12 +90,14 @@ export function Component() {
       const getTeaData = async () => {
          setIsLoading(true);
          setError(null);
-         try {
-            if (!id) {
-               setError('Tea ID is missing');
-               return;
-            }
 
+         if (!id) {
+            setError('Tea ID is missing');
+            setIsLoading(false);
+            return;
+         }
+
+         try {
             const teaData = await fetchTeaData();
             const selectedTea = teaData.find((item: Tea) => item.id === id);
 
@@ -104,6 +106,7 @@ export function Component() {
                return;
             }
 
+            console.log('Selected tea data:', selectedTea);
             setTea(selectedTea);
 
             const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
@@ -160,8 +163,12 @@ export function Component() {
       return <LoadingSpinner />;
    }
 
-   if (error || !tea) {
-      return <div>{error || 'An unexpected error occurred'}</div>;
+   if (error) {
+      return <div>{error}</div>;
+   }
+
+   if (!tea) {
+      return <div>티 데이터를 불러오지 못했습니다.</div>;
    }
 
    return (
