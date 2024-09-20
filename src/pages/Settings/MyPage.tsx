@@ -6,7 +6,7 @@ import { Button } from '@/components/Buttons/Buttons';
 import { UserActivity } from '@/components/User/UserActivity';
 import UserCollection from '@/components/User/UserCollection';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
-import { fetchMultipleReviews } from '@/utils/fetchData';
+import { fetchMultipleReviews, fetchUserTaste } from '@/utils/fetchData';
 
 interface UserInfo {
    nickname: string;
@@ -43,7 +43,8 @@ export function Component() {
       profile_img: '',
    });
    const [activities, setActivities] = useState<Activity[]>(defaultActivities);
-   const [loading, setLoading] = useState<boolean>(true);
+   const [userTaste, setUserTaste] = useState<string>('');
+   const [isLoading, setIsLoading] = useState<boolean>(true);
 
    useEffect(() => {
       const fetchUserData = async () => {
@@ -57,7 +58,11 @@ export function Component() {
          setUserInfo(user);
 
          try {
-            setLoading(true);
+            setIsLoading(true);
+
+            // 유저의 taste 데이터 가져오기
+            const tasteData = await fetchUserTaste(user.nickname);
+            setUserTaste(tasteData || '');
 
             // 유저의 리뷰 데이터 가져오기
             const reviewData = await fetchMultipleReviews();
@@ -99,7 +104,7 @@ export function Component() {
             toast.error('유저 데이터를 가져오는 데 실패했습니다.');
             console.error('Error fetching user data:', err);
          } finally {
-            setLoading(false);
+            setIsLoading(false);
          }
       };
 
@@ -121,7 +126,7 @@ export function Component() {
       }
    };
 
-   if (loading) {
+   if (isLoading) {
       return <LoadingSpinner />;
    }
 
@@ -134,7 +139,9 @@ export function Component() {
                alt="프로필"
                className="mb-4 h-[9.375rem] w-[9.375rem] rounded-full bg-stone-300 object-cover"
             />
-            <p className="mb-2 text-xs font-normal text-stone-950">상큼한</p>
+            <p className="mb-2 text-xs font-normal text-stone-950">
+               {userTaste}
+            </p>
             <p className="mb-6 text-base font-extrabold text-stone-950">
                {userInfo.nickname}
             </p>
