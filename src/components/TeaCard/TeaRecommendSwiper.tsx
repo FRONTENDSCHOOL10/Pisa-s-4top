@@ -45,9 +45,7 @@ interface TeaRecommendSwiperProps {
    teaRecommendations: TeaRecommendCardProps[];
 }
 
-export default function TeaRecommendSwiper({
-   teaRecommendations,
-}: TeaRecommendSwiperProps) {
+export default function TeaRecommendSwiper({ teaRecommendations }) {
    return (
       <Swiper
          spaceBetween={8}
@@ -63,14 +61,14 @@ export default function TeaRecommendSwiper({
          role="list"
          aria-label="추천하는 티 슬라이드"
       >
-         {teaRecommendations.map((recommendation, index) => (
+         {teaRecommendations.map((recommendation) => (
             <SwiperSlide
-               key={index}
+               key={recommendation.id} // 고유한 ID를 key로 사용
                style={{ width: 'auto' }}
                role="listitem"
-               aria-label={`${recommendation.teaName} - ${recommendation.brand} 티 추천 카드`}
+               aria-label={`${recommendation.tea_name} - ${recommendation.tea_brand} 티 추천 카드`}
             >
-               <TeaRecommendCard {...recommendation} />
+               <TeaRecommendCard {...recommendation} /> {/* id 포함 */}
             </SwiperSlide>
          ))}
       </Swiper>

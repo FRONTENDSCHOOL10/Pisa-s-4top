@@ -95,7 +95,7 @@ interface TitleProps {
 export function CardTitle({ children, className }: TitleProps) {
    return (
       <h3
-         className={`w-full truncate text-wrap pr-4 text-lg font-extrabold leading-6 text-stone-950 ${className}`}
+         className={`w-full break-keep pr-4 text-lg font-extrabold leading-6 text-stone-950 ${className}`}
       >
          {children}
       </h3>
@@ -202,10 +202,7 @@ export function TeaRecommendCard({
             console.error('Error fetching like status:', error);
          }
       };
-
-      if (userNickname) {
-         fetchLikeStatus();
-      }
+      fetchLikeStatus();
    }, [userNickname, id]);
 
    const handleToggle = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -229,6 +226,12 @@ export function TeaRecommendCard({
       }
    };
 
+   // console.log('TeaRecommendCard ID:', id);
+
+   if (!id) {
+      return null;
+   }
+
    return (
       <CardLayout
          to={`/detail/${id}`}
@@ -243,7 +246,9 @@ export function TeaRecommendCard({
             />
          </div>
          <div className="relative mt-36">
-            <CardTitle className="mb-1 h-12 text-base">{teaName}</CardTitle>
+            <CardTitle className="mb-1 h-12 pr-6 text-base">
+               {teaName}
+            </CardTitle>
             <div className="absolute right-0 top-0.5">
                <ButtonHeart handleToggle={handleToggle} isActive={isLiked} />
             </div>
