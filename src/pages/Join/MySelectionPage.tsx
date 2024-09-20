@@ -25,6 +25,12 @@ export function Component() {
       const fetchData = async () => {
          try {
             await loadTasteNoteData(setTasteNoteData, setSelectedLabels);
+            setTasteNoteData((prevData) => {
+               const withoutPreferredTag = prevData.filter(
+                  (item) => item !== '😋️ 가리는 거 없어요!'
+               );
+               return [...withoutPreferredTag, '😋️ 가리는 거 없어요!'];
+            });
          } catch (error) {
             console.error('Failed to fetch taste note data:', error);
          }
@@ -34,9 +40,24 @@ export function Component() {
    }, [navigate]);
 
    const toggleLabelSelection = (index: number) => {
-      setSelectedLabels((prevSelected) =>
-         prevSelected.map((selected, i) => (i === index ? !selected : selected))
-      );
+      if (tasteNoteData[index] === '😋️ 가리는 거 없어요!') {
+         setSelectedLabels(new Array(tasteNoteData.length).fill(false));
+         setSelectedLabels((prevSelected) =>
+            prevSelected.map((_, i) => i === index)
+         );
+      } else {
+         setSelectedLabels((prevSelected) =>
+            prevSelected.map((selected, i) => {
+               if (i === index) {
+                  return !selected;
+               }
+               if (tasteNoteData[i] === '😋️ 가리는 거 없어요!') {
+                  return false;
+               }
+               return selected;
+            })
+         );
+      }
    };
 
    const resetSelection = () => {
