@@ -30,21 +30,81 @@ export default function App() {
 
 */
 
-interface StarRatingProps {
-   score: 0 | 1 | 2 | 3 | 4 | 5;
-   altText?: string;
+import { useState } from 'react';
+
+interface CardStarRatingProps {
+   score: number;
+   altText: string;
 }
 
-export function StarRating({ score, altText = '별점' }: StarRatingProps) {
+export function CardStarRating({ score, altText }: CardStarRatingProps) {
    const src = `/assets/starRate.svg#gray-rateScore-${Math.floor(score * 10)}`;
 
    return (
       <div className="w-20">
          <img
-            className="h-4 object-cover"
+            className="h-5 object-cover"
             src={src}
             alt={`${altText} ${score}`}
          />
+      </div>
+   );
+}
+interface StarRatingProps {
+   score: number;
+   setScore: (newScore: number) => void;
+   editable: boolean;
+}
+
+export function StarRating({ score, setScore, editable }: StarRatingProps) {
+   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+   const handleDropdownToggle = () => {
+      if (editable) {
+         setIsDropdownOpen(!isDropdownOpen);
+      }
+   };
+
+   const handleRatingSelect = (newScore: number) => {
+      setScore(newScore);
+      setIsDropdownOpen(false);
+   };
+
+   return (
+      <div className="relative flex justify-center">
+         <button
+            onClick={handleDropdownToggle}
+            className="flex items-center space-x-2"
+            aria-label="별점 선택"
+         >
+            <div className="w-32">
+               <img
+                  className="h-7 object-cover"
+                  src={`/assets/starRate.svg#rateScore-${Math.floor(score * 10)}`}
+                  alt={`별점 ${score}`}
+               />
+            </div>
+         </button>
+
+         {isDropdownOpen && (
+            <ul className="absolute top-6 z-10 mt-2 overflow-hidden rounded-2xl border bg-white shadow-md">
+               {[1, 2, 3, 4, 5].map((star) => (
+                  <li
+                     key={star}
+                     className="flex cursor-pointer items-center justify-center p-2 hover:bg-gray-200"
+                     onClick={() => handleRatingSelect(star)}
+                  >
+                     <div className="w-32">
+                        <img
+                           className="h-7 object-cover"
+                           src={`/assets/starRate.svg#rateScore-${Math.floor(star * 10)}`}
+                           alt={`${star}점`}
+                        />
+                     </div>
+                  </li>
+               ))}
+            </ul>
+         )}
       </div>
    );
 }

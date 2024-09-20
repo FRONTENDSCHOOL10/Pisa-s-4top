@@ -1,10 +1,13 @@
 import supabase from '@/api/supabase';
 
 // 테이블 이름에 따라 데이터를 가져오는 함수
-export async function fetchDataFromTable(tableName: string) {
+export async function fetchDataFromTable<T>(
+   tableName: string
+): Promise<T[] | null> {
    const { data, error } = await supabase.from(tableName).select('*');
    if (error) {
       console.error(`Error fetching data from ${tableName}:`, error);
+      return null;
    }
    return data;
 }
@@ -12,6 +15,58 @@ export async function fetchDataFromTable(tableName: string) {
 // 티 데이터 함수
 export async function fetchTeaData() {
    return fetchDataFromTable('tea') || [];
+}
+
+// 유저 데이터 기반한 티 데이터 함수
+export async function fetchFilteredTeaData(
+   selectedCategory: string,
+   userNickname: string
+) {
+   try {
+      const { data: userTastes, error: userTasteError } = await supabase
+         .from('tasteselection')
+         .select('user_selection')
+         .eq('user_nickname', userNickname)
+         .single();
+
+      if (userTasteError || !userTastes) {
+         throw new Error('사용자의 테이스팅 노트를 가져오지 못했습니다.');
+      }
+
+      const selectedTastes = userTastes?.user_selection || [];
+
+      const { data: tastingNotes, error: tastingNoteError } = await supabase
+         .from('teatastingnote')
+         .select('tea_id')
+         .in('tasting_note', selectedTastes);
+
+      if (tastingNoteError || !tastingNotes) {
+         throw new Error(
+            '테이스팅 노트에 해당하는 차 데이터를 가져오지 못했습니다.'
+         );
+      }
+
+      const teaIds = tastingNotes.map((note) => note.tea_id);
+
+      if (teaIds.length === 0) {
+         return [];
+      }
+
+      const { data: teas, error: teaError } = await supabase
+         .from('tea')
+         .select('id, tea_name, tea_image, tea_brand, tea_category')
+         .eq('tea_category', selectedCategory)
+         .in('id', teaIds);
+
+      if (teaError || !teas) {
+         throw new Error('티 데이터를 가져오는 중 오류가 발생했습니다.');
+      }
+
+      return teas;
+   } catch (error) {
+      console.error('Error fetching filtered tea data:', error);
+      return [];
+   }
 }
 
 // 티 카테고리 함수
@@ -35,17 +90,9 @@ export async function fetchLikeData() {
 }
 
 // 테이스팅 노트 데이터 함수
-export async function loadTasteNoteData(
-   setTasteNoteData: Function,
-   setSelectedLabels: Function
-) {
+export async function loadTasteNoteData() {
    try {
-      const { data, error } = await supabase
-         .from('tastingnote') // 테이블 이름에 맞게 수정
-         .select('*');
-
-      // console.log('Fetched data:', data);
-      // console.log('Fetch error:', error);
+      const { data, error } = await supabase.from('tastingnote').select('*');
 
       if (error) {
          console.error('Failed to fetch taste note data:', error);
@@ -53,15 +100,15 @@ export async function loadTasteNoteData(
       }
 
       if (!data || data.length === 0) {
-         console.error('No data found in tastingnote table.', error);
-         return;
+         console.error('No data found in tastingnote table.');
+         return [];
       }
 
-      // 데이터 설정
-      setTasteNoteData(data.map((note) => note.taste_name)); // 필요한 데이터만 추출
-      setSelectedLabels(new Array(data.length).fill(false));
+      // 데이터 반환
+      return data.map((note) => note.taste_name); // 필요한 데이터만 추출하여 반환
    } catch (error) {
       console.error('Error in loadTasteNoteData:', error);
+      return [];
    }
 }
 
@@ -69,15 +116,15 @@ export async function loadTasteNoteData(
 export async function fetchTeaTastingNotes(teaId: string) {
    const { data, error } = await supabase
       .from('teatastingnote')
-      .select('tastingnote')
-      .eq('tea', teaId);
+      .select('tasting_note')
+      .eq('tea_id', teaId);
 
    if (error) {
       console.error('Error fetching tea tasting notes:', error);
-      return []; // 에러 발생 시 빈 배열 반환
+      return [];
    }
 
-   return data.map((item: { tastingnote: string }) => item.tastingnote);
+   return data.map((item: { tasting_note: string }) => item.tasting_note);
 }
 
 // 리뷰 데이터 함수 (단일 데이터)
@@ -96,7 +143,7 @@ export async function fetchReviewData(reviewId?: string) {
 
    if (error) {
       console.error('Error fetching review data:', error);
-      return null; // 에러 발생 시 null 반환
+      return null;
    }
 
    return {
@@ -146,13 +193,11 @@ export async function fetchTastingNoteCategories() {
 export async function fetchUserTaste(userNickname: string) {
    const trimmedNickname = userNickname.trim();
 
-   // 사용자 닉네임으로 데이터베이스에서 직접 필터링
    const { data, error } = await supabase
       .from('tasteselection')
       .select('user_taste')
       .eq('user_nickname', trimmedNickname)
-      .single(); // 단일 항목을 가져옵니다.
-
+      .single();
    if (error) {
       console.error('Error fetching user taste:', error);
       return null;

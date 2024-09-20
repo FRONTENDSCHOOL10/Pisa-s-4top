@@ -3,7 +3,7 @@ import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import { useTeaLikes } from '@/hooks/useTeaLikes';
 import { useEffect, useState } from 'react';
-import { fetchTeaData } from '@/utils/fetchData';
+import { fetchFilteredTeaData } from '@/utils/fetchData';
 
 interface Tea {
    id: string;
@@ -14,49 +14,73 @@ interface Tea {
 }
 
 export function Component() {
-   const { categories, selectedCategory, setSelectedCategory, currentUser, isLoading } = useTeaLikes();
-   const [allTeas, setAllTeas] = useState<Tea[]>([]);
+   const { categories, currentUser, isLoading: isLikesLoading } = useTeaLikes();
+   const [selectedCategory, setSelectedCategory] = useState('홍차'); // 기본값을 '홍차'로 설정
+   const [filteredTeas, setFilteredTeas] = useState<Tea[]>([]);
+   const [isTeaLoading, setIsTeaLoading] = useState(true);
 
+   // 카테고리 및 테이스팅 노트를 기반으로 필터링된 티 데이터를 가져오는 함수
    useEffect(() => {
-      const getAllTeas = async () => {
+      const getFilteredTeas = async () => {
+         if (!selectedCategory || !currentUser) return;
+
          try {
-            const teas = await fetchTeaData();
-            setAllTeas(teas);
+            setIsTeaLoading(true);
+            const teas = await fetchFilteredTeaData(
+               selectedCategory,
+               currentUser.nickname
+            );
+            setFilteredTeas(teas);
          } catch (error) {
-            console.error('Failed to fetch all tea data:', error);
+            console.error('Failed to fetch filtered tea data:', error);
+         } finally {
+            setIsTeaLoading(false);
          }
       };
 
-      getAllTeas();
-   }, []);
+      getFilteredTeas();
+   }, [selectedCategory, currentUser]); // 카테고리가 변경될 때마다 다시 필터링
 
-   if (isLoading) {
+   const handleTabSelect = (category: string) => {
+      setSelectedCategory(category); // 선택한 카테고리로 상태 업데이트
+   };
+
+   if (isLikesLoading || isTeaLoading) {
       return <LoadingSpinner />;
    }
-
-   const filteredTeas = allTeas.filter((tea) => tea.tea_category === selectedCategory);
 
    return (
       <main className="flex flex-col gap-5">
          <h1 className="sr-only">추천 티 리스트 페이지</h1>
-         <TabButton
-            tabs={categories.map((category) => category.category)}
-            onTabSelect={setSelectedCategory}
-            activeTab={selectedCategory}
-         />
-         <ul className="grid grid-cols-[repeat(auto-fill,_minmax(158px,_1fr))] gap-4">
-            {filteredTeas.map((tea) => (
-               <li key={tea.id} className="flex justify-center">
-                  <TeaRecommendCard
-                     id={tea.id}
-                     imageUrl={tea.tea_image}
-                     teaName={tea.tea_name}
-                     brand={tea.tea_brand}
-                     userNickname={currentUser?.nickname || ''}
-                  />
-               </li>
-            ))}
-         </ul>
+         <div className="mx-auto">
+            {/* 카테고리 필터 버튼 */}
+            <TabButton
+               tabs={categories?.map((category) => category.category) || []}
+               onTabSelect={handleTabSelect} // 탭 선택 시 카테고리 변경
+               activeTab={selectedCategory} // 현재 활성화된 카테고리
+               className="mb-6"
+            />
+            <ul className="grid place-items-center gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+               {filteredTeas.length > 0 ? (
+                  filteredTeas.map((tea) => (
+                     <li key={tea.id} className="flex justify-center">
+                        <TeaRecommendCard
+                           id={tea.id}
+                           imageUrl={tea.tea_image}
+                           teaName={tea.tea_name}
+                           brand={tea.tea_brand}
+                           userNickname={currentUser?.nickname || ''}
+                        />
+                     </li>
+                  ))
+               ) : (
+                  <p>
+                     선택한 카테고리 또는 테이스팅 노트에 해당하는 티가
+                     없습니다.
+                  </p>
+               )}
+            </ul>
+         </div>
       </main>
    );
 }
