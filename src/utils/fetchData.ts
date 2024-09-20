@@ -90,15 +90,9 @@ export async function fetchLikeData() {
 }
 
 // 테이스팅 노트 데이터 함수
-export async function loadTasteNoteData(
-   setTasteNoteData: Function,
-   setSelectedLabels: Function
-) {
+export async function loadTasteNoteData() {
    try {
       const { data, error } = await supabase.from('tastingnote').select('*');
-
-      // console.log('Fetched data:', data);
-      // console.log('Fetch error:', error);
 
       if (error) {
          console.error('Failed to fetch taste note data:', error);
@@ -106,15 +100,15 @@ export async function loadTasteNoteData(
       }
 
       if (!data || data.length === 0) {
-         console.error('No data found in tastingnote table.', error);
-         return;
+         console.error('No data found in tastingnote table.');
+         return [];
       }
 
-      // 데이터 설정
-      setTasteNoteData(data.map((note) => note.taste_name)); // 필요한 데이터만 추출
-      setSelectedLabels(new Array(data.length).fill(false));
+      // 데이터 반환
+      return data.map((note) => note.taste_name); // 필요한 데이터만 추출하여 반환
    } catch (error) {
       console.error('Error in loadTasteNoteData:', error);
+      return [];
    }
 }
 

@@ -16,8 +16,15 @@ export function Component() {
    const [reviewData, setReviewData] = useState<any>(null);
    const [isLoading, setIsLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
+   const [currentUser, setCurrentUser] = useState<any>(null); // 접속한 유저 정보 상태 추가
 
    useEffect(() => {
+      // 로컬 스토리지에서 접속 유저 정보 가져오기
+      const userData = localStorage.getItem('@auth/user');
+      if (userData) {
+         setCurrentUser(JSON.parse(userData));
+      }
+
       const getReviewData = async () => {
          try {
             setIsLoading(true);
@@ -54,6 +61,9 @@ export function Component() {
       return <div>차 데이터를 찾을 수 없습니다.</div>;
    }
 
+   // 접속한 유저가 작성자인지 확인하는 변수
+   const isAuthor = currentUser?.nickname === reviewData.user.nickname;
+
    return (
       <main className="flex flex-col items-center px-6">
          <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
@@ -85,21 +95,25 @@ export function Component() {
             contents={reviewData.review_comment}
          />
 
-         <div className="mb-2 mt-6 w-full">
-            <Button
-               size="fullWidth"
-               content="리뷰 수정하기"
-               handleClick={() => navigate(`/reviews/edit/${id}`)}
-            />
-         </div>
-         <div className="w-full">
-            <Button
-               size="fullWidth"
-               isError={true}
-               content="삭제"
-               handleClick={() => console.log('리뷰 삭제 버튼 클릭됨')}
-            />
-         </div>
+         {isAuthor && (
+            <>
+               <div className="mb-2 mt-6 w-full">
+                  <Button
+                     size="fullWidth"
+                     content="리뷰 수정하기"
+                     handleClick={() => navigate(`/reviews/edit/${id}`)}
+                  />
+               </div>
+               <div className="w-full">
+                  <Button
+                     size="fullWidth"
+                     isError={true}
+                     content="삭제"
+                     handleClick={() => console.log('리뷰 삭제 버튼 클릭됨')}
+                  />
+               </div>
+            </>
+         )}
       </main>
    );
 }
