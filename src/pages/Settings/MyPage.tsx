@@ -7,8 +7,13 @@ import { UserActivity } from '@/components/User/UserActivity';
 import UserCollection from '@/components/User/UserCollection';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import { fetchMultipleReviews, fetchUserTaste } from '@/utils/fetchData';
+import UserData from '@/components/User/UserData';
+import UserDataLayout from './../../components/User/UserDataLayout';
+import UserProfileImg from '@/components/User/UserProfileImg';
+import { updateLocalData } from '@/utils/updateLocalData';
 
 interface UserInfo {
+   id: string;
    nickname: string;
    profile_img: string;
 }
@@ -39,6 +44,7 @@ const defaultActivities: Activity[] = [
 export function Component() {
    const navigate = useNavigate();
    const [userInfo, setUserInfo] = useState<UserInfo>({
+      id: '',
       nickname: '',
       profile_img: '',
    });
@@ -111,6 +117,7 @@ export function Component() {
       fetchUserData();
    }, [navigate]);
 
+   // 로그아웃
    const handleLogout = async () => {
       try {
          const { error } = await supabase.auth.signOut();
@@ -134,10 +141,11 @@ export function Component() {
       <main className="flex flex-col gap-6">
          <h1 className="sr-only">마이페이지</h1>
          <section className="mb-3 flex flex-col items-center">
-            <img
-               src={userInfo.profile_img || '/assets/profileDefault.webp'}
-               alt="프로필"
-               className="mb-4 h-[9.375rem] w-[9.375rem] rounded-full bg-stone-300 object-cover"
+            <UserProfileImg
+               userId={userInfo.id}
+               userName={userInfo.nickname}
+               img={userInfo.profile_img}
+               name="profile_img"
             />
             <p className="mb-2 text-xs font-normal text-stone-950">
                {userTaste}
@@ -145,14 +153,32 @@ export function Component() {
             <p className="mb-6 text-base font-extrabold text-stone-950">
                {userInfo.nickname}
             </p>
-            <Button
-               isLink={true}
-               href="/my-page/edit"
-               ariaLabel="프로필 수정 페이지"
-               content="프로필 수정"
-               size="small"
-            />
          </section>
+
+         <section className="flex flex-col gap-2">
+            <h2 className="sr-only">나의 프로필 수정</h2>
+            <UserDataLayout>
+               <UserData
+                  label="닉네임"
+                  userData="닉네임수정필요"
+                  href="edit/nickname"
+               />
+               <UserData
+                  label="이메일"
+                  userData="이메일수정필요"
+                  href="edit/email"
+               />
+            </UserDataLayout>
+
+            <UserDataLayout>
+               <UserData label="비밀번호 수정" href="edit/password" />
+            </UserDataLayout>
+
+            <UserDataLayout>
+               <UserData label="유저의 취향 태그 수정" href="/" />
+            </UserDataLayout>
+         </section>
+
          <section>
             <h2 className="mb-6 text-2xl font-extrabold text-stone-950">
                나의 활동
