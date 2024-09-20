@@ -74,8 +74,16 @@ export const routes: RouteObject[] = [
                   lazy: () => import('@/pages/Settings/MyPage'),
                },
                {
-                  path: 'edit',
-                  lazy: () => import('@/pages/Settings/MyEditPage'),
+                  path: 'edit/email',
+                  lazy: () => import('@/pages/Settings/MyEditEmailPage'),
+               },
+               {
+                  path: 'edit/nickname',
+                  lazy: () => import('@/pages/Settings/MyEditNicknamePage'),
+               },
+               {
+                  path: 'edit/password',
+                  lazy: () => import('@/pages/Settings/MyEditPasswordPage'),
                },
                {
                   path: 'reviews',
