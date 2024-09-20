@@ -39,12 +39,12 @@ export function Component() {
          setIsLoading(true);
          try {
             // 사용자 정보 가져오기
-            const userString = localStorage.getItem('@auth/user');
-            if (!userString) {
+            const userData = localStorage.getItem('@auth/user');
+            if (!userData) {
                navigate('/login');
                return;
             }
-            const user = JSON.parse(userString);
+            const user = JSON.parse(userData);
 
             const categoryData = await fetchTeaCategoryData();
             setCategories(categoryData);

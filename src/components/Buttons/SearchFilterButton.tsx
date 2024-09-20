@@ -11,6 +11,7 @@ import { useState } from 'react';
 
 export interface Props {
    filter: string[];
+   handleFilterChange: (index: number) => void;
 }
 
 interface SearchStyles {
@@ -30,11 +31,15 @@ export const SEARCH_STYLES: SearchStyles = {
    listItem: 'flex-1 truncate',
 };
 
-export default function SearchFilterButton({ filter }: Props) {
+export default function SearchFilterButton({
+   filter,
+   handleFilterChange,
+}: Props) {
    const [selected, setSelected] = useState<number>(0);
 
    const handleClick = (index: number): void => {
       setSelected(index);
+      handleFilterChange(index);
    };
 
    return (

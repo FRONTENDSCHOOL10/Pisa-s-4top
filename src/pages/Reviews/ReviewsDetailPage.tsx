@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchReviewData } from '@/utils/fetchData';
 import { Button } from '@/components/Buttons/Buttons';
 import { StarRatingAverage } from '@/components/Review/StarRate';
@@ -8,7 +9,6 @@ import {
    TeaTasteCard,
 } from '@/components/TeaCard/CardComponents';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
-import { useNavigate, useParams } from 'react-router-dom';
 
 export function Component() {
    const { id } = useParams<{ id: string }>();
@@ -55,7 +55,7 @@ export function Component() {
    }
 
    return (
-      <main className="flex flex-col items-center px-6 pb-20">
+      <main className="flex flex-col items-center px-6">
          <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
             <img
                className="object-contain"
@@ -89,7 +89,7 @@ export function Component() {
             <Button
                size="fullWidth"
                content="리뷰 수정하기"
-               handleClick={() => console.log('리뷰 수정하기 버튼 클릭됨')}
+               handleClick={() => navigate(`/reviews/edit/${id}`)}
             />
          </div>
          <div className="w-full">

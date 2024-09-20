@@ -60,6 +60,8 @@ import { ButtonHeart } from '../Buttons/Buttons';
 import { StarRating } from '../Review/StarRate';
 import { SelectColor } from '../Select/SelectColor';
 import { LabelGroup } from '../Labels/Labels';
+// 기능 구현 완료 후 합칠 예정
+import { addLike, checkLikeStatus, removeLike } from '@/utils/likeData';
 
 // 공통 UI 컴포넌트
 interface ImageProps {
@@ -179,6 +181,7 @@ export interface TeaRecommendCardProps {
    imageUrl: string;
    teaName: string;
    brand: string;
+   userNickname: string;
 }
 
 export function TeaRecommendCard({
@@ -186,7 +189,46 @@ export function TeaRecommendCard({
    imageUrl,
    teaName,
    brand,
+   userNickname,
 }: TeaRecommendCardProps) {
+   const [isLiked, setIsLiked] = useState(false);
+
+   useEffect(() => {
+      const fetchLikeStatus = async () => {
+         try {
+            const status = await checkLikeStatus(userNickname, id);
+            setIsLiked(status);
+         } catch (error) {
+            console.error('Error fetching like status:', error);
+         }
+      };
+
+      if (userNickname) {
+         fetchLikeStatus();
+      }
+   }, [userNickname, id]);
+
+   const handleToggle = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+
+      if (!userNickname) {
+         console.log('User not logged in');
+         return;
+      }
+
+      try {
+         if (isLiked) {
+            await removeLike(userNickname, id);
+            setIsLiked(false);
+         } else {
+            await addLike(userNickname, id);
+            setIsLiked(true);
+         }
+      } catch (error) {
+         console.error('Error toggling like status:', error);
+      }
+   };
+
    return (
       <CardLayout
          to={`/detail/${id}`}
@@ -203,7 +245,7 @@ export function TeaRecommendCard({
          <div className="relative mt-36">
             <CardTitle className="mb-1 h-12 text-base">{teaName}</CardTitle>
             <div className="absolute right-0 top-0.5">
-               <ButtonHeart />
+               <ButtonHeart handleToggle={handleToggle} isActive={isLiked} />
             </div>
             <p className="text-sm text-stone-400">{brand}</p>
          </div>
@@ -262,26 +304,30 @@ export function TeaReviewCard({
 // 티 수색 선택 카드
 interface TeaColorCardProps {
    className?: string;
-   initialColor?: string; // 초기 색상 prop
-   onColorChange?: (color: string) => void; // 선택적 색상 변경 핸들러
+   initialColor?: string;
+   onColorChange?: (color: string) => void;
+   disabled?: boolean;
 }
 
 export function TeaColorCard({
    className = '',
    initialColor = '',
    onColorChange,
+   disabled = false,
 }: TeaColorCardProps) {
    const [selectedColor, setSelectedColor] = useState<string | null>(
       initialColor
    );
 
    useEffect(() => {
-      setSelectedColor(initialColor); // initialColor가 변경되면 selectedColor 업데이트
+      setSelectedColor(initialColor);
    }, [initialColor]);
 
    const handleSelectColor = (color: string) => {
-      setSelectedColor(color);
-      onColorChange?.(color);
+      if (!disabled) {
+         setSelectedColor(color);
+         onColorChange?.(color);
+      }
    };
 
    return (
@@ -290,6 +336,7 @@ export function TeaColorCard({
          <SelectColor
             selectedColor={selectedColor}
             onSelect={handleSelectColor}
+            disabled={disabled}
          />
       </CardLayout>
    );
@@ -343,12 +390,18 @@ interface TeaReviewDetailCardProps {
    title: string;
    contents: string;
    className?: string;
+   isEditable?: boolean;
+   onChangeTitle?: (title: string) => void;
+   onChangeContents?: (contents: string) => void;
 }
 
 export function TeaReviewDetailCard({
    title,
    contents,
    className = '',
+   isEditable = false,
+   onChangeTitle,
+   onChangeContents,
 }: TeaReviewDetailCardProps) {
    return (
       <CardLayout ariaLabel="티 리뷰 디테일 카드" className={className}>
