@@ -25,6 +25,7 @@ const getUserNicknameFromLocalStorage = () => {
 
 const formatTeaData = (teaResult) => {
    return teaResult.map((tea) => ({
+      id: tea.id,
       imageUrl: tea.tea_image,
       teaName: tea.tea_name,
       brand: tea.tea_brand,
@@ -41,7 +42,7 @@ export default function MainPage() {
       const fetchData = async () => {
          try {
             const userNickname = getUserNicknameFromLocalStorage();
-            console.log('User Nickname:', userNickname);
+            // console.log('User Nickname:', userNickname);
 
             let userTasteResult = '추천하는';
             if (userNickname) {
@@ -93,13 +94,11 @@ export default function MainPage() {
             <span className="sr-only">추천하는 차</span>
          </h2>
 
-         <section className="relative h-72">
-            <div className="absolute left-0">
-               <TeaRecommendSwiper teaRecommendations={teaData} />
-            </div>
-         </section>
+         <div className="absolute left-0">
+            <TeaRecommendSwiper teaRecommendations={teaData} />
+         </div>
 
-         <h3 className="mb-4 mt-12 text-2xl font-extralight">
+         <h3 className="mb-4 mt-80 pt-4 text-2xl font-extralight">
             다른 사람들의 <strong className="font-semibold">리뷰</strong>
          </h3>
 
