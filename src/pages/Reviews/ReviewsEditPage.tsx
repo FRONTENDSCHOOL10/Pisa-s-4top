@@ -22,14 +22,18 @@ export function Component() {
    const navigate = useNavigate();
 
    useEffect(() => {
+      // 테이스팅 노트 데이터를 불러오는 함수
       const fetchTasteNoteData = async () => {
-         await loadTasteNoteData((data) => {
+         try {
+            const data = await loadTasteNoteData();
             const filteredData = data.filter(
                (note) => note !== '😋️ 가리는 거 없어요!'
             );
             setTasteNoteData(filteredData);
             setSelectedLabels(new Array(filteredData.length).fill(false));
-         });
+         } catch (error) {
+            console.error('Failed to load taste note data:', error);
+         }
       };
 
       fetchTasteNoteData();
@@ -40,13 +44,13 @@ export function Component() {
 
       const fetchReview = async () => {
          const review = await fetchReviewData(id);
-         if (review && review.length > 0) {
-            setReviewData(review[0]);
-            setReviewTitle(review[0].review_title);
-            setReviewContent(review[0].review_comment);
-            setReviewColor(review[0].teacolor?.tea_color || '');
+         if (review) {
+            setReviewData(review);
+            setReviewTitle(review.review_title);
+            setReviewContent(review.review_comment);
+            setReviewColor(review.tea_color);
 
-            const existingTastes = review[0].review_tasting_note || [];
+            const existingTastes = review.review_tasting_note || [];
             setSelectedLabels(
                tasteNoteData.map((taste) => existingTastes.includes(taste))
             );
@@ -76,20 +80,19 @@ export function Component() {
          tea_color: reviewColor,
       };
 
+      // 기존 데이터와의 비교
       if (
          reviewData.review_title === updatedReview.review_title &&
          reviewData.review_comment === updatedReview.review_comment &&
          JSON.stringify(reviewData.review_tasting_note) ===
             JSON.stringify(updatedReview.review_tasting_note) &&
-         reviewData.teacolor?.tea_color === updatedReview.tea_color
+         reviewData.tea_color === updatedReview.tea_color
       ) {
          toast.error('업데이트할 내용이 없습니다.');
          return;
       }
 
-      console.log('Updating review with ID:', id);
-      console.log('Updated review data:', updatedReview);
-
+      // 리뷰 업데이트 로직
       const result = await updateReviewData(id, updatedReview);
 
       if (result) {
@@ -126,6 +129,7 @@ export function Component() {
             initialColor={reviewColor}
             onColorChange={setReviewColor}
          />
+
          <TeaReviewDetailCard
             title={reviewTitle}
             contents={reviewContent}
