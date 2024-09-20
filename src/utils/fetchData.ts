@@ -83,43 +83,42 @@ export async function fetchTeaTastingNotes(teaId: string) {
 // 리뷰 데이터 함수
 export async function fetchReviewData(reviewId?: string) {
    let query = supabase.from('review').select(
-      `id, review_title, review_comment, review_tasting_note, tea_rate,
+      `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
          tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
-         user:review_user(nickname, profile_img),
-         teacolor:tea_color(id)`
+         user:review_user(nickname, profile_img)`
    );
 
    if (reviewId) {
       query = query.eq('id', reviewId);
    }
 
-   const { data, error } = await query;
+   const { data, error } = await query.single();
 
    if (error) {
       console.error('Error fetching review data:', error);
-      return []; // 에러 발생 시 빈 배열 반환
+      return null; // 에러 발생 시 null 반환
    }
 
-   return data.map((review) => ({
-      id: review.id || '',
-      review_title: review.review_title || '제목 없음',
-      review_comment: review.review_comment || '코멘트 없음',
-      tea_rate: review.tea_rate || 0,
-      review_tasting_note: review.review_tasting_note || [],
+   return {
+      id: data.id || '',
+      review_title: data.review_title || '제목 없음',
+      review_comment: data.review_comment || '코멘트 없음',
+      tea_rate: data.tea_rate || 0,
+      review_tasting_note: Array.isArray(data.review_tasting_note)
+         ? data.review_tasting_note
+         : [],
+      tea_color: data.tea_color || 'default',
       tea: {
-         id: review.tea?.id || '',
-         tea_name: review.tea?.tea_name || '',
-         tea_image: review.tea?.tea_image || '',
-         category: review.tea?.tea_category?.category || '',
-      },
-      teacolor: {
-         tea_color: review.teacolor?.id || '',
+         id: data.tea?.id || '',
+         tea_name: data.tea?.tea_name || '',
+         tea_image: data.tea?.tea_image || '',
+         category: data.tea?.tea_category?.category || '',
       },
       user: {
-         nickname: review.user?.nickname || '익명',
-         profile_img: review.user?.profile_img || '/assets/profileDefault.webp',
+         nickname: data.user?.nickname || '익명',
+         profile_img: data.user?.profile_img || '/assets/profileDefault.webp',
       },
-   }));
+   };
 }
 
 // 테이스팅 노트 카테고리 함수

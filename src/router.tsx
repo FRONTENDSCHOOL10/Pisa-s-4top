@@ -57,7 +57,7 @@ export const routes: RouteObject[] = [
                   lazy: () => import('@/pages/Reviews/ReviewsDetailPage'),
                },
                {
-                  path: 'write',
+                  path: 'write/:id',
                   lazy: () => import('@/pages/Reviews/ReviewsWritePage'),
                },
                {

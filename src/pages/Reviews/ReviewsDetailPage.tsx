@@ -11,42 +11,47 @@ import {
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 
 export function Component() {
-   const [reviewData, setReviewData] = useState<any>(null);
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState<string | null>(null);
-
    const { id } = useParams<{ id: string }>();
    const navigate = useNavigate();
+   const [reviewData, setReviewData] = useState<any>(null);
+   const [isLoading, setIsLoading] = useState(true);
+   const [error, setError] = useState<string | null>(null);
 
    useEffect(() => {
-      // console.log('Raw id from useParams:', id);
-      if (!id) {
-         setError('리뷰 ID를 찾을 수 없습니다.');
-         setLoading(false);
-         return;
-      }
-
-      const loadReviewData = async () => {
+      const getReviewData = async () => {
          try {
-            const data = await fetchReviewData({ reviewId: id });
-            if (data && data.length > 0) {
-               setReviewData(data[0]);
-            } else {
-               setError('리뷰 데이터를 찾을 수 없습니다.');
-            }
-         } catch (err) {
-            console.error('리뷰 데이터를 가져오는 중 오류 발생:', err);
-            setError('리뷰 데이터를 가져오는 중 오류가 발생했습니다.');
+            setIsLoading(true);
+            const data = await fetchReviewData(id);
+            setReviewData(data);
+            console.log(data);
+         } catch (error) {
+            console.error('Failed to fetch review data:', error);
+            setError('리뷰 데이터를 가져오는 데 실패했습니다.');
          } finally {
-            setLoading(false);
+            setIsLoading(false);
          }
       };
 
-      loadReviewData();
+      getReviewData();
    }, [id]);
 
-   if (loading) {
+   // 로딩 중인 경우 로딩 스피너를 표시
+   if (isLoading) {
       return <LoadingSpinner />;
+   }
+
+   // 에러가 발생한 경우 에러 메시지 표시
+   if (error) {
+      return <div>{error}</div>;
+   }
+
+   // 데이터가 없는 경우 처리
+   if (!reviewData) {
+      return <div>리뷰 데이터를 찾을 수 없습니다.</div>;
+   }
+
+   if (!reviewData.tea) {
+      return <div>차 데이터를 찾을 수 없습니다.</div>;
    }
 
    return (
@@ -60,22 +65,26 @@ export function Component() {
          </div>
          <p className="my-4">{reviewData.user.nickname}</p>
          <StarRatingAverage score={reviewData.tea_rate} />
+
          <TeaTasteCard
-            labels={reviewData.review_tasting_note}
-            selectedLabels={[false, false, false]}
+            labels={reviewData.review_tasting_note || []}
+            selectedLabels={reviewData.review_tasting_note.map(() => false)}
             types="label"
             isEditable={false}
             className="mb-2 mt-8"
          />
+
          <TeaColorCard
             className="mb-2"
-            initialColor={reviewData.teacolor.id}
+            initialColor={reviewData.tea_color}
             disabled={true}
          />
+
          <TeaReviewDetailCard
             title={reviewData.review_title}
             contents={reviewData.review_comment}
          />
+
          <div className="mb-2 mt-6 w-full">
             <Button
                size="fullWidth"

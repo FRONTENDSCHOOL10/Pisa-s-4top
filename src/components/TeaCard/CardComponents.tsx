@@ -412,13 +412,13 @@ export function TeaReviewDetailCard({
                   value={title}
                   onChange={(e) => onChangeTitle?.(e.target.value)}
                   className="mb-2 w-full border-b border-stone-300 p-1 text-lg font-bold"
-                  placeholder={title}
+                  placeholder="리뷰 제목을 입력하세요."
                />
                <textarea
                   value={contents}
                   onChange={(e) => onChangeContents?.(e.target.value)}
                   className="w-full border-b border-stone-300 p-1"
-                  placeholder={contents}
+                  placeholder="리뷰 내용을 입력하세요."
                   rows={4}
                />
             </>
