@@ -80,7 +80,7 @@ export async function fetchTeaTastingNotes(teaId: string) {
    return data.map((item: { tastingnote: string }) => item.tastingnote);
 }
 
-// 리뷰 데이터 함수
+// 리뷰 데이터 함수 (단일 데이터)
 export async function fetchReviewData(reviewId?: string) {
    let query = supabase.from('review').select(
       `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
@@ -119,6 +119,22 @@ export async function fetchReviewData(reviewId?: string) {
          profile_img: data.user?.profile_img || '/assets/profileDefault.webp',
       },
    };
+}
+
+// 리뷰 데이터 함수 (여러 데이터)
+export async function fetchMultipleReviews() {
+   const { data, error } = await supabase.from('review').select(
+      `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
+         tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
+         user:review_user(nickname, profile_img)`
+   );
+
+   if (error) {
+      console.error('Error fetching multiple reviews:', error);
+      return [];
+   }
+
+   return data;
 }
 
 // 테이스팅 노트 카테고리 함수

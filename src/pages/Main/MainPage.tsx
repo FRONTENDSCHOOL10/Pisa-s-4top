@@ -1,118 +1,125 @@
 import { useState, useEffect } from 'react';
 import {
    fetchTeaData,
-   fetchReviewData,
+   fetchMultipleReviews,
    fetchUserTaste,
 } from '@/utils/fetchData';
 import TeaRecommendSwiper from '@/components/TeaCard/TeaRecommendSwiper';
 import SearchInput from '@/components/Input/SearchInput';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
 import { Helmet } from 'react-helmet-async';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+
+const getUserNicknameFromLocalStorage = () => {
+   const userString = localStorage.getItem('@auth/user');
+   if (userString) {
+      try {
+         const userObject = JSON.parse(userString);
+         return userObject.nickname;
+      } catch (error) {
+         console.error('Error parsing user data:', error);
+      }
+   }
+   return null;
+};
+
+const formatTeaData = (teaResult) => {
+   return teaResult.map((tea) => ({
+      imageUrl: tea.tea_image,
+      teaName: tea.tea_name,
+      brand: tea.tea_brand,
+   }));
+};
 
 export default function MainPage() {
    const [teaData, setTeaData] = useState([]);
    const [reviewData, setReviewData] = useState([]);
    const [userTaste, setUserTaste] = useState('추천하는');
+   const [isLoading, setIsLoading] = useState(true);
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            // localStorage에서 사용자 정보 가져오기
-            const userString = localStorage.getItem('@auth/user');
-            console.log('User Data from localStorage:', userString);
+            const userNickname = getUserNicknameFromLocalStorage();
+            console.log('User Nickname:', userNickname);
 
-            let userNickname = null;
-
-            if (userString) {
-               const userObject = JSON.parse(userString);
-               userNickname = userObject.nickname;
-               console.log('Parsed userNickname:', userNickname);
-            }
-
-            // 사용자 취향 가져오기
-            let userTasteResult = '추천하는'; // 기본 값 설정
+            let userTasteResult = '추천하는';
             if (userNickname) {
-               userTasteResult = await fetchUserTaste(userNickname);
-               console.log(
-                  'User Taste Result from fetchUserTaste:',
-                  userTasteResult
-               );
-            } else {
-               console.log('No userNickname found');
+               const tasteResult = await fetchUserTaste(userNickname);
+               if (tasteResult) {
+                  userTasteResult = tasteResult;
+               }
             }
+            setUserTaste(userTasteResult);
 
-            // 사용자 취향 업데이트
-            setUserTaste(userTasteResult || '추천하는');
-            console.log(
-               'Updated userTaste state:',
-               userTasteResult || '추천하는'
-            );
-
-            // 티와 리뷰 데이터를 병렬로 가져오기
             const [teaResult, reviewResult] = await Promise.all([
                fetchTeaData(),
-               fetchReviewData(),
+               fetchMultipleReviews(),
             ]);
-            console.log('Fetched teaResult:', teaResult);
-            console.log('Fetched reviewResult:', reviewResult);
 
             setTeaData(formatTeaData(teaResult));
-            setReviewData(reviewResult);
-            console.log('Formatted teaData state:', formatTeaData(teaResult));
-            console.log('Updated reviewData state:', reviewResult);
+            setReviewData(reviewResult || []);
          } catch (error) {
             console.error('Error fetching data:', error);
+         } finally {
+            setIsLoading(false);
          }
       };
 
       fetchData();
    }, []);
 
-   // Helper function to format tea data
-   const formatTeaData = (teaResult) => {
-      console.log('Formatting tea data:', teaResult);
-      return teaResult.map((tea) => ({
-         imageUrl: tea.tea_image,
-         teaName: tea.tea_name,
-         brand: tea.tea_brand,
-      }));
-   };
+   if (isLoading) {
+      return <LoadingSpinner />;
+   }
 
    return (
       <main>
          <Helmet>
             <title>데일리 차 추천 서비스, Tea of the Day</title>
-            <meta name="description" content="데일리 티 추천 서비스, TOTD" />
+            <meta
+               name="description"
+               content="당신의 차 취향에 맞춘 추천 서비스, Tea of the Day"
+            />
          </Helmet>
          <h1 className="sr-only">메인 페이지</h1>
+
          <SearchInput isButton={true} />
+
          <h2 className="mb-6 mt-16 text-3xl font-thin text-stone-950">
             {userTaste}
             <br />
             <strong className="font-extrabold">당신에게,</strong>{' '}
             <span className="sr-only">추천하는 차</span>
          </h2>
+
          <section className="relative h-72">
             <div className="absolute left-0">
                <TeaRecommendSwiper teaRecommendations={teaData} />
             </div>
          </section>
+
          <h3 className="mb-4 mt-12 text-2xl font-extralight">
             다른 사람들의 <strong className="font-semibold">리뷰</strong>
          </h3>
 
          <div className="flex flex-col gap-3">
-            {reviewData.map((review) => (
-               <HomeReviewCard
-                  id={review.id}
-                  teaImg={review.tea.tea_image}
-                  teaName={review.tea.tea_name}
-                  title={review.review_title}
-                  comment={review.review_comment}
-                  nickname={review.review_user}
-                  score={review.tea_rate}
-               />
-            ))}
+            {Array.isArray(reviewData) && reviewData.length > 0 ? (
+               reviewData.map((review) => (
+                  <HomeReviewCard
+                     key={review.id}
+                     id={review.id}
+                     teaImg={review.tea?.tea_image || '/default-tea-image.jpg'}
+                     teaName={review.tea?.tea_name || '알 수 없는 차'}
+                     title={review.review_title || '제목 없음'}
+                     comment={review.review_comment || '내용 없음'}
+                     nickname={review.user?.nickname || '익명'}
+                     score={review.tea_rate}
+                  />
+               ))
+            ) : (
+               <p>아직 등록된 리뷰가 없습니다.</p>
+            )}
          </div>
       </main>
    );
