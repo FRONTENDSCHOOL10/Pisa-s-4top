@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TabButton } from '@/components/Buttons/TabButton';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
-import { fetchTeaCategoryData, fetchReviewData } from '@/utils/fetchData';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { fetchTeaCategoryData, fetchMultipleReviews } from '@/utils/fetchData';
 
 interface TeaCategory {
    id: string;
@@ -14,12 +14,17 @@ interface Review {
    id: string;
    review_title: string;
    review_comment: string;
+   tea_color: string;
+   review_tasting_note: string[];
    tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
    tea: {
       id: string;
       tea_name: string;
       tea_image: string;
-      category: string;
+      tea_category: {
+         id: string;
+         category: string;
+      };
    };
    user: {
       nickname: string;
@@ -47,18 +52,21 @@ export function Component() {
             const user = JSON.parse(userData);
 
             const categoryData = await fetchTeaCategoryData();
-            setCategories(categoryData);
-
-            if (categoryData.length > 0) {
-               setSelectedCategory(categoryData[0].category);
+            if (categoryData) {
+               setCategories(categoryData as TeaCategory[]);
+               if (categoryData.length > 0) {
+                  setSelectedCategory(categoryData[0].category);
+               }
             }
 
-            const data = await fetchReviewData();
+            const data = await fetchMultipleReviews();
             // 사용자의 리뷰만 필터링
-            const userReviews = data.filter(
-               (review: Review) => review.user.nickname === user.nickname
-            );
-            setReviewData(userReviews);
+            if (data) {
+               const userReviews = data.filter(
+                  (review: any) => review.user.nickname === user.nickname
+               );
+               setReviewData(userReviews as Review[]);
+            }
          } catch (error) {
             console.error('Failed to fetch data:', error);
          } finally {
@@ -70,7 +78,7 @@ export function Component() {
    }, [navigate]);
 
    const filteredReviews = reviewData.filter(
-      (review) => review.tea.category === selectedCategory
+      (review) => review.tea.tea_category.category === selectedCategory
    );
 
    if (isLoading) {

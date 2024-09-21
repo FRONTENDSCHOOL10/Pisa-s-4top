@@ -1,4 +1,5 @@
 import supabase from '@/api/supabase';
+import { Review, Tea, TeaCategory } from '@/types/types';
 
 // 테이블 이름에 따라 데이터를 가져오는 함수
 export async function fetchDataFromTable<T>(
@@ -13,10 +14,10 @@ export async function fetchDataFromTable<T>(
 }
 
 // 티 데이터 함수
-export async function fetchTeaData() {
-   return fetchDataFromTable('tea') || [];
+export async function fetchTeaData(): Promise<Tea[]> {
+   const data = await fetchDataFromTable<Tea>('tea');
+   return data || [];
 }
-
 // 유저 데이터 기반한 티 데이터 함수
 export async function fetchFilteredTeaData(
    selectedCategory: string,
@@ -70,8 +71,9 @@ export async function fetchFilteredTeaData(
 }
 
 // 티 카테고리 함수
-export async function fetchTeaCategoryData() {
-   return fetchDataFromTable('teacategory') || [];
+export async function fetchTeaCategoryData(): Promise<TeaCategory[]> {
+   const data = await fetchDataFromTable<TeaCategory>('teacategory');
+   return data || [];
 }
 
 // 유저 데이터 함수
@@ -90,15 +92,9 @@ export async function fetchLikeData() {
 }
 
 // 테이스팅 노트 데이터 함수
-export async function loadTasteNoteData(
-   setTasteNoteData: Function,
-   setSelectedLabels: Function
-) {
+export async function loadTasteNoteData() {
    try {
       const { data, error } = await supabase.from('tastingnote').select('*');
-
-      // console.log('Fetched data:', data);
-      // console.log('Fetch error:', error);
 
       if (error) {
          console.error('Failed to fetch taste note data:', error);
@@ -106,15 +102,15 @@ export async function loadTasteNoteData(
       }
 
       if (!data || data.length === 0) {
-         console.error('No data found in tastingnote table.', error);
-         return;
+         console.error('No data found in tastingnote table.');
+         return [];
       }
 
-      // 데이터 설정
-      setTasteNoteData(data.map((note) => note.taste_name)); // 필요한 데이터만 추출
-      setSelectedLabels(new Array(data.length).fill(false));
+      // 데이터 반환
+      return data.map((note) => note.taste_name); // 필요한 데이터만 추출하여 반환
    } catch (error) {
       console.error('Error in loadTasteNoteData:', error);
+      return [];
    }
 }
 
@@ -134,7 +130,7 @@ export async function fetchTeaTastingNotes(teaId: string) {
 }
 
 // 리뷰 데이터 함수 (단일 데이터)
-export async function fetchReviewData(reviewId?: string) {
+export async function fetchSingleReview(reviewId?: string): Promise<Review | null> {
    let query = supabase.from('review').select(
       `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
          tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
@@ -152,42 +148,29 @@ export async function fetchReviewData(reviewId?: string) {
       return null;
    }
 
-   return {
-      id: data.id || '',
-      review_title: data.review_title || '제목 없음',
-      review_comment: data.review_comment || '코멘트 없음',
-      tea_rate: data.tea_rate || 0,
-      review_tasting_note: Array.isArray(data.review_tasting_note)
-         ? data.review_tasting_note
-         : [],
-      tea_color: data.tea_color || 'default',
-      tea: {
-         id: data.tea?.id || '',
-         tea_name: data.tea?.tea_name || '',
-         tea_image: data.tea?.tea_image || '',
-         category: data.tea?.tea_category?.category || '',
-      },
-      user: {
-         nickname: data.user?.nickname || '익명',
-         profile_img: data.user?.profile_img || '/assets/profileDefault.webp',
-      },
-   };
+   return data as any;
 }
 
 // 리뷰 데이터 함수 (여러 데이터)
-export async function fetchMultipleReviews() {
-   const { data, error } = await supabase.from('review').select(
+export async function fetchMultipleReviews(teaId?: string): Promise<any[] | null>  {
+   let query = supabase.from('review').select(
       `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
          tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
          user:review_user(nickname, profile_img)`
    );
+
+   if (teaId) {
+      query = query.eq('review_tea', teaId);
+   }
+
+   const { data, error } = await query;
 
    if (error) {
       console.error('Error fetching multiple reviews:', error);
       return [];
    }
 
-   return data;
+   return data || [];
 }
 
 // 테이스팅 노트 카테고리 함수

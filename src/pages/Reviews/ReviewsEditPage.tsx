@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Buttons/Buttons';
-import { loadTasteNoteData, fetchReviewData } from '@/utils/fetchData';
+import { fetchSingleReview, loadTasteNoteData } from '@/utils/fetchData';
 import { updateReviewData } from '@/utils/updateData';
-import { StarRatingAverage } from '@/components/Review/StarRate';
+import { StarRating } from '@/components/Review/StarRate';
 import {
    TeaColorCard,
    TeaReviewDetailCard,
@@ -16,16 +16,22 @@ export function Component() {
    const [selectedLabels, setSelectedLabels] = useState<boolean[]>([]);
    const [reviewData, setReviewData] = useState<any>(null);
    const [reviewTitle, setReviewTitle] = useState<string>('');
+   const [rating, setRating] = useState(3); // 기본 별점 3점
    const [reviewContent, setReviewContent] = useState<string>('');
    const [reviewColor, setReviewColor] = useState<string>('');
    const { id } = useParams<{ id: string }>();
    const navigate = useNavigate();
 
    useEffect(() => {
-      // 테이스팅 노트 데이터를 불러오는 함수
       const fetchTasteNoteData = async () => {
          try {
             const data = await loadTasteNoteData();
+            console.log('Loaded taste note data:', data);
+
+            if (!data) {
+               throw new Error('Taste note data is undefined or null');
+            }
+
             const filteredData = data.filter(
                (note) => note !== '😋️ 가리는 거 없어요!'
             );
@@ -43,12 +49,13 @@ export function Component() {
       if (!id || tasteNoteData.length === 0) return;
 
       const fetchReview = async () => {
-         const review = await fetchReviewData(id);
+         const review = await fetchSingleReview(id);
          if (review) {
             setReviewData(review);
             setReviewTitle(review.review_title);
             setReviewContent(review.review_comment);
             setReviewColor(review.tea_color);
+            setRating(review.tea_rate);
 
             const existingTastes = review.review_tasting_note || [];
             setSelectedLabels(
@@ -75,24 +82,24 @@ export function Component() {
 
       const updatedReview = {
          review_title: reviewTitle,
+         tea_rate: rating,
          review_comment: reviewContent,
          review_tasting_note: updatedTastingNotes,
          tea_color: reviewColor,
       };
 
-      // 기존 데이터와의 비교
       if (
          reviewData.review_title === updatedReview.review_title &&
          reviewData.review_comment === updatedReview.review_comment &&
          JSON.stringify(reviewData.review_tasting_note) ===
             JSON.stringify(updatedReview.review_tasting_note) &&
-         reviewData.tea_color === updatedReview.tea_color
+         reviewData.tea_color === updatedReview.tea_color &&
+         reviewData.tea_rate === updatedReview.tea_rate
       ) {
          toast.error('업데이트할 내용이 없습니다.');
          return;
       }
 
-      // 리뷰 업데이트 로직
       const result = await updateReviewData(id, updatedReview);
 
       if (result) {
@@ -114,7 +121,7 @@ export function Component() {
             />
          </div>
          <p className="my-4 text-stone-600">{reviewData?.user.nickname}</p>
-         <StarRatingAverage score={reviewData?.tea_rate} />
+         <StarRating setScore={setRating} editable={true} score={rating} />
 
          <TeaTasteCard
             labels={tasteNoteData}
