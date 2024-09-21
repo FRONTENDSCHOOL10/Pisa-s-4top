@@ -106,9 +106,9 @@ export default function MainPage() {
             />
          </div>
 
-         <h3 className="mb-4 mt-80 pt-4 text-2xl font-extralight">
+         <h2 className="mb-4 mt-80 pt-4 text-2xl font-extralight">
             다른 사람들의 <strong className="font-semibold">리뷰</strong>
-         </h3>
+         </h2>
 
          <div className="flex flex-col gap-3">
             {Array.isArray(reviewData) && reviewData.length > 0 ? (
