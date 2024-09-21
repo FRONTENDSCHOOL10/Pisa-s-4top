@@ -36,12 +36,14 @@ export default function MainPage() {
    const [teaData, setTeaData] = useState([]);
    const [reviewData, setReviewData] = useState([]);
    const [userTaste, setUserTaste] = useState('추천하는');
+   const [userNickname, setUserNickname] = useState('');
    const [isLoading, setIsLoading] = useState(true);
 
    useEffect(() => {
       const fetchData = async () => {
          try {
             const userNickname = getUserNicknameFromLocalStorage();
+            setUserNickname(userNickname);
             // console.log('User Nickname:', userNickname);
 
             let userTasteResult = '추천하는';
@@ -95,7 +97,10 @@ export default function MainPage() {
          </h2>
 
          <div className="absolute left-0">
-            <TeaRecommendSwiper teaRecommendations={teaData} />
+            <TeaRecommendSwiper
+               teaRecommendations={teaData}
+               userNickname={userNickname}
+            />
          </div>
 
          <h3 className="mb-4 mt-80 pt-4 text-2xl font-extralight">

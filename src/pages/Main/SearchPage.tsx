@@ -7,7 +7,7 @@ import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
 import { useInputFocus } from '@/hooks/useInputFocus';
 import { getSearchReviewData } from '@/utils/getSearchReviewData';
 import { getSearchTeaData } from '@/utils/getSearchTeaData';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface Tea {
@@ -38,8 +38,25 @@ export function Component() {
    const [searchReviewResults, setSearchReviewResults] = useState<Review[]>([]);
    const [searchValue, setSearchValue] = useState('');
    const [isSearched, setIsSearched] = useState(false); // 검색했는지 안 했는지 상태 확인
+   const [userNickname, setUserNickname] = useState('');
 
    useInputFocus('input[type="search"]');
+
+   useEffect(() => {
+      const getUserNickname = () => {
+         const userData = localStorage.getItem('@auth/user');
+         if (userData) {
+            try {
+               const user = JSON.parse(userData);
+               setUserNickname(user.nickname);
+            } catch (error) {
+               console.error('Failed to parse user data from localStorage:', error);
+            }
+         }
+      };
+
+      getUserNickname();
+   }, []);
 
    // 필터 버튼
    const handleFilterChange = (index: number) => {
@@ -103,6 +120,7 @@ export function Component() {
                                  imageUrl={tea.tea_image}
                                  teaName={tea.tea_name}
                                  brand={tea.tea_brand}
+                                 userNickname={userNickname}
                               />
                            </li>
                         ))}

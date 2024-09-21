@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import supabase from '@/api/supabase';
 import { Button } from '@/components/Buttons/Buttons';
 import { UserActivity } from '@/components/User/UserActivity';
 import UserCollection from '@/components/User/UserCollection';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import { fetchReviewData } from '@/utils';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import { fetchMultipleReviews, fetchUserTaste } from '@/utils/fetchData';
 import UserData from '@/components/User/UserData';
 import UserDataLayout from './../../components/User/UserDataLayout';
 import UserProfileImg from '@/components/User/UserProfileImg';
@@ -24,16 +24,16 @@ interface Activity {
    className?: string;
 }
 
-interface Review {
-   id: string;
-   review_title: string;
-   review_comment: string;
-   tea_rate: number;
-   user: {
-      nickname: string;
-      profile_img: string;
-   };
-}
+// interface Review {
+//    id: string;
+//    review_title: string;
+//    review_comment: string;
+//    tea_rate: number;
+//    user: {
+//       nickname: string;
+//       profile_img: string;
+//    };
+// }
 
 const defaultActivities: Activity[] = [
    { title: '찜 개수', count: 0 },
@@ -49,7 +49,8 @@ export function Component() {
       profile_img: '',
    });
    const [activities, setActivities] = useState<Activity[]>(defaultActivities);
-   const [loading, setLoading] = useState<boolean>(true);
+   const [userTaste, setUserTaste] = useState<string>('');
+   const [isLoading, setIsLoading] = useState<boolean>(true);
 
    useEffect(() => {
       const fetchUserData = async () => {
@@ -63,13 +64,19 @@ export function Component() {
          setUserInfo(user);
 
          try {
-            setLoading(true);
+            setIsLoading(true);
+
+            // 유저의 taste 데이터 가져오기
+            const tasteData = await fetchUserTaste(user.nickname);
+            setUserTaste(tasteData || '');
 
             // 유저의 리뷰 데이터 가져오기
-            const reviewData: Review[] = await fetchReviewData();
-            const userReviews = reviewData.filter(
-               (review) => review.user.nickname === user.nickname
-            );
+            const reviewData = await fetchMultipleReviews();
+            const userReviews = reviewData
+               ? reviewData.filter(
+                    (review) => review.user.nickname === user.nickname
+                 )
+               : [];
 
             const reviewCount = userReviews.length;
             const averageRating =
@@ -103,7 +110,7 @@ export function Component() {
             toast.error('유저 데이터를 가져오는 데 실패했습니다.');
             console.error('Error fetching user data:', err);
          } finally {
-            setLoading(false);
+            setIsLoading(false);
          }
       };
 
@@ -126,7 +133,7 @@ export function Component() {
       }
    };
 
-   if (loading) {
+   if (isLoading) {
       return <LoadingSpinner />;
    }
 
@@ -140,8 +147,9 @@ export function Component() {
                img={userInfo.profile_img}
                name="profile_img"
             />
-
-            <p className="mb-2 text-xs font-normal text-stone-950">상큼한</p>
+            <p className="mb-2 text-xs font-normal text-stone-950">
+               {userTaste}
+            </p>
             <p className="mb-6 text-base font-extrabold text-stone-950">
                {userInfo.nickname}
             </p>
