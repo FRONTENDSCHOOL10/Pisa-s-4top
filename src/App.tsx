@@ -7,7 +7,18 @@ export default function App() {
    return (
       <HelmetProvider>
          <RouterProvider router={router} />
-         <Toaster position="bottom-center" reverseOrder={false} />
+         <Toaster
+            position="bottom-center"
+            reverseOrder={false}
+            containerStyle={{
+               bottom: 70,
+            }}
+            toastOptions={{
+               style: {
+                  maxWidth: '500px',
+               },
+            }}
+         />
       </HelmetProvider>
    );
 }
