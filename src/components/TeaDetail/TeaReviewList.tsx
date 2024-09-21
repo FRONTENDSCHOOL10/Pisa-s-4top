@@ -17,15 +17,14 @@ interface Review {
 }
 
 interface TeaReviewListProps {
-   reviews: Review[] | null | undefined; // reviews가 null 또는 undefined일 수 있음
+   reviews: Review[] | null | undefined;
 }
 
 export default function TeaReviewList({ reviews }: TeaReviewListProps) {
    if (!reviews || reviews.length === 0) {
-      // reviews가 없을 경우 처리
       return (
          <section className="flex flex-col gap-4">
-            <h3 className="mt-3 pl-2 text-2xl font-black text-stone-950">
+            <h3 className="mt-3 pl-2 text-xl font-bold text-stone-950">
                아직 등록된 리뷰가 없습니다.
             </h3>
          </section>
@@ -34,7 +33,7 @@ export default function TeaReviewList({ reviews }: TeaReviewListProps) {
 
    return (
       <section className="flex flex-col gap-4">
-         <h3 className="mt-3 pl-2 text-2xl font-black text-stone-950">
+         <h3 className="mt-3 pl-2 text-2xl font-bold text-stone-950">
             {reviews.length}개의 리뷰
          </h3>
          {reviews.map((review) => (

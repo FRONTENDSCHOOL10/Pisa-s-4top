@@ -150,7 +150,7 @@ export function Component() {
             <p className="mb-2 text-xs font-normal text-stone-950">
                {userTaste}
             </p>
-            <p className="mb-6 text-base font-extrabold text-stone-950">
+            <p className="mb-6 text-base font-bold text-stone-950">
                {userInfo.nickname}
             </p>
          </section>
@@ -180,7 +180,7 @@ export function Component() {
          </section>
 
          <section>
-            <h2 className="mb-6 text-2xl font-extrabold text-stone-950">
+            <h2 className="mb-6 text-2xl font-bold text-stone-950">
                나의 활동
             </h2>
             <div className="grid grid-cols-2 gap-4">

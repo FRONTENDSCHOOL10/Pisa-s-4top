@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-   fetchTeaData,
+   fetchFilteredTeaData,
    fetchMultipleReviews,
    fetchUserTaste,
 } from '@/utils/fetchData';
@@ -23,8 +23,8 @@ const getUserNicknameFromLocalStorage = () => {
    return null;
 };
 
-const formatTeaData = (teaResult) => {
-   return teaResult.map((tea) => ({
+const formatTeaData = (teas) => {
+   return teas.map((tea) => ({
       id: tea.id,
       imageUrl: tea.tea_image,
       teaName: tea.tea_name,
@@ -43,10 +43,8 @@ export default function MainPage() {
       const fetchData = async () => {
          try {
             const userNickname = getUserNicknameFromLocalStorage();
-            setUserNickname(userNickname);
-            // console.log('User Nickname:', userNickname);
-
             let userTasteResult = '추천하는';
+
             if (userNickname) {
                const tasteResult = await fetchUserTaste(userNickname);
                if (tasteResult) {
@@ -55,13 +53,18 @@ export default function MainPage() {
             }
             setUserTaste(userTasteResult);
 
-            const [teaResult, reviewResult] = await Promise.all([
-               fetchTeaData(),
-               fetchMultipleReviews(),
-            ]);
+            // selectedCategory와 userNickname을 fetchFilteredTeaData에 전달
+            const teaResult = await fetchFilteredTeaData('홍차', userNickname);
+            const reviewResult = await fetchMultipleReviews();
 
-            setTeaData(formatTeaData(teaResult));
+            // 무작위로 20개의 티 데이터를 선택
+            const randomTeaData = teaResult
+               .sort(() => Math.random() - 0.5) // 데이터를 무작위로 섞음
+               .slice(0, 20); // 20개의 데이터만 선택
+
+            setTeaData(formatTeaData(randomTeaData));
             setReviewData(reviewResult || []);
+            console.log('TeaData: ', randomTeaData);
          } catch (error) {
             console.error('Error fetching data:', error);
          } finally {
@@ -77,7 +80,7 @@ export default function MainPage() {
    }
 
    return (
-      <main>
+      <>
          <Helmet>
             <title>데일리 차 추천 서비스, Tea of the Day</title>
             <meta
@@ -85,46 +88,45 @@ export default function MainPage() {
                content="당신의 차 취향에 맞춘 추천 서비스, Tea of the Day"
             />
          </Helmet>
-         <h1 className="sr-only">메인 페이지</h1>
-
-         <SearchInput isButton={true} />
-
-         <h2 className="mb-6 mt-16 text-3xl font-thin text-stone-950">
-            {userTaste}
-            <br />
-            <strong className="font-extrabold">당신에게,</strong>{' '}
-            <span className="sr-only">추천하는 차</span>
-         </h2>
-
-         <div className="absolute left-0">
-            <TeaRecommendSwiper
-               teaRecommendations={teaData}
-               userNickname={userNickname}
-            />
-         </div>
-
-         <h3 className="mb-4 mt-80 pt-4 text-2xl font-extralight">
-            다른 사람들의 <strong className="font-semibold">리뷰</strong>
-         </h3>
-
-         <div className="flex flex-col gap-3">
-            {Array.isArray(reviewData) && reviewData.length > 0 ? (
-               reviewData.map((review) => (
-                  <HomeReviewCard
-                     key={review.id}
-                     id={review.id}
-                     teaImg={review.tea?.tea_image || '/default-tea-image.jpg'}
-                     teaName={review.tea?.tea_name || '알 수 없는 차'}
-                     title={review.review_title || '제목 없음'}
-                     comment={review.review_comment || '내용 없음'}
-                     nickname={review.user?.nickname || '익명'}
-                     score={review.tea_rate}
-                  />
-               ))
-            ) : (
-               <p>아직 등록된 리뷰가 없습니다.</p>
-            )}
-         </div>
-      </main>
+         <main>
+            <h1 className="sr-only">메인 페이지</h1>
+            <SearchInput isButton={true} />
+            <h2 className="mb-6 mt-16 text-3xl font-thin text-stone-950">
+               {userTaste}
+               <br />
+               <strong className="font-bold">당신에게,</strong>{' '}
+               <span className="sr-only">추천하는 차</span>
+            </h2>
+            <div className="absolute left-0">
+               <TeaRecommendSwiper
+                  teaRecommendations={teaData}
+                  userNickname={userNickname}
+               />
+            </div>
+            <h2 className="mb-4 mt-80 pt-4 text-2xl font-extralight">
+               다른 사람들의 <strong className="font-semibold">리뷰</strong>
+            </h2>
+            <div className="flex flex-col gap-3">
+               {Array.isArray(reviewData) && reviewData.length > 0 ? (
+                  reviewData.map((review) => (
+                     <HomeReviewCard
+                        key={review.id}
+                        id={review.id}
+                        teaImg={
+                           review.tea?.tea_image || '/default-tea-image.jpg'
+                        }
+                        teaName={review.tea?.tea_name || '알 수 없는 차'}
+                        title={review.review_title || '제목 없음'}
+                        comment={review.review_comment || '내용 없음'}
+                        nickname={review.user?.nickname || '익명'}
+                        score={review.tea_rate}
+                     />
+                  ))
+               ) : (
+                  <p>아직 등록된 리뷰가 없습니다.</p>
+               )}
+            </div>
+         </main>
+      </>
    );
 }

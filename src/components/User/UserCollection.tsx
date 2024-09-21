@@ -19,7 +19,7 @@ const UserCollectionItem = memo(
                className={`fi ${iconClass} inline-flex`}
                aria-hidden={true}
             ></span>
-            <p className="text-base font-extrabold text-stone-950">{text}</p>
+            <p className="text-base font-bold text-stone-950">{text}</p>
          </Link>
       );
    }

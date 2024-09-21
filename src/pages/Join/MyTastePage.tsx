@@ -73,7 +73,7 @@ export function Component() {
 
    return (
       <main className="center-layout gap-2 overflow-x-hidden">
-         <h1 className="mt-36 text-center text-2xl font-extrabold">
+         <h1 className="mt-36 text-center text-2xl font-bold">
             {userTaste ? `${userTaste} 당신에게` : '당신에게'}
             <br /> 추천하는 차
          </h1>

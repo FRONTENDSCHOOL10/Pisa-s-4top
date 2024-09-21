@@ -35,7 +35,7 @@ export default function HomeReviewCard({
                alt={`${teaName}`}
             />
             <div className="flex w-full flex-col gap-1">
-               <h3 className="text-base font-black text-stone-950">{title}</h3>
+               <h3 className="text-base font-bold text-stone-950">{title}</h3>
                <p className="text-sm font-medium text-stone-400">{nickname}</p>
                <p className="text-sm font-light text-stone-950">{comment}</p>
                <div className="self-end">
