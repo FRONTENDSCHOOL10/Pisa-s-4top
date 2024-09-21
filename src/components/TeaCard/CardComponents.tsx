@@ -270,7 +270,9 @@ export function TeaRecommendCard({
 
 // 티 리뷰 카드
 export interface TeaReviewCardProps {
-   profileImageUrl?: string;
+   teaImageUrl?: string;
+   teaName: string;
+   teaBrand: string;
    reviewTitle: string;
    nickName: string;
    reviewContent: string;
@@ -278,7 +280,9 @@ export interface TeaReviewCardProps {
 }
 
 export function TeaReviewCard({
-   profileImageUrl,
+   teaImageUrl,
+   teaName,
+   teaBrand,
    reviewTitle,
    nickName,
    reviewContent,
@@ -288,10 +292,10 @@ export function TeaReviewCard({
       <CardLayout to={''} ariaLabel="티 리뷰 카드">
          <div className="mb-3 flex">
             <div className="mr-3 h-9 w-9 overflow-hidden rounded-full bg-lime-200">
-               {profileImageUrl ? (
+               {teaImageUrl ? (
                   <CardImage
-                     src={profileImageUrl}
-                     alt={`${nickName}'s profile`}
+                     src={teaImageUrl}
+                     alt={teaName}
                      className="h-full w-full"
                   />
                ) : (
@@ -302,6 +306,9 @@ export function TeaReviewCard({
                )}
             </div>
             <div className="w-full">
+               <p>
+                  {teaName} {teaBrand}
+               </p>
                <CardTitle className="mb-1">{reviewTitle}</CardTitle>
                <div className="flex justify-between">
                   <StarRating score={score} />

@@ -117,6 +117,7 @@ export default function MainPage() {
                            review.tea?.tea_image || '/default-tea-image.jpg'
                         }
                         teaName={review.tea?.tea_name || '알 수 없는 차'}
+                        teaBrand={review.tea?.tea_brand || '알 수 없는 브랜드'}
                         title={review.review_title || '제목 없음'}
                         comment={review.review_comment || '내용 없음'}
                         nickname={review.user?.nickname || '익명'}
