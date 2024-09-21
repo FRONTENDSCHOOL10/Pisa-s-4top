@@ -81,7 +81,7 @@ export function SelectColor({
          </div>
 
          {!disabled && isOpen && (
-            <ul className="absolute top-0 z-10 flex w-full flex-col gap-4 rounded-3xl border border-stone-300 bg-stone-50 pb-5 pt-12 shadow-lg">
+            <ul className="absolute top-0 z-20 flex w-full flex-col gap-4 rounded-3xl border border-stone-300 bg-stone-50 pb-5 pt-12 shadow-lg">
                {options.map((option) => (
                   <li
                      key={option.value}
