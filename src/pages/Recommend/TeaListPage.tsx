@@ -52,7 +52,7 @@ export function Component() {
    return (
       <main className="flex flex-col gap-5">
          <h1 className="sr-only">추천 티 리스트 페이지</h1>
-         <div className="mx-auto">
+         <div className="">
             {/* 카테고리 필터 버튼 */}
             <TabButton
                tabs={categories?.map((category) => category.category) || []}
@@ -60,16 +60,17 @@ export function Component() {
                activeTab={selectedCategory} // 현재 활성화된 카테고리
                className="mb-6"
             />
-            <ul className="grid place-items-center gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid grid-cols-3 gap-4">
                {filteredTeas.length > 0 ? (
                   filteredTeas.map((tea) => (
-                     <li key={tea.id} className="flex justify-center">
+                     <li key={tea.id} className="flex-1">
                         <TeaRecommendCard
                            id={tea.id}
                            imageUrl={tea.tea_image}
                            teaName={tea.tea_name}
                            brand={tea.tea_brand}
                            userNickname={currentUser?.nickname || ''}
+                           className="!w-full"
                         />
                      </li>
                   ))
