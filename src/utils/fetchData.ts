@@ -18,11 +18,9 @@ export async function fetchTeaData(): Promise<Tea[]> {
    const data = await fetchDataFromTable<Tea>('tea');
    return data || [];
 }
+
 // 유저 데이터 기반한 티 데이터 함수
-export async function fetchFilteredTeaData(
-   selectedCategory: string,
-   userNickname: string
-) {
+export async function fetchFilteredTeaData(selectedCategory, userNickname) {
    try {
       const { data: userTastes, error: userTasteError } = await supabase
          .from('tasteselection')
@@ -53,11 +51,16 @@ export async function fetchFilteredTeaData(
          return [];
       }
 
-      const { data: teas, error: teaError } = await supabase
+      const teaQuery = supabase
          .from('tea')
          .select('id, tea_name, tea_image, tea_brand, tea_category')
-         .eq('tea_category', selectedCategory)
          .in('id', teaIds);
+
+      if (selectedCategory) {
+         teaQuery.eq('tea_category', selectedCategory);
+      }
+
+      const { data: teas, error: teaError } = await teaQuery;
 
       if (teaError || !teas) {
          throw new Error('티 데이터를 가져오는 중 오류가 발생했습니다.');
@@ -130,7 +133,9 @@ export async function fetchTeaTastingNotes(teaId: string) {
 }
 
 // 리뷰 데이터 함수 (단일 데이터)
-export async function fetchSingleReview(reviewId?: string): Promise<Review | null> {
+export async function fetchSingleReview(
+   reviewId?: string
+): Promise<Review | null> {
    let query = supabase.from('review').select(
       `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
          tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
@@ -152,7 +157,9 @@ export async function fetchSingleReview(reviewId?: string): Promise<Review | nul
 }
 
 // 리뷰 데이터 함수 (여러 데이터)
-export async function fetchMultipleReviews(teaId?: string): Promise<any[] | null>  {
+export async function fetchMultipleReviews(
+   teaId?: string
+): Promise<any[] | null> {
    let query = supabase.from('review').select(
       `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
          tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
