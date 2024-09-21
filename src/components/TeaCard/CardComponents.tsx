@@ -183,6 +183,7 @@ export interface TeaRecommendCardProps {
    teaName: string;
    brand: string;
    userNickname: string;
+   className: string;
 }
 
 export function TeaRecommendCard({
@@ -191,6 +192,7 @@ export function TeaRecommendCard({
    teaName,
    brand,
    userNickname,
+   className,
 }: TeaRecommendCardProps) {
    const [isLiked, setIsLiked] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
@@ -239,18 +241,18 @@ export function TeaRecommendCard({
    return (
       <CardLayout
          to={`/detail/${id}`}
-         className="!w-48 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100%"
+         className={`w-1/3 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100% ${className}`}
          ariaLabel={`${teaName} 추천 카드`}
       >
-         <div className="absolute left-0 top-0 w-48 rounded-t-2xl">
+         <div className="mx-auto w-40 rounded-t-2xl">
             <CardImage
                src={imageUrl}
                alt={`${teaName} 미리보기`}
-               className="h-36"
+               className="h-36 w-full object-cover"
             />
          </div>
-         <div className="relative mt-36">
-            <CardTitle className="mb-1 h-12 pr-6 text-base">
+         <div className="relative mx-auto mt-3">
+            <CardTitle className="mb-1 h-12 w-3/4 pr-6 text-base">
                {teaName}
             </CardTitle>
             <div className="absolute right-0 top-0.5">
