@@ -94,7 +94,7 @@ export default function MainPage() {
             <h2 className="mb-6 mt-16 text-3xl font-thin text-stone-950">
                {userTaste}
                <br />
-               <strong className="font-extrabold">당신에게,</strong>{' '}
+               <strong className="font-bold">당신에게,</strong>{' '}
                <span className="sr-only">추천하는 차</span>
             </h2>
             <div className="absolute left-0">

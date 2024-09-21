@@ -96,7 +96,7 @@ interface TitleProps {
 export function CardTitle({ children, className }: TitleProps) {
    return (
       <h3
-         className={`w-full break-keep pr-4 text-lg font-extrabold leading-6 text-stone-950 ${className}`}
+         className={`w-full break-keep pr-4 text-lg font-bold leading-6 text-stone-950 ${className}`}
       >
          {children}
       </h3>
