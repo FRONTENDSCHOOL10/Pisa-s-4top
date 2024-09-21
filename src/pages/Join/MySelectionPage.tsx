@@ -87,7 +87,7 @@ export function Component() {
    return (
       <main className="flex h-screen w-full flex-col items-center justify-center">
          <h1 className="mt-7 text-2xl">
-            <strong className="font-extrabold">선호하는 맛</strong>을<br />
+            <strong className="font-bold">선호하는 맛</strong>을<br />
             선택해주세요.
          </h1>
          <p className="mt-2 text-stone-500">취향에 맞는 차를 추천해드려요!</p>

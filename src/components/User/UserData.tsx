@@ -11,15 +11,11 @@ export default function UserData({ label, userData = '', href }: Props) {
       <div className="flex justify-between">
          {userData ? (
             <div>
-               <span className="text-sm font-extrabold text-stone-500">
-                  {label}
-               </span>
+               <span className="text-sm font-bold text-stone-500">{label}</span>
                <span className="ml-2 text-sm">{userData}</span>
             </div>
          ) : (
-            <span className="text-sm font-extrabold text-stone-500">
-               {label}
-            </span>
+            <span className="text-sm font-bold text-stone-500">{label}</span>
          )}
          <Button
             className="h-[0.88rem] w-[1.3rem] text-xs font-bold"
