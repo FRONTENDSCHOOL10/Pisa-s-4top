@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-   fetchTeaData,
+   fetchFilteredTeaData,
    fetchMultipleReviews,
    fetchUserTaste,
 } from '@/utils/fetchData';
@@ -23,8 +23,8 @@ const getUserNicknameFromLocalStorage = () => {
    return null;
 };
 
-const formatTeaData = (teaResult) => {
-   return teaResult.map((tea) => ({
+const formatTeaData = (teas) => {
+   return teas.map((tea) => ({
       id: tea.id,
       imageUrl: tea.tea_image,
       teaName: tea.tea_name,
@@ -43,10 +43,8 @@ export default function MainPage() {
       const fetchData = async () => {
          try {
             const userNickname = getUserNicknameFromLocalStorage();
-            setUserNickname(userNickname);
-            // console.log('User Nickname:', userNickname);
-
             let userTasteResult = '추천하는';
+
             if (userNickname) {
                const tasteResult = await fetchUserTaste(userNickname);
                if (tasteResult) {
@@ -55,13 +53,18 @@ export default function MainPage() {
             }
             setUserTaste(userTasteResult);
 
-            const [teaResult, reviewResult] = await Promise.all([
-               fetchTeaData(),
-               fetchMultipleReviews(),
-            ]);
+            // selectedCategory와 userNickname을 fetchFilteredTeaData에 전달
+            const teaResult = await fetchFilteredTeaData('홍차', userNickname);
+            const reviewResult = await fetchMultipleReviews();
 
-            setTeaData(formatTeaData(teaResult));
+            // 무작위로 20개의 티 데이터를 선택
+            const randomTeaData = teaResult
+               .sort(() => Math.random() - 0.5) // 데이터를 무작위로 섞음
+               .slice(0, 20); // 20개의 데이터만 선택
+
+            setTeaData(formatTeaData(randomTeaData));
             setReviewData(reviewResult || []);
+            console.log('TeaData: ', randomTeaData);
          } catch (error) {
             console.error('Error fetching data:', error);
          } finally {
