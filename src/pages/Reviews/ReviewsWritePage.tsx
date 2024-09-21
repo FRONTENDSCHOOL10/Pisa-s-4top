@@ -120,62 +120,62 @@ export function Component() {
    };
 
    return (
-      <main className="flex flex-col items-center px-6">
+      <>
          <Helmet>
             <title>TOTD, 티 리뷰 작성 페이지</title>
          </Helmet>
-         <h1 className="sr-only">리뷰 작성 페이지</h1>
-
-         {/* 차 정보 표시 */}
-         {teaInfo ? (
-            <>
-               <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
-                  <img
-                     className="object-contain"
-                     src={teaInfo.tea_image || '/default-tea-image.jpg'}
-                     alt={teaInfo.tea_name || '차 이미지'}
-                  />
-               </div>
-               <h2 className="mt-6 text-xl font-bold">{teaInfo.tea_name}</h2>
-               <p className="text-stone-500">{teaInfo.tea_brand}</p>
-            </>
-         ) : (
-            <p>티 정보를 불러오는 중입니다...</p>
-         )}
-
-         <p className="mb-3 mt-1 text-stone-600">
-            {currentUser || '작성자 닉네임'}
-         </p>
-         <StarRating
-            score={rating}
-            setScore={setRating}
-            editable={isEditable}
-         />
-         <TeaTasteCard
-            labels={tasteNoteData}
-            className="mb-2 mt-8"
-            selectedLabels={selectedLabels}
-            handleToggleLabel={toggleLabelSelection}
-            types="button"
-         />
-         <TeaColorCard
-            className="mb-2"
-            initialColor={reviewColor}
-            onColorChange={setReviewColor}
-         />
-         <TeaReviewDetailCard
-            title={reviewTitle}
-            contents={reviewContent}
-            isEditable={true}
-            onChangeTitle={setReviewTitle}
-            onChangeContents={setReviewContent}
-         />
-         <Button
-            content="리뷰 작성하기"
-            size="fullWidth"
-            className="mt-6"
-            handleClick={handleCreateReview}
-         />
-      </main>
+         <main className="flex flex-col items-center px-6">
+            <h1 className="sr-only">리뷰 작성 페이지</h1>
+            {/* 차 정보 표시 */}
+            {teaInfo ? (
+               <>
+                  <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
+                     <img
+                        className="object-contain"
+                        src={teaInfo.tea_image || '/default-tea-image.jpg'}
+                        alt={teaInfo.tea_name || '차 이미지'}
+                     />
+                  </div>
+                  <h2 className="mt-6 text-xl font-bold">{teaInfo.tea_name}</h2>
+                  <p className="text-stone-500">{teaInfo.tea_brand}</p>
+               </>
+            ) : (
+               <p>티 정보를 불러오는 중입니다...</p>
+            )}
+            <p className="mb-3 mt-1 text-stone-600">
+               {currentUser || '작성자 닉네임'}
+            </p>
+            <StarRating
+               score={rating}
+               setScore={setRating}
+               editable={isEditable}
+            />
+            <TeaTasteCard
+               labels={tasteNoteData}
+               className="mb-2 mt-8"
+               selectedLabels={selectedLabels}
+               handleToggleLabel={toggleLabelSelection}
+               types="button"
+            />
+            <TeaColorCard
+               className="mb-2"
+               initialColor={reviewColor}
+               onColorChange={setReviewColor}
+            />
+            <TeaReviewDetailCard
+               title={reviewTitle}
+               contents={reviewContent}
+               isEditable={true}
+               onChangeTitle={setReviewTitle}
+               onChangeContents={setReviewContent}
+            />
+            <Button
+               content="리뷰 작성하기"
+               size="fullWidth"
+               className="mt-6"
+               handleClick={handleCreateReview}
+            />
+         </main>
+      </>
    );
 }
