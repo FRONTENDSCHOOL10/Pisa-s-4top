@@ -97,7 +97,7 @@ export default function MainPage() {
                <strong className="font-bold">당신에게,</strong>{' '}
                <span className="sr-only">추천하는 차</span>
             </h2>
-            <div className="absolute left-0">
+            <div className="absolute left-0 w-full">
                <TeaRecommendSwiper
                   teaRecommendations={teaData}
                   userNickname={userNickname}

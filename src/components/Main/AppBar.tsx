@@ -36,9 +36,9 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
    function renderContent() {
       if (hasLogo) {
          return (
-            <span className="focus-green mx-auto">
+            <div className="focus-green mx-auto py-3">
                <Logo />
-            </span>
+            </div>
          );
       }
 
@@ -46,7 +46,7 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
          return (
             <>
                {renderBackButton()}
-               <p className="text-green-700">{title}</p>
+               <p className="w-full text-green-700">{title}</p>
             </>
          );
       }
@@ -59,8 +59,8 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
    }
 
    return (
-      <header className="my-6 h-10">
-         <nav className="fixed top-0 z-20 flex w-full max-w-[48rem] items-center bg-stone-100 py-3 text-base">
+      <header className="sticky left-0 top-0 z-50 w-full">
+         <nav className="flex !w-full min-w-80 max-w-layout items-center bg-stone-100">
             {renderContent()}
          </nav>
       </header>
