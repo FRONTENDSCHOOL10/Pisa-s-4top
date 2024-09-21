@@ -138,7 +138,7 @@ export async function fetchSingleReview(
 ): Promise<Review | null> {
    let query = supabase.from('review').select(
       `id, review_title, review_comment, tea_color, review_tasting_note, tea_rate,
-         tea:review_tea(id, tea_name, tea_image, tea_category(id, category)),
+         tea:review_tea(id, tea_name, tea_image, tea_brand, tea_category(id, category)),
          user:review_user(nickname, profile_img)`
    );
 

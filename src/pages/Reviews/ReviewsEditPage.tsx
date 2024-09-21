@@ -120,6 +120,9 @@ export function Component() {
                alt={reviewData?.tea.tea_name}
             />
          </div>
+
+         <h2 className="mt-6 text-xl font-bold">{reviewData?.tea.tea_name}</h2>
+         <p className="text-stone-500">{reviewData?.tea.tea_brand}</p>
          <p className="my-4 text-stone-600">{reviewData?.user.nickname}</p>
          <StarRating setScore={setRating} editable={true} score={rating} />
 

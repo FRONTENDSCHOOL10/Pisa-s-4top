@@ -21,6 +21,7 @@ interface Review {
       id: string;
       tea_name: string;
       tea_image: string;
+      tea_brand: string;
       category: {
          category: string;
       };
@@ -94,6 +95,8 @@ export function Component() {
                alt={reviewData.tea.tea_name}
             />
          </div>
+         <h2 className="mt-6 text-xl font-bold">{reviewData?.tea.tea_name}</h2>
+         <p className="text-stone-500">{reviewData?.tea.tea_brand}</p>
          <p className="my-4">{reviewData.user.nickname}</p>
          <StarRatingAverage score={reviewData.tea_rate} />
 

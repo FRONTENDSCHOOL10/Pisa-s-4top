@@ -198,17 +198,17 @@ export function Component() {
          </div>
          <TeaDescriptionCard description={tea.tea_detail} />
          <TeaRecipeCard title="" imageUrl="" steps={[]} />
-         <div className="">
+         <div className="relative">
             <TeaReviewList reviews={reviews} />
+            <Button
+               isLink={true}
+               href={`/reviews/write?teaId=${tea.id}`}
+               ariaLabel="리뷰 작성 페이지"
+               content="리뷰 쓰기"
+               size="small"
+               className="absolute right-0 top-0 z-50 mt-1 !py-3 text-sm !font-bold"
+            />
          </div>
-         <Button
-            isLink={true}
-            href={`/reviews/write?teaId=${tea.id}`}
-            ariaLabel="리뷰 작성 페이지"
-            content="리뷰 쓰기"
-            size="small"
-            className="absolute bottom-16 right-4 z-50 mb-2 mt-4"
-         />
       </main>
    );
 }

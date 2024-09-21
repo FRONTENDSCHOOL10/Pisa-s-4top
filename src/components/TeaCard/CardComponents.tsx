@@ -57,7 +57,7 @@ TeaReviewCard
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
-import { StarRating } from '../Review/StarRate';
+import { CardStarRating, StarRating } from '../Review/StarRate';
 import { SelectColor } from '../Select/SelectColor';
 import { LabelGroup } from '../Labels/Labels';
 import { LoadingSpinner } from '../Main/LoadingSpinner';
@@ -272,9 +272,6 @@ export function TeaRecommendCard({
 
 // 티 리뷰 카드
 export interface TeaReviewCardProps {
-   teaImageUrl?: string;
-   teaName: string;
-   teaBrand: string;
    reviewTitle: string;
    nickName: string;
    reviewContent: string;
@@ -282,9 +279,6 @@ export interface TeaReviewCardProps {
 }
 
 export function TeaReviewCard({
-   teaImageUrl,
-   teaName,
-   teaBrand,
    reviewTitle,
    nickName,
    reviewContent,
@@ -293,27 +287,12 @@ export function TeaReviewCard({
    return (
       <CardLayout to={''} ariaLabel="티 리뷰 카드">
          <div className="mb-3 flex">
-            <div className="mr-3 h-9 w-9 overflow-hidden rounded-full bg-lime-200">
-               {teaImageUrl ? (
-                  <CardImage
-                     src={teaImageUrl}
-                     alt={teaName}
-                     className="h-full w-full"
-                  />
-               ) : (
-                  <div
-                     className="h-full w-full bg-lime-200"
-                     aria-hidden="true"
-                  />
-               )}
-            </div>
             <div className="w-full">
-               <p>
-                  {teaName} {teaBrand}
-               </p>
-               <CardTitle className="mb-1">{reviewTitle}</CardTitle>
+               <CardTitle className="mb-1 !text-lg !text-stone-600">
+                  {reviewTitle}
+               </CardTitle>
                <div className="flex justify-between">
-                  <StarRating score={score} />
+                  <CardStarRating score={score} altText={`별점 ${score}점`} />
                   <p className="text-sm text-stone-400">{nickName}</p>
                </div>
             </div>
