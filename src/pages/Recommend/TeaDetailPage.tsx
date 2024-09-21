@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@/components/Buttons/Buttons';
-import { TeaDescriptionCard } from '@/components/TeaCard/CardComponents';
+import {
+   TeaDescriptionCard,
+   TeaRecipeCard,
+} from '@/components/TeaCard/CardComponents';
 import TeaInfo from '@/components/TeaDetail/TeaInfo';
 import TeaReviewList from '@/components/TeaDetail/TeaReviewList';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
@@ -201,6 +204,7 @@ export function Component() {
          </div>
          <TeaDescriptionCard description={tea.tea_detail} />
          <TeaReviewList reviews={reviews} />
+         <TeaRecipeCard title="" imageUrl="" steps={[]} />
       </main>
    );
 }
