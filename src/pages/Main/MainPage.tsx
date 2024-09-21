@@ -80,7 +80,7 @@ export default function MainPage() {
    }
 
    return (
-      <main>
+      <>
          <Helmet>
             <title>데일리 차 추천 서비스, Tea of the Day</title>
             <meta
@@ -88,46 +88,45 @@ export default function MainPage() {
                content="당신의 차 취향에 맞춘 추천 서비스, Tea of the Day"
             />
          </Helmet>
-         <h1 className="sr-only">메인 페이지</h1>
-
-         <SearchInput isButton={true} />
-
-         <h2 className="mb-6 mt-16 text-3xl font-thin text-stone-950">
-            {userTaste}
-            <br />
-            <strong className="font-extrabold">당신에게,</strong>{' '}
-            <span className="sr-only">추천하는 차</span>
-         </h2>
-
-         <div className="absolute left-0">
-            <TeaRecommendSwiper
-               teaRecommendations={teaData}
-               userNickname={userNickname}
-            />
-         </div>
-
-         <h2 className="mb-4 mt-80 pt-4 text-2xl font-extralight">
-            다른 사람들의 <strong className="font-semibold">리뷰</strong>
-         </h2>
-
-         <div className="flex flex-col gap-3">
-            {Array.isArray(reviewData) && reviewData.length > 0 ? (
-               reviewData.map((review) => (
-                  <HomeReviewCard
-                     key={review.id}
-                     id={review.id}
-                     teaImg={review.tea?.tea_image || '/default-tea-image.jpg'}
-                     teaName={review.tea?.tea_name || '알 수 없는 차'}
-                     title={review.review_title || '제목 없음'}
-                     comment={review.review_comment || '내용 없음'}
-                     nickname={review.user?.nickname || '익명'}
-                     score={review.tea_rate}
-                  />
-               ))
-            ) : (
-               <p>아직 등록된 리뷰가 없습니다.</p>
-            )}
-         </div>
-      </main>
+         <main>
+            <h1 className="sr-only">메인 페이지</h1>
+            <SearchInput isButton={true} />
+            <h2 className="mb-6 mt-16 text-3xl font-thin text-stone-950">
+               {userTaste}
+               <br />
+               <strong className="font-extrabold">당신에게,</strong>{' '}
+               <span className="sr-only">추천하는 차</span>
+            </h2>
+            <div className="absolute left-0">
+               <TeaRecommendSwiper
+                  teaRecommendations={teaData}
+                  userNickname={userNickname}
+               />
+            </div>
+            <h2 className="mb-4 mt-80 pt-4 text-2xl font-extralight">
+               다른 사람들의 <strong className="font-semibold">리뷰</strong>
+            </h2>
+            <div className="flex flex-col gap-3">
+               {Array.isArray(reviewData) && reviewData.length > 0 ? (
+                  reviewData.map((review) => (
+                     <HomeReviewCard
+                        key={review.id}
+                        id={review.id}
+                        teaImg={
+                           review.tea?.tea_image || '/default-tea-image.jpg'
+                        }
+                        teaName={review.tea?.tea_name || '알 수 없는 차'}
+                        title={review.review_title || '제목 없음'}
+                        comment={review.review_comment || '내용 없음'}
+                        nickname={review.user?.nickname || '익명'}
+                        score={review.tea_rate}
+                     />
+                  ))
+               ) : (
+                  <p>아직 등록된 리뷰가 없습니다.</p>
+               )}
+            </div>
+         </main>
+      </>
    );
 }
