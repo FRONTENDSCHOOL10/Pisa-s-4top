@@ -177,9 +177,9 @@ export function Component() {
    }
 
    return (
-      <main className="flex flex-col gap-4">
+      <main className="relative flex flex-col gap-4">
          <h1 className="sr-only">티 상세 페이지</h1>
-         <div className="mx-8">
+         <div className="mx-8 mb-8 flex flex-col items-center">
             <TeaInfo
                img={tea.tea_image}
                category={tea.tea_category}
@@ -195,18 +195,20 @@ export function Component() {
                brewingTime={tea.tea_brew_time}
                labels={labels}
             />
-            <Button
-               isLink={true}
-               href={`/reviews/write?teaId=${tea.id}`}
-               ariaLabel="리뷰 작성 페이지"
-               content="리뷰 쓰기"
-               size="fullWidth"
-               className="mb-2 mt-4"
-            />
          </div>
          <TeaDescriptionCard description={tea.tea_detail} />
-         <TeaReviewList reviews={reviews} />
          <TeaRecipeCard title="" imageUrl="" steps={[]} />
+         <div className="">
+            <TeaReviewList reviews={reviews} />
+         </div>
+         <Button
+            isLink={true}
+            href={`/reviews/write?teaId=${tea.id}`}
+            ariaLabel="리뷰 작성 페이지"
+            content="리뷰 쓰기"
+            size="small"
+            className="absolute bottom-16 right-4 z-50 mb-2 mt-4"
+         />
       </main>
    );
 }
