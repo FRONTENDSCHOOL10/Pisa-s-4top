@@ -142,6 +142,7 @@ export function Component() {
             ) : (
                <p>티 정보를 불러오는 중입니다...</p>
             )}
+
             <p className="mb-3 mt-1 text-stone-600">
                {currentUser || '작성자 닉네임'}
             </p>

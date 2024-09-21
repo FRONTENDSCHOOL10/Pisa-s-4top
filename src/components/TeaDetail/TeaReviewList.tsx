@@ -39,7 +39,6 @@ export default function TeaReviewList({ reviews }: TeaReviewListProps) {
          {reviews.map((review) => (
             <TeaReviewCard
                key={review.id}
-               profileImageUrl={review.user.profile_img}
                nickName={review.user.nickname}
                reviewTitle={review.review_title}
                reviewContent={review.review_comment}
