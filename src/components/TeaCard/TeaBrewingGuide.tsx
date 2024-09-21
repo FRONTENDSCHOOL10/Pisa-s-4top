@@ -23,10 +23,9 @@ const sectionClass: string =
    'shadow-tea-brewing-guide w-full flex justify-between rounded-2xl bg-stone-50 px-6 py-6 select-none';
 const containerClass: string = 'flex flex-col items-center';
 const iconClass: string =
-   'text-lime-600 text-3xl flex justify-center items-center';
-const valueClass: string = 'text-lime-600 text-sm font-extrabold mt-2';
-const unitClass: string =
-   'text-stone-300 text-[.625rem] leading-3 font-medium';
+   'text-green-700 text-3xl flex justify-center items-center';
+const valueClass: string = 'text-green-700 text-lg font-bold mt-2';
+const unitClass: string = 'text-stone-500 text-sm leading-3 font-medium';
 
 interface BrewingDetailProps {
    iconClassName: string;
