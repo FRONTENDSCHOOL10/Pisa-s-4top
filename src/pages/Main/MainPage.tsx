@@ -53,9 +53,11 @@ export default function MainPage() {
             }
             setUserTaste(userTasteResult);
 
-            // selectedCategory와 userNickname을 fetchFilteredTeaData에 전달
-            const teaResult = await fetchFilteredTeaData('홍차', userNickname);
+            // 카테고리 필터 없이 전체 데이터를 가져옴
+            const teaResult = await fetchFilteredTeaData('', userNickname); // 카테고리를 빈 값으로 전달
             const reviewResult = await fetchMultipleReviews();
+
+            setUserNickname(userNickname);
 
             // 무작위로 20개의 티 데이터를 선택
             const randomTeaData = teaResult
@@ -64,7 +66,6 @@ export default function MainPage() {
 
             setTeaData(formatTeaData(randomTeaData));
             setReviewData(reviewResult || []);
-            console.log('TeaData: ', randomTeaData);
          } catch (error) {
             console.error('Error fetching data:', error);
          } finally {
@@ -91,10 +92,10 @@ export default function MainPage() {
          <main>
             <h1 className="sr-only">메인 페이지</h1>
             <SearchInput isButton={true} />
-            <h2 className="mb-6 mt-16 text-3xl font-thin text-stone-950">
+            <h2 className="mb-6 mt-16 text-3xl font-bold text-stone-950">
                {userTaste}
                <br />
-               <strong className="font-bold">당신에게,</strong>{' '}
+               <span className="font-light">{userNickname}에게,</span>
                <span className="sr-only">추천하는 차</span>
             </h2>
             <div className="absolute left-0 w-full">
@@ -116,6 +117,7 @@ export default function MainPage() {
                            review.tea?.tea_image || '/default-tea-image.jpg'
                         }
                         teaName={review.tea?.tea_name || '알 수 없는 차'}
+                        teaBrand={review.tea?.tea_brand || '알 수 없는 브랜드'}
                         title={review.review_title || '제목 없음'}
                         comment={review.review_comment || '내용 없음'}
                         nickname={review.user?.nickname || '익명'}
