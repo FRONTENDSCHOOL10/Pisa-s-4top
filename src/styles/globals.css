@@ -4,6 +4,9 @@
 
 /* 커스텀 스타일 */
 
+#root * {
+   box-sizing: border-box;
+}
 #root {
    position: relative;
    width: 100%;

@@ -59,7 +59,7 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
    }
 
    return (
-      <header className="fixed top-0 z-50 w-full">
+      <header className="sticky left-0 top-0 z-50 w-full">
          <nav className="flex !w-full min-w-80 max-w-layout items-center bg-stone-100">
             {renderContent()}
          </nav>
