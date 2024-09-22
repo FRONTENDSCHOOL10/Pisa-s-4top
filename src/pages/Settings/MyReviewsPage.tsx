@@ -61,7 +61,7 @@ export function Component() {
    }
 
    return (
-      <main className="flex flex-col gap-5">
+      <main className="-mt-2 flex flex-col gap-5">
          <h1 className="sr-only">내 리뷰 리스트 페이지</h1>
          <TabButton
             tabs={categories.map((category) => category.category)}

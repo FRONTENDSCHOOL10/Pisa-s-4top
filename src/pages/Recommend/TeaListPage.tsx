@@ -68,8 +68,8 @@ export function Component() {
    const handleShowAllChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const checked = e.target.checked;
       setIsShowAll(checked);
-      setIsTeaLoading(true);  // 체크박스 상태 변경 시 로딩 상태 시작
-      setTimeout(() => setIsTeaLoading(false), 500);  // 짧은 지연 후 로딩 상태 해제
+      setIsTeaLoading(true); // 체크박스 상태 변경 시 로딩 상태 시작
+      setTimeout(() => setIsTeaLoading(false), 500); // 짧은 지연 후 로딩 상태 해제
    };
 
    const resultTeas = useMemo(() => {
@@ -86,7 +86,7 @@ export function Component() {
    }
 
    return (
-      <main className="flex flex-col">
+      <main className="flex flex-col -mt-2">
          <h1 className="sr-only">추천 티 리스트 페이지</h1>
          {/* 카테고리 필터 버튼 */}
          <TabButton
@@ -97,12 +97,12 @@ export function Component() {
          {/* 전체 티 체크박스 */}
          <CheckBox
             label="모든 티 보기"
-            className="text-stone-950 ml-1 my-3"
+            className="my-3 ml-1 text-stone-950"
             checked={isShowAll}
             onChange={handleShowAllChange}
          />
          {resultTeas.length > 0 ? (
-            <ul className="grid gap-4 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                {resultTeas.map((tea) => (
                   <li key={tea.id}>
                      <TeaRecommendCard
@@ -111,7 +111,7 @@ export function Component() {
                         teaName={tea.tea_name}
                         brand={tea.tea_brand}
                         userNickname={currentUser?.nickname || ''}
-                        // className="!w-full"
+                        className="!w-full"
                      />
                   </li>
                ))}
