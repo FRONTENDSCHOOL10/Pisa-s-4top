@@ -51,6 +51,10 @@ export const routes: RouteObject[] = [
                   lazy: () => import('@/pages/Recommend/TeaDetailPage'),
                },
                {
+                  path: 'edit/my-selection',
+                  lazy: () => import('@/pages/Settings/MyEditTastePage'),
+               },
+               {
                   path: 'reviews',
                   children: [
                      {

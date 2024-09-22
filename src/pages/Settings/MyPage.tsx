@@ -175,7 +175,10 @@ export function Component() {
             </UserDataLayout>
 
             <UserDataLayout>
-               <UserData label="유저의 취향 태그 수정" href="/" />
+               <UserData
+                  label="유저의 취향 태그 수정"
+                  href="edit/my-selection"
+               />
             </UserDataLayout>
          </section>
 
