@@ -26,14 +26,16 @@ export interface Review {
    id: string;
    review_title: string;
    review_comment: string;
-   tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
-   review_tasting_note: string[];
    tea_color: string;
+   review_tasting_note: string[];
+   tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
    tea: {
       id: string;
       tea_name: string;
+      tea_brand: string;
       tea_image: string;
-      category: {
+      tea_category: {
+         id: string;
          category: string;
       };
    };
@@ -41,10 +43,6 @@ export interface Review {
       nickname: string;
       profile_img: string;
    };
-   // teacolor: {
-   //    id: string;
-   //    tea_color: string;
-   // };
 }
 
 export interface TeaColor {
