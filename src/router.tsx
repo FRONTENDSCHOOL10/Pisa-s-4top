@@ -1,97 +1,106 @@
-import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom';
+import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import RootLayout from './layouts/RootLayout';
 import { JoinPage, LoginPage, MainPage, NotFoundPage } from './pages';
+import PublicRoute from './layouts/PublicRoute';
+import PrivateRoute from './layouts/PrivateRoute';
 
 export const routes: RouteObject[] = [
    {
       path: '/',
       element: <RootLayout />,
       children: [
-         // 루트 경로로 접속 시 로그인 페이지로 리다이렉션
          {
-            index: true,
-            element: <Navigate to="/login" replace />,
-         },
-         {
-            path: 'login',
-            element: <LoginPage />,
-         },
-         {
-            path: 'main',
-            element: <MainPage />,
-         },
-         {
-            path: 'join',
-            element: <JoinPage />,
-         },
-         {
-            path: 'my-selection',
-            lazy: () => import('@/pages/Join/MySelectionPage'),
-         },
-         {
-            path: 'my-taste',
-            lazy: () => import('@/pages/Join/MyTastePage'),
-         },
-         {
-            path: 'recommend',
-            lazy: () => import('@/pages/Recommend/TeaListPage'),
-         },
-         {
-            path: 'search',
-            lazy: () => import('@/pages/Main/SearchPage'),
-         },
-         {
-            path: 'detail/:id',
-            lazy: () => import('@/pages/Recommend/TeaDetailPage'),
-         },
-         {
-            path: 'reviews',
+            element: <PublicRoute />,
             children: [
                {
-                  index: true,
-                  lazy: () => import('@/pages/Reviews/ReviewsPage'),
+                  path: 'login',
+                  element: <LoginPage />,
                },
                {
-                  path: 'detail/:id',
-                  lazy: () => import('@/pages/Reviews/ReviewsDetailPage'),
-               },
-               {
-                  path: 'write',
-                  lazy: () => import('@/pages/Reviews/ReviewsWritePage'),
-               },
-               {
-                  path: 'edit/:id',
-                  lazy: () => import('@/pages/Reviews/ReviewsEditPage'),
+                  path: 'join',
+                  element: <JoinPage />,
                },
             ],
          },
          {
-            path: 'my-page',
+            element: <PrivateRoute />,
             children: [
                {
                   index: true,
-                  lazy: () => import('@/pages/Settings/MyPage'),
+                  element: <MainPage />,
                },
                {
-                  path: 'edit/email',
-                  lazy: () => import('@/pages/Settings/MyEditEmailPage'),
+                  path: 'my-selection',
+                  lazy: () => import('@/pages/Join/MySelectionPage'),
                },
                {
-                  path: 'edit/nickname',
-                  lazy: () => import('@/pages/Settings/MyEditNicknamePage'),
+                  path: 'my-taste',
+                  lazy: () => import('@/pages/Join/MyTastePage'),
                },
                {
-                  path: 'edit/password',
-                  lazy: () => import('@/pages/Settings/MyEditPasswordPage'),
+                  path: 'recommend',
+                  lazy: () => import('@/pages/Recommend/TeaListPage'),
+               },
+               {
+                  path: 'search',
+                  lazy: () => import('@/pages/Main/SearchPage'),
+               },
+               {
+                  path: 'detail/:id',
+                  lazy: () => import('@/pages/Recommend/TeaDetailPage'),
                },
                {
                   path: 'reviews',
-                  lazy: () => import('@/pages/Settings/MyReviewsPage'),
+                  children: [
+                     {
+                        index: true,
+                        lazy: () => import('@/pages/Reviews/ReviewsPage'),
+                     },
+                     {
+                        path: 'detail/:id',
+                        lazy: () => import('@/pages/Reviews/ReviewsDetailPage'),
+                     },
+                     {
+                        path: 'write',
+                        lazy: () => import('@/pages/Reviews/ReviewsWritePage'),
+                     },
+                     {
+                        path: 'edit/:id',
+                        lazy: () => import('@/pages/Reviews/ReviewsEditPage'),
+                     },
+                  ],
                },
                {
-                  path: 'favorites',
-                  lazy: () => import('@/pages/Settings/MyFavoritesPage'),
+                  path: 'my-page',
+                  children: [
+                     {
+                        index: true,
+                        lazy: () => import('@/pages/Settings/MyPage'),
+                     },
+                     {
+                        path: 'edit/email',
+                        lazy: () => import('@/pages/Settings/MyEditEmailPage'),
+                     },
+                     {
+                        path: 'edit/nickname',
+                        lazy: () =>
+                           import('@/pages/Settings/MyEditNicknamePage'),
+                     },
+                     {
+                        path: 'edit/password',
+                        lazy: () =>
+                           import('@/pages/Settings/MyEditPasswordPage'),
+                     },
+                     {
+                        path: 'reviews',
+                        lazy: () => import('@/pages/Settings/MyReviewsPage'),
+                     },
+                     {
+                        path: 'favorites',
+                        lazy: () => import('@/pages/Settings/MyFavoritesPage'),
+                     },
+                  ],
                },
             ],
          },

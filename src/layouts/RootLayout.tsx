@@ -12,7 +12,7 @@ export default function RootLayout() {
    return (
       <>
          <AppBarController />
-         {isLoading ? <LoadingSpinner size={45} /> : <Outlet />}
+         {isLoading ? <LoadingSpinner /> : <Outlet />}
          <BottomNavController />
       </>
    );

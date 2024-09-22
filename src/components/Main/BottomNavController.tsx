@@ -6,7 +6,7 @@ export default function BottomNavController() {
    const location = useLocation();
 
    const showRoutes = [
-      '/main',
+      '/',
       '/recommend',
       '/search',
       '/detail/:id',
@@ -15,7 +15,9 @@ export default function BottomNavController() {
       '/reviews/write',
       '/reviews/edit/:id',
       '/my-page',
-      '/my-page/edit',
+      '/my-page/edit/nickname',
+      '/my-page/edit/email',
+      '/my-page/edit/password',
       '/my-page/reviews',
       '/my-page/favorites',
    ];
