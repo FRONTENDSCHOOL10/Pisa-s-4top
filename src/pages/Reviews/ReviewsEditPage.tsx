@@ -10,6 +10,7 @@ import {
    TeaTasteCard,
 } from '@/components/TeaCard/CardComponents';
 import toast from 'react-hot-toast';
+import { getValidEmoji } from '@/utils/emojiMap';
 
 export function Component() {
    const [tasteNoteData, setTasteNoteData] = useState<string[]>([]);
@@ -32,9 +33,10 @@ export function Component() {
                throw new Error('Taste note data is undefined or null');
             }
 
-            const filteredData = data.filter(
-               (note) => note !== '😋️ 가리는 거 없어요!'
-            );
+            const filteredData = data
+               .filter((note) => note !== '😋️ 가리는 거 없어요!')
+               .map((note) => getValidEmoji(note));
+
             setTasteNoteData(filteredData);
             setSelectedLabels(new Array(filteredData.length).fill(false));
          } catch (error) {

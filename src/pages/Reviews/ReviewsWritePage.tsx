@@ -11,6 +11,7 @@ import {
 } from '@/components/TeaCard/CardComponents';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
+import { getValidEmoji } from '@/utils/emojiMap';
 
 export function Component() {
    const [tasteNoteData, setTasteNoteData] = useState<string[]>([]);
@@ -62,13 +63,23 @@ export function Component() {
 
    useEffect(() => {
       const fetchTasteNoteData = async () => {
-         await loadTasteNoteData((data) => {
-            const filteredData = data.filter(
-               (note) => note !== '😋️ 가리는 거 없어요!'
-            );
+         try {
+            const data = await loadTasteNoteData();
+            console.log('Loaded taste note data:', data);
+
+            if (!data) {
+               throw new Error('Taste note data is undefined or null');
+            }
+
+            const filteredData = data
+               .filter((note) => note !== '😋️ 가리는 거 없어요!')
+               .map((note) => getValidEmoji(note));
+
             setTasteNoteData(filteredData);
             setSelectedLabels(new Array(filteredData.length).fill(false));
-         });
+         } catch (error) {
+            console.error('Failed to load taste note data:', error);
+         }
       };
 
       fetchTasteNoteData();
