@@ -235,7 +235,7 @@ export function TeaRecommendCard({
    return (
       <CardLayout
          to={`/detail/${id}`}
-         className={`h-64 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100% ${className}`}
+         className={`h-64 w-1/3 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100% ${className}`}
          ariaLabel={`${teaName} 추천 카드`}
       >
          <div className="mx-auto rounded-t-2xl">
@@ -247,7 +247,9 @@ export function TeaRecommendCard({
          </div>
          <div className="relative mx-auto mt-3">
             <p className="text-sm text-stone-400">{brand}</p>
-            <CardTitle className="mt-1 text-base">{teaName}</CardTitle>
+            <CardTitle className="mt-1 line-clamp-2 text-base sm:break-words">
+               {teaName}
+            </CardTitle>
             <div className="absolute right-0 top-0.5">
                <ButtonHeart handleToggle={handleToggle} isActive={isLiked} />
             </div>
