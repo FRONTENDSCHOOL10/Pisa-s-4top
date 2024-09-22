@@ -21,6 +21,7 @@ import {
    checkLikeStatus,
    fetchTotalLikes,
 } from '@/utils/likeData';
+import NoData from '@/components/Data/NoData';
 
 interface Tea {
    id: string;
@@ -120,6 +121,8 @@ export function Component() {
                return;
             }
 
+            console.log('Selected tea:', selectedTea); // 선택된 tea 로그 추가
+
             setTea(selectedTea);
 
             const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
@@ -142,6 +145,8 @@ export function Component() {
             }
 
             const teaRecipe = await fetchTeaRecipe(selectedTea.id);
+            console.log('Tea recipe:', teaRecipe); // 레시피 결과 확인
+
             setRecipe(teaRecipe);
          } catch (error) {
             console.error('Failed to fetch tea data:', error);
@@ -168,7 +173,6 @@ export function Component() {
          }
          setIsLiked(!isLiked);
 
-         // Update total likes count
          const updatedTotalLikes = await fetchTotalLikes(tea.id);
          setLikeCount(updatedTotalLikes);
       } catch (error) {
@@ -185,7 +189,7 @@ export function Component() {
    }
 
    if (!tea) {
-      return <div>티 데이터를 불러오지 못했습니다.</div>;
+      return <NoData text="티 데이터를 불러오지 못했습니다." />;
    }
 
    return (

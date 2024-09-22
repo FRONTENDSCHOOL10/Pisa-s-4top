@@ -81,7 +81,7 @@ export function CardImage({
       <img
          src={src}
          alt={decorative ? '' : alt}
-         className={`w-full rounded-md object-contain ${className}`}
+         className={`h-full w-full rounded-md object-contain ${className}`}
          aria-hidden={decorative}
       />
    );
@@ -162,10 +162,10 @@ export function TeaRecipeCard({ title, imageUrl, steps }: TeaRecipeCardProps) {
       <CardLayout ariaLabel="티 레시피 카드">
          <CardTitle className="mb-3">{title}</CardTitle>
          <div className="flex gap-5">
-            <div className="w-1/3">
+            <div className="h-24 pl-2 pr-4">
                <CardImage src={imageUrl} alt="Recipe" />
             </div>
-            <ol className="text-sm leading-6">
+            <ol className="list-decimal text-sm leading-6">
                {steps.map((step, index) => (
                   <li key={index}>{step}</li>
                ))}
