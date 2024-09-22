@@ -57,10 +57,9 @@ TeaReviewCard
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ButtonHeart } from '../Buttons/Buttons';
-import { CardStarRating, StarRating } from '../Review/StarRate';
+import { CardStarRating } from '../Review/StarRate';
 import { SelectColor } from '../Select/SelectColor';
 import { LabelGroup } from '../Labels/Labels';
-import { LoadingSpinner } from '../Main/LoadingSpinner';
 // 기능 구현 완료 후 합칠 예정
 import { addLike, checkLikeStatus, removeLike } from '@/utils/likeData';
 
@@ -195,19 +194,17 @@ export function TeaRecommendCard({
    className,
 }: TeaRecommendCardProps) {
    const [isLiked, setIsLiked] = useState(false);
-   const [isLoading, setIsLoading] = useState(false);
 
    useEffect(() => {
       const fetchLikeStatus = async () => {
          if (userNickname) {
-            try {
-               setIsLoading(true);
-               const status = await checkLikeStatus(userNickname, id);
-               setIsLiked(status);
-            } catch (error) {
-               console.error('Error fetching like status:', error);
-            } finally {
-               setIsLoading(false);
+            if (userNickname) {
+               try {
+                  const status = await checkLikeStatus(userNickname, id);
+                  setIsLiked(status);
+               } catch (error) {
+                  console.error('Error fetching like status:', error);
+               }
             }
          }
       };
@@ -223,7 +220,6 @@ export function TeaRecommendCard({
       }
 
       try {
-         setIsLoading(true);
          if (isLiked) {
             await removeLike(userNickname, id);
             setIsLiked(false);
@@ -233,38 +229,28 @@ export function TeaRecommendCard({
          }
       } catch (error) {
          console.error('Error toggling like status:', error);
-      } finally {
-         setIsLoading(false);
       }
    };
 
    return (
       <CardLayout
          to={`/detail/${id}`}
-         className={`w-1/3 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100% ${className}`}
+         className={`h-64 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100% ${className}`}
          ariaLabel={`${teaName} 추천 카드`}
       >
-         <div className="mx-auto w-40 rounded-t-2xl">
+         <div className="mx-auto rounded-t-2xl">
             <CardImage
                src={imageUrl}
                alt={`${teaName} 미리보기`}
-               className="h-36 w-full object-cover"
+               className="h-32 w-full object-cover"
             />
          </div>
          <div className="relative mx-auto mt-3">
-            <CardTitle className="mb-1 h-12 w-3/4 pr-6 text-base">
-               {teaName}
-            </CardTitle>
-            <div className="absolute right-0 top-0.5">
-               {isLoading ? (
-                  <div className="h-6 w-6">
-                     <LoadingSpinner />
-                  </div>
-               ) : (
-                  <ButtonHeart handleToggle={handleToggle} isActive={isLiked} />
-               )}
-            </div>
             <p className="text-sm text-stone-400">{brand}</p>
+            <CardTitle className="mt-1 text-base">{teaName}</CardTitle>
+            <div className="absolute right-0 top-0.5">
+               <ButtonHeart handleToggle={handleToggle} isActive={isLiked} />
+            </div>
          </div>
       </CardLayout>
    );
