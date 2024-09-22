@@ -83,7 +83,9 @@ export default function SearchInput({
          {isButton ? (
             <Link to="/search">{renderInput(isButton)}</Link>
          ) : (
-            <form onSubmit={onSubmit}>{renderInput(isButton)}</form>
+            <form onSubmit={onSubmit} className="z-10">
+               {renderInput(isButton)}
+            </form>
          )}
       </>
    );

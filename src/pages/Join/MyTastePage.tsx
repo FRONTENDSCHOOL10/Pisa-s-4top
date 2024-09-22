@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/Buttons/Buttons';
 import SplashSwiper from '@/components/TeaCard/SplashSwiper';
 import { fetchTeasByUserSelection, fetchUserTaste } from '@/utils/fetchData'; // fetchUserTaste 함수 import
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 
 export function Component() {
    const [filteredTeas, setFilteredTeas] = useState([]);
    const [userTaste, setUserTaste] = useState<string | null>(null); // userTaste 상태 추가
+   const [isLoading, setIsLoading] = useState<boolean>(false);
 
    useEffect(() => {
       // 로컬 스토리지에서 사용자 정보 가져오기
@@ -18,6 +20,7 @@ export function Component() {
          // 사용자 선택에 기반한 차 데이터 가져오기
          const getUserTeas = async () => {
             try {
+               setIsLoading(true);
                // user_taste 가져오기
                const taste = await fetchUserTaste(userNickname);
                setUserTaste(taste); // 가져온 taste를 상태에 저장
@@ -29,6 +32,8 @@ export function Component() {
                setFilteredTeas(teas as any);
             } catch (error) {
                console.error('Failed to fetch user teas:', error);
+            } finally {
+               setIsLoading(false);
             }
          };
 
@@ -71,6 +76,9 @@ export function Component() {
 
    const teaChunks = getRandomTeaData(filteredTeas, 9, 3);
 
+   if (isLoading) {
+      return <LoadingSpinner />;
+   }
    return (
       <main className="center-layout gap-2 overflow-x-hidden">
          <h1 className="mt-36 text-center text-2xl font-bold">
@@ -93,7 +101,7 @@ export function Component() {
                <SplashSwiper
                   key={index}
                   images={chunk.map((tea) => tea.tea_image)}
-                  className=""
+                  direction={index % 2 === 0 ? 'ltr' : 'rtl'}
                />
             ))}
          </div>

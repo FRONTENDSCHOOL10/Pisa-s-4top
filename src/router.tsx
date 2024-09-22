@@ -51,10 +51,6 @@ export const routes: RouteObject[] = [
                   lazy: () => import('@/pages/Recommend/TeaDetailPage'),
                },
                {
-                  path: 'edit/my-selection',
-                  lazy: () => import('@/pages/Settings/MyEditTastePage'),
-               },
-               {
                   path: 'reviews',
                   children: [
                      {
@@ -95,6 +91,10 @@ export const routes: RouteObject[] = [
                         path: 'edit/password',
                         lazy: () =>
                            import('@/pages/Settings/MyEditPasswordPage'),
+                     },
+                     {
+                        path: 'edit/my-selection',
+                        lazy: () => import('@/pages/Settings/MyEditTastePage'),
                      },
                      {
                         path: 'reviews',

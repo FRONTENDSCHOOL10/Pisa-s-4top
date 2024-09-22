@@ -4,12 +4,19 @@ interface Props {
    color?: string;
    size?: number;
    duration?: number;
+   className?: string;
 }
 
 export const LoadingSpinner = memo(
-   ({ color = '#15803d', size = 45, duration = 1.2, ...restProps }: Props) => {
+   ({
+      color = '#15803d',
+      size = 45,
+      duration = 1.2,
+      className = 'center-content',
+      ...restProps
+   }: Props) => {
       return (
-         <div className="h-screen">
+         <div className={`${className}`.trim()}>
             <svg
                role="presentation"
                viewBox="0 0 38 38"

@@ -14,6 +14,7 @@ import { updateLocalData } from '@/utils/updateLocalData';
 
 interface UserInfo {
    id: string;
+   email: string;
    nickname: string;
    profile_img: string;
 }
@@ -45,6 +46,7 @@ export function Component() {
    const navigate = useNavigate();
    const [userInfo, setUserInfo] = useState<UserInfo>({
       id: '',
+      email: '',
       nickname: '',
       profile_img: '',
    });
@@ -170,12 +172,8 @@ export function Component() {
                img={userInfo.profile_img}
                name="profile_img"
             />
-            <p className="mb-2 text-xs font-normal text-stone-950">
-               {userTaste}
-            </p>
-            <p className="mb-6 text-base font-bold text-stone-950">
-               {userInfo.nickname}
-            </p>
+            <p className="mb-2 text-xs font-normal">{userTaste}</p>
+            <p className="mb-1 text-base font-bold">{userInfo.nickname}</p>
          </section>
 
          <section className="flex flex-col gap-2">
@@ -183,25 +181,22 @@ export function Component() {
             <UserDataLayout>
                <UserData
                   label="닉네임"
-                  userData="닉네임수정필요"
+                  userData={userInfo.nickname}
                   href="edit/nickname"
                />
                <UserData
                   label="이메일"
-                  userData="이메일수정필요"
+                  userData={userInfo.email}
                   href="edit/email"
                />
             </UserDataLayout>
 
             <UserDataLayout>
-               <UserData label="비밀번호 수정" href="edit/password" />
+               <UserData label="비밀번호 변경" href="edit/password" />
             </UserDataLayout>
 
             <UserDataLayout>
-               <UserData
-                  label="유저의 취향 태그 수정"
-                  href="edit/my-selection"
-               />
+               <UserData label="나의 취향 태그 변경" href="edit/my-selection" />
             </UserDataLayout>
          </section>
 

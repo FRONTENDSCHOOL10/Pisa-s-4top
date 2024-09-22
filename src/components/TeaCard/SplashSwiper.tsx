@@ -9,12 +9,14 @@ interface SplashSwiperProps {
    images: string[];
    reverse?: boolean;
    className?: string;
+   direction?: string;
 }
 
 export default function SplashSwiper({
    images,
    reverse = false,
    className = '',
+   direction = 'ltr',
 }: SplashSwiperProps) {
    const [allImagesLoaded, setAllImagesLoaded] = useState(false);
    const swiperRef = useRef<any>(null);
@@ -71,6 +73,7 @@ export default function SplashSwiper({
                className={`w-full ${className}`}
                role="list"
                aria-label="당신에게 추천하는 티"
+               dir={direction} // 방향 설정
             >
                {images.map((image, index) => (
                   <SwiperSlide

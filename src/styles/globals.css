@@ -12,6 +12,10 @@
    height: 100dvh;
    background-color: #f5f5f4;
    overflow-y: auto;
+
+   img {
+      user-select: none;
+   }
 }
 
 /* 한글 줄바꿈 스타일 지정 */
@@ -26,11 +30,15 @@ main {
 
 @layer components {
    .focus-green {
-      @apply p-1 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-green-700;
+      @apply p-1 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700;
    }
 
    .center-layout {
       @apply flex h-[100dvh] flex-col items-center justify-center;
+   }
+
+   .center-content {
+      @apply h-[calc(100dvh-124px)];
    }
 
    .outline-base {

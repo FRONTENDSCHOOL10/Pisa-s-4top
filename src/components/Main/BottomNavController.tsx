@@ -18,6 +18,7 @@ export default function BottomNavController() {
       '/my-page/edit/nickname',
       '/my-page/edit/email',
       '/my-page/edit/password',
+      '/my-page/edit/my-selection',
       '/my-page/reviews',
       '/my-page/favorites',
    ];

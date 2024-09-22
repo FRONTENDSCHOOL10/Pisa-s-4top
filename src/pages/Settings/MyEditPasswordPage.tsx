@@ -1,15 +1,16 @@
 import { FormEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import supabase from '@/api/supabase';
-import { useJoinStore } from '@/stores';
 import { Button } from '@/components/Buttons/Buttons';
-import DuplicateEmailInput from '@/components/Input/DuplicateEmailInput';
-import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
-import { updateLocalData } from '@/utils/updateLocalData';
 import DoublePasswordInput from '@/components/Input/DoublePasswordInput';
+import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
+import { useJoinStore } from '@/stores';
 
 export function Component() {
+   const navigate = useNavigate();
+
    // 로컬 스토리지 값 가져오기
    const userId = useLocalStorageUserData('id');
 
@@ -74,6 +75,7 @@ export function Component() {
             }
 
             toast.success('비밀번호 변경을 완료하였습니다');
+            navigate('/my-page');
          }
       }
 
@@ -83,7 +85,7 @@ export function Component() {
    };
 
    return (
-      <main>
+      <main className="center-content">
          <h1 className="sr-only">비밀번호 수정</h1>
 
          <form onSubmit={handleSubmit}>
