@@ -5,6 +5,7 @@ import { useTeaLikes } from '@/hooks/useTeaLikes';
 import { useEffect, useState, useMemo } from 'react';
 import { fetchFilteredTeaData, fetchTeaData } from '@/utils/fetchData';
 import CheckBox from '@/components/Input/CheckBox';
+import NoData from '@/components/Data/NoData';
 
 interface Tea {
    id: string;
@@ -98,9 +99,9 @@ export function Component() {
             checked={isShowAll}
             onChange={handleShowAllChange}
          />
-         <ul className="grid grid-cols-3 gap-4">
-            {resultTeas.length > 0 ? (
-               resultTeas.map((tea) => (
+         {resultTeas.length > 0 ? (
+            resultTeas.map((tea) => (
+               <ul className="grid grid-cols-3 gap-4">
                   <li key={tea.id} className="flex-1">
                      <TeaRecommendCard
                         id={tea.id}
@@ -111,11 +112,11 @@ export function Component() {
                         className="!w-full"
                      />
                   </li>
-               ))
-            ) : (
-               <p>선택한 카테고리에 해당하는 티가 없습니다</p>
-            )}
-         </ul>
+               </ul>
+            ))
+         ) : (
+            <NoData text="선택한 카테고리에 해당하는 티가 없습니다" />
+         )}
       </main>
    );
 }

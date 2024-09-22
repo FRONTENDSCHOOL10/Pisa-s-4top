@@ -100,7 +100,7 @@ export function Component() {
    };
 
    return (
-      <main className="flex h-screen w-full flex-col items-center justify-center">
+      <main className="flex w-full flex-col items-center justify-center">
          <h1 className="mt-7 text-2xl">
             <strong className="font-bold">선호하는 맛</strong>을<br />
             선택해주세요.
