@@ -183,7 +183,7 @@ export interface TeaRecommendCardProps {
    teaName: string;
    brand: string;
    userNickname: string;
-   className: string;
+   className?: string;
 }
 
 export function TeaRecommendCard({
