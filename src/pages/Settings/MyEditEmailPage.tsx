@@ -7,8 +7,11 @@ import { Button } from '@/components/Buttons/Buttons';
 import DuplicateEmailInput from '@/components/Input/DuplicateEmailInput';
 import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
 import { updateLocalData } from '@/utils/updateLocalData';
+import { useNavigate } from 'react-router-dom';
 
 export function Component() {
+   const navigate = useNavigate();
+
    // 로컬 스토리지 값 가져오기
    const userId = useLocalStorageUserData('id');
    const userEmail = useLocalStorageUserData('email');
@@ -51,6 +54,7 @@ export function Component() {
             updateLocalData('email', formEmail); // 로컬스토리지 업데이트
 
             toast.success('이메일 변경을 완료하였습니다');
+            navigate('/my-page');
 
             setEmailSuccess(false); // 이메일 변경 후 상태를 다시 false
          }
@@ -60,7 +64,7 @@ export function Component() {
    };
 
    return (
-      <main>
+      <main className="center-content">
          <h1 className="sr-only">이메일 수정</h1>
 
          <form onSubmit={handleSubmit}>

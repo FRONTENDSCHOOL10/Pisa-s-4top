@@ -21,8 +21,8 @@ export default function UserData({ label, userData = '', href }: Props) {
             className="h-[0.88rem] w-[1.3rem] text-xs font-bold"
             isLink={true}
             href={href}
-            ariaLabel={`${label} 수정 페이지`}
-            content="수정"
+            ariaLabel={`${label} 변경 페이지`}
+            content="변경"
             size="small"
          />
       </div>

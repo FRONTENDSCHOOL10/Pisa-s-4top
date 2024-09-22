@@ -22,7 +22,7 @@ export default function UserProfileImg({
    // 접근성 → Enter 또는 스페이스바 눌렀을 때 클릭되도록
    const handleKeyDown = (e: KeyboardEvent<HTMLLabelElement>) => {
       if (e.key === 'Enter' || e.key === ' ') {
-         e.preventDefault(); // 스페이스바의 기본 동작(스크롤)을 막음
+         e.preventDefault();
          e.currentTarget.click();
       }
    };
@@ -72,15 +72,12 @@ export default function UserProfileImg({
 
             if (updateError) throw updateError;
 
-            // 5. 상위 컴포넌트에 새 이미지 URL 전달
-            // onImageUpdate(publicUrl);
-
             updateLocalData('profile_img', publicUrl);
 
-            toast.success('프로필 이미지가 성공적으로 업데이트되었습니다');
+            toast.success('프로필 이미지 변경을 완료하였습니다');
          } catch (error) {
             console.error('이미지 업로드 중 오류 발생:', error);
-            toast.error('이미지 업로드 중 오류가 발생했습니다');
+            toast.error('이미지 업로드 중 오류가 발생하였습니다');
          }
       }
    };

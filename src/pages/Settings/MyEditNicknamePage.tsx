@@ -1,4 +1,5 @@
 import { FormEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import supabase from '@/api/supabase';
@@ -9,6 +10,8 @@ import { updateLocalData } from '@/utils/updateLocalData';
 import DuplicateNicknameInput from '@/components/Input/DuplicateNicknameInput';
 
 export function Component() {
+   const navigate = useNavigate();
+
    // 로컬 스토리지 값 가져오기
    const userId = useLocalStorageUserData('id');
    const userNickname = useLocalStorageUserData('nickname');
@@ -41,6 +44,7 @@ export function Component() {
          updateLocalData('nickname', formNickname); // 로컬스토리지 업데이트
 
          toast.success('닉네임 변경을 완료하였습니다');
+         navigate('/my-page');
 
          setNicknameSuccess(false); // 닉네임 변경 후 상태를 다시 false
       } else {
@@ -49,7 +53,7 @@ export function Component() {
    };
 
    return (
-      <main>
+      <main className="center-content">
          <h1 className="sr-only">닉네임 수정</h1>
 
          <form onSubmit={handleSubmit}>

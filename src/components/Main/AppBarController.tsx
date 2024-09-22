@@ -19,6 +19,10 @@ const routes: RouteConfig[] = [
    { path: '/my-page/edit/email', props: { title: '이메일 변경' } },
    { path: '/my-page/edit/nickname', props: { title: '닉네임 변경' } },
    { path: '/my-page/edit/password', props: { title: '비밀번호 변경' } },
+   {
+      path: '/my-page/edit/my-selection',
+      props: { title: '나의 취향 태그 변경' },
+   },
    { path: '/my-page/favorites', props: { title: '나의 찜' } },
    { path: '/my-page/reviews', props: { title: '나의 리뷰' } },
 ];
