@@ -35,7 +35,7 @@ export function Component() {
                      이 카테고리에 찜한 티가 없습니다.
                   </p>
                ) : (
-                  <ul className="grid grid-cols-3 gap-4">
+                  <ul className="grid gap-4 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
                      {filteredTeas.map((tea) => (
                         <li key={tea.id}>
                            <TeaRecommendCard

@@ -1,3 +1,6 @@
+import { FormEvent, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+
 import SearchFilterButton from '@/components/Buttons/SearchFilterButton';
 import SearchInput from '@/components/Input/SearchInput';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
@@ -7,8 +10,6 @@ import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
 import { useInputFocus } from '@/hooks/useInputFocus';
 import { getSearchReviewData } from '@/utils/getSearchReviewData';
 import { getSearchTeaData } from '@/utils/getSearchTeaData';
-import { FormEvent, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 
 interface Tea {
    id: string;
@@ -28,6 +29,7 @@ interface Review {
    };
    tea: {
       tea_name: string;
+      tea_brand: string;
       tea_image: string;
    };
 }
@@ -50,7 +52,10 @@ export function Component() {
                const user = JSON.parse(userData);
                setUserNickname(user.nickname);
             } catch (error) {
-               console.error('Failed to parse user data from localStorage:', error);
+               console.error(
+                  'Failed to parse user data from localStorage:',
+                  error
+               );
             }
          }
       };
@@ -112,9 +117,9 @@ export function Component() {
                         data={searchValue}
                         count={searchTeaResults.length}
                      />
-                     <ul className="grid grid-cols-[repeat(auto-fill,_minmax(158px,_1fr))] gap-4">
+                     <ul className="grid gap-4 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                         {searchTeaResults.map((tea: Tea) => (
-                           <li key={tea.id} className="flex justify-center">
+                           <li key={tea.id}>
                               <TeaRecommendCard
                                  id={tea.id}
                                  imageUrl={tea.tea_image}
@@ -139,6 +144,7 @@ export function Component() {
                               key={review.id}
                               id={review.id}
                               teaName={review.tea.tea_name}
+                              teaBrand={review.tea.tea_brand}
                               teaImg={review.tea.tea_image}
                               nickname={review.users.nickname}
                               title={review.review_title}

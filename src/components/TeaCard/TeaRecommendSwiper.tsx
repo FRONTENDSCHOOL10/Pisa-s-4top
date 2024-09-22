@@ -46,7 +46,10 @@ interface TeaRecommendSwiperProps {
    userNickname: string;
 }
 
-export default function TeaRecommendSwiper({ teaRecommendations, userNickname }: TeaRecommendSwiperProps) {
+export default function TeaRecommendSwiper({
+   teaRecommendations,
+   userNickname,
+}: TeaRecommendSwiperProps) {
    return (
       <Swiper
          spaceBetween={8}
@@ -72,6 +75,7 @@ export default function TeaRecommendSwiper({ teaRecommendations, userNickname }:
                <TeaRecommendCard
                   {...recommendation}
                   userNickname={userNickname}
+                  className="w-44 lg:w-48"
                />
             </SwiperSlide>
          ))}
