@@ -12,6 +12,7 @@ import {
    fetchTeaData,
    fetchTeaTastingNotes,
    fetchMultipleReviews,
+   fetchTeaRecipe,
 } from '@/utils/fetchData';
 import { calculateAverageRate } from '@/utils/calculateAverageRate';
 import {
@@ -20,6 +21,7 @@ import {
    checkLikeStatus,
    fetchTotalLikes,
 } from '@/utils/likeData';
+import NoData from '@/components/Data/NoData';
 
 interface Tea {
    id: string;
@@ -56,6 +58,13 @@ interface User {
    nickname: string;
 }
 
+interface Recipe {
+   id: string;
+   recipe_title: string;
+   recipe_image: string;
+   recipe_detail: string[];
+}
+
 export function Component() {
    const { id } = useParams<{ id: string }>();
    const [tea, setTea] = useState<Tea | null>(null);
@@ -69,6 +78,7 @@ export function Component() {
    const [likeCount, setLikeCount] = useState(0);
    const [isLoading, setIsLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
+   const [recipe, setRecipe] = useState<Recipe | null>(null);
 
    useEffect(() => {
       const getCurrentUser = () => {
@@ -111,6 +121,8 @@ export function Component() {
                return;
             }
 
+            console.log('Selected tea:', selectedTea); // 선택된 tea 로그 추가
+
             setTea(selectedTea);
 
             const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
@@ -131,6 +143,11 @@ export function Component() {
                );
                setIsLiked(likeStatus);
             }
+
+            const teaRecipe = await fetchTeaRecipe(selectedTea.id);
+            console.log('Tea recipe:', teaRecipe); // 레시피 결과 확인
+
+            setRecipe(teaRecipe);
          } catch (error) {
             console.error('Failed to fetch tea data:', error);
             setError('Failed to load tea data. Please try again.');
@@ -156,7 +173,6 @@ export function Component() {
          }
          setIsLiked(!isLiked);
 
-         // Update total likes count
          const updatedTotalLikes = await fetchTotalLikes(tea.id);
          setLikeCount(updatedTotalLikes);
       } catch (error) {
@@ -173,7 +189,7 @@ export function Component() {
    }
 
    if (!tea) {
-      return <div>티 데이터를 불러오지 못했습니다.</div>;
+      return <NoData text="티 데이터를 불러오지 못했습니다." />;
    }
 
    return (
@@ -197,7 +213,13 @@ export function Component() {
             />
          </div>
          <TeaDescriptionCard description={tea.tea_detail} />
-         <TeaRecipeCard title="" imageUrl="" steps={[]} />
+         {recipe && (
+            <TeaRecipeCard
+               title={recipe.recipe_title}
+               imageUrl={recipe.recipe_image}
+               steps={recipe.recipe_detail}
+            />
+         )}
          <div className="relative">
             <TeaReviewList reviews={reviews} />
             <Button
