@@ -69,7 +69,7 @@ export function SelectColor({
    return (
       <div className="relative w-full">
          <div
-            className={`relative z-20 flex items-center justify-center rounded-full border border-stone-300 bg-stone-50 p-2 ${
+            className={`relative z-[25] flex items-center justify-center rounded-full border border-stone-300 bg-stone-50 p-2 ${
                disabled ? 'cursor-default' : 'cursor-pointer'
             }`}
             onClick={handleToggle}

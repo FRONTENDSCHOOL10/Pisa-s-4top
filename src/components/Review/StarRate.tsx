@@ -87,7 +87,7 @@ export function StarRating({ score, setScore, editable }: StarRatingProps) {
          </button>
 
          {isDropdownOpen && (
-            <ul className="absolute top-6 z-10 mt-2 overflow-hidden rounded-2xl border bg-white shadow-md">
+            <ul className="absolute top-6 z-30 mt-2 overflow-hidden rounded-2xl border bg-white shadow-md">
                {[1, 2, 3, 4, 5].map((star) => (
                   <li
                      key={star}
