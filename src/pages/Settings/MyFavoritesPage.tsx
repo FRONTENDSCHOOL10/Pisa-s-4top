@@ -18,7 +18,7 @@ export function Component() {
    }
 
    return (
-      <main className="h-screen">
+      <main className="">
          <h1 className="sr-only">나의 찜 페이지</h1>
          <article className="flex flex-col gap-5">
             <div>
