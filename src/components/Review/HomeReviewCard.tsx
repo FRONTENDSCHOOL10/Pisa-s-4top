@@ -37,15 +37,15 @@ export default function HomeReviewCard({
                alt={`${teaName}`}
             />
             <div className="flex w-full flex-col gap-1 pl-4 pr-2">
-               <p className="mb-2 text-xs text-stone-500">
+               <p className="text-xs text-stone-500">
                   <span className="text-sm font-bold">{teaName}</span>{' '}
                   {teaBrand}
                </p>
-               <h3 className="text-lg font-bold leading-4 text-stone-800">
+               <h3 className="line-clamp-1 text-lg font-bold leading-4 text-stone-800">
                   {title}
                </h3>
                <p className="text-sm font-medium text-stone-400">{nickname}</p>
-               <p className="mt-1 text-base leading-relaxed text-stone-500">
+               <p className="line-clamp-2 text-base text-stone-500">
                   {comment}
                </p>
                <div className="self-end">
