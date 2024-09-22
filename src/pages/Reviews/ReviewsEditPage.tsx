@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Buttons/Buttons';
 import { fetchSingleReview, loadTasteNoteData } from '@/utils/fetchData';
 import { updateReviewData } from '@/utils/updateData';
+import { deleteReviewData } from '@/utils/deleteData';
 import { StarRating } from '@/components/Review/StarRate';
 import {
    TeaColorCard,
@@ -112,6 +113,19 @@ export function Component() {
       }
    };
 
+   const handleDeleteReview = async () => {
+      if (!id) return;
+
+      const result = await deleteReviewData(id);
+
+      if (result) {
+         toast.success('리뷰가 삭제되었습니다.');
+         navigate('/reviews');
+      } else {
+         toast.error('리뷰 삭제에 실패했습니다.');
+      }
+   };
+
    return (
       <main className="flex flex-col items-center px-6">
          <h1 className="sr-only">리뷰 수정 페이지</h1>
@@ -162,6 +176,7 @@ export function Component() {
             size="fullWidth"
             className="mt-2"
             isError={true}
+            handleClick={handleDeleteReview}
          />
       </main>
    );
