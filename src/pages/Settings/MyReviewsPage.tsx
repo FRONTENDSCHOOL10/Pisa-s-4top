@@ -5,6 +5,7 @@ import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
 import { fetchTeaCategoryData, fetchMultipleReviews } from '@/utils/fetchData';
 import { Review, TeaCategory } from '@/types/types';
+import NoData from '@/components/Data/NoData';
 
 export function Component() {
    const navigate = useNavigate();
@@ -60,7 +61,7 @@ export function Component() {
    }
 
    return (
-      <main className="flex flex-col gap-5">
+      <main className="-mt-2 flex flex-col gap-5">
          <h1 className="sr-only">내 리뷰 리스트 페이지</h1>
          <TabButton
             tabs={categories.map((category) => category.category)}
@@ -86,7 +87,7 @@ export function Component() {
                   />
                ))
             ) : (
-               <p>이 카테고리에 작성한 리뷰가 없습니다</p>
+               <NoData text="해당 카테고리에 리뷰가 없습니다" />
             )}
          </section>
       </main>

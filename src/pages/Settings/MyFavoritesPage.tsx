@@ -2,6 +2,7 @@ import { TabButton } from '@/components/Buttons/TabButton';
 import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import { useTeaLikes } from '@/hooks/useTeaLikes';
+import NoData from '@/components/Data/NoData';
 
 export function Component() {
    const {
@@ -18,7 +19,7 @@ export function Component() {
    }
 
    return (
-      <main className="">
+      <main className="-mt-2">
          <h1 className="sr-only">나의 찜 페이지</h1>
          <article className="flex flex-col gap-5">
             <div>
@@ -28,14 +29,13 @@ export function Component() {
                   className="mb-8 self-start"
                   activeTab={selectedCategory}
                />
+
                {!currentUser ? (
                   <p className="text-center">로그인이 필요합니다.</p>
                ) : filteredTeas.length === 0 ? (
-                  <p className="text-center">
-                     이 카테고리에 찜한 티가 없습니다.
-                  </p>
+                  <NoData text="선택한 카테고리에 해당하는 티가 없습니다" />
                ) : (
-                  <ul className="grid gap-4 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
+                  <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                      {filteredTeas.map((tea) => (
                         <li key={tea.id}>
                            <TeaRecommendCard

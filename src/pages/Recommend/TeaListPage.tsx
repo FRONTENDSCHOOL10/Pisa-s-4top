@@ -1,10 +1,12 @@
+import { useEffect, useState, useMemo, useCallback } from 'react';
+
 import { TabButton } from '@/components/Buttons/TabButton';
 import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import { useTeaLikes } from '@/hooks/useTeaLikes';
-import { useEffect, useState, useMemo } from 'react';
 import { fetchFilteredTeaData, fetchTeaData } from '@/utils/fetchData';
 import CheckBox from '@/components/Input/CheckBox';
+import NoData from '@/components/Data/NoData';
 
 interface Tea {
    id: string;
@@ -37,30 +39,27 @@ export function Component() {
    }, []);
 
    // 테이스팅 노트를 기반으로 필터링된 티 데이터를 가져오는 함수
+   const getFilteredTea = useCallback(async () => {
+      if (!currentUser) return;
+
+      try {
+         setIsTeaLoading(true);
+         const teas = await fetchFilteredTeaData(null, currentUser.nickname);
+         setFilteredTeas(teas);
+      } catch (error) {
+         console.error('Failed to fetch filtered tea data:', error);
+      } finally {
+         setIsTeaLoading(false);
+      }
+   }, [currentUser]);
+
    useEffect(() => {
-      const getFilteredTeas = async () => {
-         if (!selectedCategory || !currentUser) return;
-
-         try {
-            setIsTeaLoading(true);
-            const teas = await fetchFilteredTeaData(
-               selectedCategory,
-               currentUser.nickname
-            );
-            setFilteredTeas(teas);
-         } catch (error) {
-            console.error('Failed to fetch filtered tea data:', error);
-         } finally {
-            setIsTeaLoading(false);
-         }
-      };
-
       if (!isShowAll) {
-         getFilteredTeas();
+         getFilteredTea();
       } else {
          setIsTeaLoading(false);
       }
-   }, [selectedCategory, currentUser, isShowAll]);
+   }, [isShowAll, getFilteredTea]);
 
    const handleTabSelect = (category: string) => {
       setSelectedCategory(category);
@@ -69,13 +68,17 @@ export function Component() {
    const handleShowAllChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const checked = e.target.checked;
       setIsShowAll(checked);
+      setIsTeaLoading(true); // 체크박스 상태 변경 시 로딩 상태 시작
+      setTimeout(() => setIsTeaLoading(false), 500); // 짧은 지연 후 로딩 상태 해제
    };
 
    const resultTeas = useMemo(() => {
       if (isShowAll) {
          return allTeas.filter((tea) => tea.tea_category === selectedCategory);
       }
-      return filteredTeas;
+      return filteredTeas.filter(
+         (tea) => tea.tea_category === selectedCategory
+      );
    }, [isShowAll, allTeas, selectedCategory, filteredTeas]);
 
    if (isLikesLoading || isTeaLoading) {
@@ -83,21 +86,21 @@ export function Component() {
    }
 
    return (
-      <main className="flex min-h-screen flex-col gap-5">
+      <main className="-mt-2 flex min-h-screen flex-col">
          <h1 className="sr-only">추천 티 리스트 페이지</h1>
          <TabButton
-            tabs={categories?.map((category) => category.category) || []}
+            tabs={categories.map((category) => category.category) || []}
             onTabSelect={handleTabSelect}
             activeTab={selectedCategory}
          />
          <CheckBox
             label="모든 티 보기"
-            className="text-stone-950"
+            className="my-3 ml-1 text-stone-950"
             checked={isShowAll}
             onChange={handleShowAllChange}
          />
          {resultTeas.length > 0 ? (
-            <ul className="grid gap-4 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                {resultTeas.map((tea) => (
                   <li key={tea.id}>
                      <TeaRecommendCard
@@ -112,7 +115,7 @@ export function Component() {
                ))}
             </ul>
          ) : (
-            <p>선택한 카테고리에 해당하는 티가 없습니다</p>
+            <NoData text="선택한 카테고리에 해당하는 티가 없습니다" />
          )}
       </main>
    );
