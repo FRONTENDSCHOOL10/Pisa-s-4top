@@ -8,6 +8,7 @@ import Input from '@/components/Input/Input';
 import Logo from '@/components/Main/Logo';
 import { isValidEmail, isValidPassword } from '@/utils/isValidCheck';
 import { INPUT_ERROR_MESSAGE } from '@/constants';
+import { getSelectionData } from '@/utils/getSelectionData';
 
 export default function LoginPage() {
    const navigate = useNavigate();
@@ -53,23 +54,25 @@ export default function LoginPage() {
                .single();
 
             if (userError) {
-               toast.error('사용자 정보를 가져오는데 실패했습니다.');
+               toast.error('사용자 정보를 가져오는 데 실패하였습니다');
                return;
             }
 
             // tasteselection 테이블에서 user_nickname 확인
-            const { data: selectionData, error: selectionError } =
-               await supabase
-                  .from('tasteselection')
-                  .select('user_nickname')
-                  .eq('user_nickname', userData.nickname)
-                  .single();
+            // const { data: selectionData, error: selectionError } =
+            //    await supabase
+            //       .from('tasteselection')
+            //       .select('user_nickname')
+            //       .eq('user_nickname', userData.nickname)
+            //       .single();
 
-            if (selectionError && selectionError.code !== 'PGRST116') {
-               // 'PGRST116'은 No Rows Found 오류
-               toast.error('사용자 선택 정보를 가져오는데 실패했습니다.');
-               return;
-            }
+            // if (selectionError && selectionError.code !== 'PGRST116') {
+            //    // 'PGRST116'은 No Rows Found 오류
+            //    toast.error('사용자 선택 정보를 가져오는 데 실패하였습니다');
+            //    return;
+            // }
+
+            const selectionData = await getSelectionData(userData.nickname);
 
             toast.success('로그인에 성공하였습니다');
             localStorage.setItem('@auth/login', 'true');
@@ -83,9 +86,9 @@ export default function LoginPage() {
                })
             );
 
-            // user_nickname이 있으면 '/main', 없으면 '/my-selection'으로 리디렉션
+            // user_nickname이 있으면 '/', 없으면 '/my-selection'으로 리디렉션
             if (selectionData) {
-               navigate('/main');
+               navigate('/');
             } else {
                navigate('/my-selection');
             }

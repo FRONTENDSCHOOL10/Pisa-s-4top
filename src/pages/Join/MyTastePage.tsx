@@ -85,7 +85,7 @@ export function Component() {
             content="홈으로 이동하기"
             size="large"
             isLink={true}
-            href="/main"
+            href="/"
             ariaLabel="홈페이지"
          />
          <div className="flex flex-col gap-3">

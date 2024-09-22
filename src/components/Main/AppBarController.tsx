@@ -9,14 +9,16 @@ interface RouteConfig {
 }
 
 const routes: RouteConfig[] = [
-   { path: '/main', props: { hasLogo: true } },
+   { path: '/', props: { hasLogo: true } },
    { path: '/join', props: { hasBackBtn: true } },
    { path: '/search', props: { title: '검색' } },
    { path: '/reviews', props: { title: '티 리뷰 리스트' } },
    { path: '/reviews/write', props: { title: '티 리뷰 작성' } },
    { path: '/recommend', props: { title: '추천 티 리스트' } },
    { path: '/my-page', props: { title: '마이페이지' } },
-   { path: '/my-page/edit', props: { title: '마이페이지 수정' } },
+   { path: '/my-page/edit/email', props: { title: '이메일 변경' } },
+   { path: '/my-page/edit/nickname', props: { title: '닉네임 변경' } },
+   { path: '/my-page/edit/password', props: { title: '비밀번호 변경' } },
    { path: '/my-page/favorites', props: { title: '나의 찜' } },
    { path: '/my-page/reviews', props: { title: '나의 리뷰' } },
 ];

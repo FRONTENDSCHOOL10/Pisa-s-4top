@@ -36,7 +36,7 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
    function renderContent() {
       if (hasLogo) {
          return (
-            <div className="focus-green mx-auto py-3">
+            <div className="focus-green mx-auto">
                <Logo />
             </div>
          );
@@ -60,7 +60,7 @@ export default function AppBar({ hasBackBtn, hasLogo, title }: AppBarProps) {
 
    return (
       <header className="sticky left-0 top-0 z-50 w-full">
-         <nav className="flex !w-full min-w-80 max-w-layout items-center bg-stone-100">
+         <nav className="flex h-16 !w-full min-w-80 max-w-layout items-center bg-stone-100">
             {renderContent()}
          </nav>
       </header>
