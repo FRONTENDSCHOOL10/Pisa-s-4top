@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchSingleReview } from '@/utils/fetchData';
+import { deleteReviewData } from '@/utils/deleteData';
 import { Button } from '@/components/Buttons/Buttons';
 import { StarRatingAverage } from '@/components/Review/StarRate';
 import {
@@ -9,6 +10,7 @@ import {
    TeaTasteCard,
 } from '@/components/TeaCard/CardComponents';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 interface Review {
    id: string;
@@ -73,17 +75,26 @@ export function Component() {
       getReviewData();
    }, [id]);
 
-   // 로딩 중인 경우 로딩 스피너를 표시
+   const handleDeleteReview = async () => {
+      if (!id) return;
+
+      const result = await deleteReviewData(id);
+
+      if (result) {
+         toast.success('리뷰가 삭제되었습니다.');
+         navigate('/reviews');
+      } else {
+         toast.error('리뷰 삭제에 실패했습니다.');
+      }
+   };
+
    if (isLoading) return <LoadingSpinner />;
 
-   // 에러가 발생한 경우 에러 메시지 표시
    if (error) return <div>{error}</div>;
 
-   // 데이터가 없는 경우 처리
    if (!reviewData) return <div>리뷰 데이터를 찾을 수 없습니다.</div>;
    if (!reviewData.tea) return <div>차 데이터를 찾을 수 없습니다.</div>;
 
-   // 접속한 유저가 작성자인지 확인하는 변수
    const isAuthor = currentUser?.nickname === reviewData.user.nickname;
 
    return (
@@ -130,10 +141,11 @@ export function Component() {
                </div>
                <div className="w-full">
                   <Button
-                     size="fullWidth"
-                     isError={true}
                      content="삭제"
-                     handleClick={() => console.log('리뷰 삭제 버튼 클릭됨')}
+                     size="fullWidth"
+                     className="mt-2"
+                     isError={true}
+                     handleClick={handleDeleteReview}
                   />
                </div>
             </>
