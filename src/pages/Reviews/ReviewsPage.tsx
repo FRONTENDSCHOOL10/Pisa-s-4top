@@ -4,33 +4,7 @@ import { TabButton } from '@/components/Buttons/TabButton';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
 import { fetchTeaCategoryData, fetchMultipleReviews } from '@/utils/fetchData';
-
-export interface TeaCategory {
-   id: string;
-   category: string;
-}
-
-export interface Review {
-   id: string;
-   review_title: string;
-   review_comment: string;
-   tea_color: string;
-   review_tasting_note: string[];
-   tea_rate: 0 | 1 | 2 | 3 | 4 | 5;
-   tea: {
-      id: string;
-      tea_name: string;
-      tea_image: string;
-      tea_category: {
-         id: string;
-         category: string;
-      };
-   };
-   user: {
-      nickname: string;
-      profile_img: string;
-   };
-}
+import { Review, TeaCategory } from '@/types/types';
 
 export function Component() {
    const [categories, setCategories] = useState<TeaCategory[]>([]);
@@ -88,6 +62,7 @@ export function Component() {
                      key={review.id}
                      id={review.id}
                      teaName={review.tea?.tea_name || ''}
+                     teaBrand={review.tea?.tea_brand || ''}
                      teaImg={review.tea?.tea_image || ''}
                      nickname={review.user?.nickname || '익명'}
                      title={review.review_title}
