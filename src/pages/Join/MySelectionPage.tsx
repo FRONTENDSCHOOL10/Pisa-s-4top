@@ -6,6 +6,7 @@ import { LabelGroup } from '@/components/Labels/Labels';
 import { loadTasteNoteData } from '@/utils/fetchData';
 import { postTasteSelection } from '@/utils/postData';
 import { Button } from '@/components/Buttons/Buttons';
+import { getValidEmoji } from '@/utils/emojiMap';
 
 export function Component() {
    const [tasteNoteData, setTasteNoteData] = useState<string[]>([]);
@@ -21,23 +22,37 @@ export function Component() {
          toast.error('로그인이 필요합니다.');
          navigate('/login');
       }
+   }, [navigate]);
 
-      const fetchData = async () => {
+   useEffect(() => {
+      const fetchTasteNoteData = async () => {
          try {
-            await loadTasteNoteData(setTasteNoteData, setSelectedLabels);
-            setTasteNoteData((prevData) => {
-               const withoutPreferredTag = prevData.filter(
-                  (item) => item !== '😋️ 가리는 거 없어요!'
-               );
-               return [...withoutPreferredTag, '😋️ 가리는 거 없어요!'];
-            });
+            const data = await loadTasteNoteData();
+            console.log('Loaded taste note data:', data);
+
+            if (!data) {
+               throw new Error('Taste note data is undefined or null');
+            }
+
+            let filteredData = data.map((note) => getValidEmoji(note));
+
+            filteredData = filteredData.sort((a, b) =>
+               a === '😋️ 가리는 거 없어요!'
+                  ? 1
+                  : b === '😋️ 가리는 거 없어요!'
+                    ? -1
+                    : 0
+            );
+
+            setTasteNoteData(filteredData);
+            setSelectedLabels(new Array(filteredData.length).fill(false));
          } catch (error) {
-            console.error('Failed to fetch taste note data:', error);
+            console.error('Failed to load taste note data:', error);
          }
       };
 
-      fetchData();
-   }, [navigate]);
+      fetchTasteNoteData();
+   }, []);
 
    const toggleLabelSelection = (index: number) => {
       if (tasteNoteData[index] === '😋️ 가리는 거 없어요!') {
