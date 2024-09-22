@@ -4,16 +4,23 @@ import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import { useTeaLikes } from '@/hooks/useTeaLikes';
 
 export function Component() {
-   const { categories, selectedCategory, setSelectedCategory, currentUser, filteredTeas, isLoading } = useTeaLikes();
+   const {
+      categories,
+      selectedCategory,
+      setSelectedCategory,
+      currentUser,
+      filteredTeas,
+      isLoading,
+   } = useTeaLikes();
 
    if (isLoading) {
       return <LoadingSpinner />;
    }
 
    return (
-      <main>
+      <main className="h-screen">
          <h1 className="sr-only">나의 찜 페이지</h1>
-         <article className="flex flex-col items-center">
+         <article className="flex flex-col gap-5">
             <div>
                <TabButton
                   tabs={categories.map((category) => category.category)}
@@ -24,9 +31,11 @@ export function Component() {
                {!currentUser ? (
                   <p className="text-center">로그인이 필요합니다.</p>
                ) : filteredTeas.length === 0 ? (
-                  <p className="text-center">이 카테고리에 찜한 티가 없습니다.</p>
+                  <p className="text-center">
+                     이 카테고리에 찜한 티가 없습니다.
+                  </p>
                ) : (
-                  <ul className="grid gap-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                  <ul className="grid grid-cols-3 gap-4">
                      {filteredTeas.map((tea) => (
                         <li key={tea.id}>
                            <TeaRecommendCard
