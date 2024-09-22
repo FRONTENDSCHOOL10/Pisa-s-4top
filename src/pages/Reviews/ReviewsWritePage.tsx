@@ -21,21 +21,19 @@ export function Component() {
    const [teaRate, setTeaRate] = useState<number>(0);
    const [currentUser, setCurrentUser] = useState<string | null>(null);
    const [teaInfo, setTeaInfo] = useState<any>(null);
-   const [rating, setRating] = useState(3); // 기본 별점 3점
-   const [isEditable, setIsEditable] = useState(true); // editable 상태
+   const [rating, setRating] = useState(3);
+   const [isEditable, setIsEditable] = useState(true);
 
-   // useSearchParams를 사용하여 쿼리 스트링에서 teaId 가져오기
    const [searchParams] = useSearchParams();
    const teaId = searchParams.get('teaId'); // teaId를 가져옴
    const navigate = useNavigate();
 
    useEffect(() => {
-      // 유저 정보 가져오기
       const userData = localStorage.getItem('@auth/user');
       if (userData) {
          try {
             const user = JSON.parse(userData);
-            setCurrentUser(user.nickname); // 유저 닉네임을 저장
+            setCurrentUser(user.nickname);
          } catch (error) {
             console.error(
                'Failed to parse user data from localStorage:',
@@ -45,14 +43,23 @@ export function Component() {
       }
    }, []);
 
-   // 차 정보 가져오기
    useEffect(() => {
       const fetchTeaInfo = async () => {
-         if (!teaId) return; // teaId가 없으면 리턴
+         if (!teaId) {
+            console.error('No tea ID found in the query string');
+            return;
+         }
+
          try {
             const teaData = await fetchTeaData();
-            const selectedTea = teaData.find((tea) => tea.id === teaId);
-            setTeaInfo(selectedTea); // 차 정보 저장
+            console.log('Fetched tea data:', teaData);
+
+            const selectedTea = teaData.find((tea) => tea.id == teaId);
+            if (selectedTea) {
+               setTeaInfo(selectedTea);
+            } else {
+               console.error('Tea with the given ID not found');
+            }
          } catch (error) {
             console.error('Failed to fetch tea info:', error);
          }
@@ -62,13 +69,22 @@ export function Component() {
 
    useEffect(() => {
       const fetchTasteNoteData = async () => {
-         await loadTasteNoteData((data) => {
+         try {
+            const data = await loadTasteNoteData();
+            console.log('Loaded taste note data:', data);
+
+            if (!data) {
+               throw new Error('Taste note data is undefined or null');
+            }
+
             const filteredData = data.filter(
                (note) => note !== '😋️ 가리는 거 없어요!'
             );
             setTasteNoteData(filteredData);
             setSelectedLabels(new Array(filteredData.length).fill(false));
-         });
+         } catch (error) {
+            console.error('Failed to load taste note data:', error);
+         }
       };
 
       fetchTasteNoteData();
@@ -81,6 +97,26 @@ export function Component() {
    };
 
    const handleCreateReview = async () => {
+      if (!reviewTitle.trim()) {
+         toast.error('리뷰 제목을 입력해주세요.');
+         return;
+      }
+
+      if (!reviewContent.trim()) {
+         toast.error('리뷰 내용을 입력해주세요.');
+         return;
+      }
+
+      if (!reviewColor.trim()) {
+         toast.error('차의 수색을 선택해주세요.');
+         return;
+      }
+
+      if (selectedLabels.every((label) => label === false)) {
+         toast.error('테이스팅 노트를 선택해주세요.');
+         return;
+      }
+
       if (!teaId || !currentUser) {
          console.error('No tea ID or user information found');
          return;
@@ -90,14 +126,13 @@ export function Component() {
          (_, index) => selectedLabels[index]
       );
 
-      // teaRate를 rating 값으로 설정
       const newReview = {
          review_tea: teaId,
          review_title: reviewTitle,
          review_comment: reviewContent,
          review_tasting_note: selectedTastingNotes,
          tea_color: reviewColor,
-         tea_rate: rating, // teaRate를 rating 값으로 설정
+         tea_rate: rating,
          review_user: currentUser,
       };
 
@@ -126,7 +161,6 @@ export function Component() {
          </Helmet>
          <main className="flex flex-col items-center px-6">
             <h1 className="sr-only">리뷰 작성 페이지</h1>
-            {/* 차 정보 표시 */}
             {teaInfo ? (
                <>
                   <div className="h-60 w-60 overflow-hidden rounded-full bg-white">

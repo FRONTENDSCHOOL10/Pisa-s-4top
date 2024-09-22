@@ -16,7 +16,7 @@ export function Component() {
    const [selectedLabels, setSelectedLabels] = useState<boolean[]>([]);
    const [reviewData, setReviewData] = useState<any>(null);
    const [reviewTitle, setReviewTitle] = useState<string>('');
-   const [rating, setRating] = useState(3); // 기본 별점 3점
+   const [rating, setRating] = useState(3);
    const [reviewContent, setReviewContent] = useState<string>('');
    const [reviewColor, setReviewColor] = useState<string>('');
    const { id } = useParams<{ id: string }>();
@@ -75,6 +75,26 @@ export function Component() {
 
    const handleUpdateReview = async () => {
       if (!id) return;
+
+      if (!reviewTitle.trim()) {
+         toast.error('리뷰 제목을 입력해주세요.');
+         return;
+      }
+
+      if (!reviewContent.trim()) {
+         toast.error('리뷰 내용을 입력해주세요.');
+         return;
+      }
+
+      if (!reviewColor.trim()) {
+         toast.error('차의 색상을 선택해주세요.');
+         return;
+      }
+
+      if (selectedLabels.every((label) => label === false)) {
+         toast.error('테이스팅 노트를 선택해주세요.');
+         return;
+      }
 
       const updatedTastingNotes = tasteNoteData.filter(
          (_, index) => selectedLabels[index]
