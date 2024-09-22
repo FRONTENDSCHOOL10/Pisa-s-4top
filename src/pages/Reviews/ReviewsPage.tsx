@@ -5,6 +5,7 @@ import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
 import { fetchTeaCategoryData, fetchMultipleReviews } from '@/utils/fetchData';
 import { Review, TeaCategory } from '@/types/types';
+import NoData from '@/components/Data/NoData';
 
 export function Component() {
    const [categories, setCategories] = useState<TeaCategory[]>([]);
@@ -71,7 +72,7 @@ export function Component() {
                   />
                ))
             ) : (
-               <p>해당 카테고리에 리뷰 데이터가 없습니다.</p>
+               <NoData text="해당 카테고리에 리뷰가 없습니다!" />
             )}
          </section>
       </main>
