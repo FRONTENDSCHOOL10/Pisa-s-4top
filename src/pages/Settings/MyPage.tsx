@@ -55,8 +55,9 @@ export function Component() {
    useEffect(() => {
       const fetchUserData = async () => {
          const userData = localStorage.getItem('@auth/user');
+
          if (!userData) {
-            navigate('/login');
+            console.error('유저 데이터 없음: ', userData);
             return;
          }
 
@@ -133,6 +134,28 @@ export function Component() {
       }
    };
 
+   // 회원 탈퇴
+   const handleUserDelete = async () => {
+      try {
+         const { data, error } = await supabase.auth.admin.deleteUser(
+            userInfo.id
+         );
+
+         if (error) throw error;
+
+         console.log('탈퇴 완료');
+
+         toast.success('회원 탈퇴가 완료되었습니다');
+         localStorage.clear();
+         navigate('/login');
+
+         return data;
+      } catch (error) {
+         console.error('회원 탈퇴 오류: ', error);
+         toast.error('탈퇴 도중 오류가 발생하였습니다');
+      }
+   };
+
    if (isLoading) {
       return <LoadingSpinner />;
    }
@@ -197,11 +220,20 @@ export function Component() {
             </div>
          </section>
          <UserCollection />
-         <Button
-            content="로그아웃"
-            size="fullWidth"
-            handleClick={handleLogout}
-         />
+         <div className="button-group">
+            <Button
+               content="로그아웃"
+               size="fullWidth"
+               handleClick={handleLogout}
+            />
+            <Button
+               content="회원 탈퇴"
+               size="fullWidth"
+               isError={true}
+               className="mt-2"
+               handleClick={handleUserDelete}
+            />
+         </div>
       </main>
    );
 }
