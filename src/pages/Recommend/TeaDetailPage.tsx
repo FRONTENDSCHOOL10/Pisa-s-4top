@@ -12,6 +12,7 @@ import {
    fetchTeaData,
    fetchTeaTastingNotes,
    fetchMultipleReviews,
+   fetchTeaRecipe,
 } from '@/utils/fetchData';
 import { calculateAverageRate } from '@/utils/calculateAverageRate';
 import {
@@ -56,6 +57,13 @@ interface User {
    nickname: string;
 }
 
+interface Recipe {
+   id: string;
+   recipe_title: string;
+   recipe_image: string;
+   recipe_detail: string[];
+}
+
 export function Component() {
    const { id } = useParams<{ id: string }>();
    const [tea, setTea] = useState<Tea | null>(null);
@@ -69,6 +77,7 @@ export function Component() {
    const [likeCount, setLikeCount] = useState(0);
    const [isLoading, setIsLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
+   const [recipe, setRecipe] = useState<Recipe | null>(null);
 
    useEffect(() => {
       const getCurrentUser = () => {
@@ -131,6 +140,9 @@ export function Component() {
                );
                setIsLiked(likeStatus);
             }
+
+            const teaRecipe = await fetchTeaRecipe(selectedTea.id);
+            setRecipe(teaRecipe);
          } catch (error) {
             console.error('Failed to fetch tea data:', error);
             setError('Failed to load tea data. Please try again.');
@@ -197,7 +209,13 @@ export function Component() {
             />
          </div>
          <TeaDescriptionCard description={tea.tea_detail} />
-         <TeaRecipeCard title="" imageUrl="" steps={[]} />
+         {recipe && (
+            <TeaRecipeCard
+               title={recipe.recipe_title}
+               imageUrl={recipe.recipe_image}
+               steps={recipe.recipe_detail}
+            />
+         )}
          <div className="relative">
             <TeaReviewList reviews={reviews} />
             <Button

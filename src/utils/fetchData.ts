@@ -270,3 +270,32 @@ export async function fetchTeasByUserSelection(userNickname: string) {
       return [];
    }
 }
+
+// 티 레시피 데이터 함수
+export const fetchTeaRecipe = async (teaId: string) => {
+   try {
+      const { data, error } = await supabase
+         .from('tearecipe')
+         .select(
+            `
+            recipe (
+               id, 
+               recipe_title, 
+               recipe_image, 
+               recipe_detail
+            )
+         `
+         )
+         .eq('tea_id', teaId);
+
+      if (error) {
+         console.error('Error fetching tea recipe:', error);
+         return null;
+      }
+
+      return data.length > 0 ? data[0].recipe : null;
+   } catch (error) {
+      console.error('Error fetching tea recipe:', error);
+      return null;
+   }
+};

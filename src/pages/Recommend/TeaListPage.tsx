@@ -83,15 +83,13 @@ export function Component() {
    }
 
    return (
-      <main className="flex flex-col gap-5">
+      <main className="flex min-h-screen flex-col gap-5">
          <h1 className="sr-only">추천 티 리스트 페이지</h1>
-         {/* 카테고리 필터 버튼 */}
          <TabButton
             tabs={categories?.map((category) => category.category) || []}
             onTabSelect={handleTabSelect}
             activeTab={selectedCategory}
          />
-         {/* 전체 티 체크박스 */}
          <CheckBox
             label="모든 티 보기"
             className="text-stone-950"
