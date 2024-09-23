@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -12,6 +12,7 @@ import UserDataLayout from '@/components/User/UserDataLayout';
 import UserProfileImg from '@/components/User/UserProfileImg';
 import AppHelmet from '@/components/Main/AppHelmet';
 import { fetchMultipleReviews, fetchUserTaste } from '@/utils/fetchData';
+import AppModal from '@/components/Main/AppModal';
 
 interface UserInfo {
    id: string;
@@ -43,6 +44,24 @@ export function Component() {
    const [activities, setActivities] = useState<Activity[]>(defaultActivities);
    const [userTaste, setUserTaste] = useState<string>('');
    const [isLoading, setIsLoading] = useState<boolean>(true);
+   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+   const [isUserDeleteModalOpen, setIsUserDeleteModalOpen] =
+      useState<boolean>(false);
+
+   const openLogoutModal = (): void => setIsLogoutModalOpen(true);
+   const closeLogoutModal = (): void => setIsLogoutModalOpen(false);
+   const openUserDeleteModal = (): void => setIsUserDeleteModalOpen(true);
+   const closeUserDeleteModal = (): void => setIsUserDeleteModalOpen(false);
+
+   const handleLogoutConfirm = (): void => {
+      handleLogout();
+      closeLogoutModal();
+   };
+
+   const handleUserDeleteConfirm = (): void => {
+      handleUserDelete();
+      closeLogoutModal();
+   };
 
    useEffect(() => {
       const fetchUserData = async () => {
@@ -210,17 +229,31 @@ export function Component() {
             </section>
             <UserCollection />
             <div className="button-group">
+               <AppModal
+                  content="로그아웃하시겠습니까?"
+                  isOpen={isLogoutModalOpen}
+                  onRequestClose={closeLogoutModal}
+                  onConfirm={handleLogoutConfirm}
+               />
+               <AppModal
+                  content="정말 탈퇴하시겠습니까?"
+                  isOpen={isUserDeleteModalOpen}
+                  onRequestClose={closeUserDeleteModal}
+                  onConfirm={handleUserDeleteConfirm}
+                  showMessage
+                  subContent="탈퇴 시 계정 복구가 불가능합니다."
+               />
                <Button
                   content="로그아웃"
                   size="fullWidth"
-                  handleClick={handleLogout}
+                  handleClick={openLogoutModal}
                />
                <Button
                   content="회원 탈퇴"
                   size="fullWidth"
                   isError={true}
                   className="mt-2"
-                  handleClick={handleUserDelete}
+                  handleClick={openUserDeleteModal}
                />
             </div>
          </main>
