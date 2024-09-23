@@ -12,6 +12,5 @@ export async function updateReviewData(id: string, updatedReview: any) {
       return null;
    }
 
-   // console.log('Update successful:', data);
    return data;
 }

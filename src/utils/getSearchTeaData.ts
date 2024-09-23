@@ -12,5 +12,3 @@ export async function getSearchTeaData(searchTerm: string) {
 
    return data;
 }
-
-//teaSearch(searchTerm)

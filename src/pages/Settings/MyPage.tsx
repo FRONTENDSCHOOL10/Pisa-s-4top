@@ -154,8 +154,6 @@ export function Component() {
 
          if (error) throw error;
 
-         console.log('탈퇴 완료');
-
          toast.success('회원 탈퇴가 완료되었습니다');
          localStorage.clear();
          navigate('/login');

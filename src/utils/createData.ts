@@ -12,11 +12,6 @@ interface ReviewData {
 
 export async function createReviewData(reviewData: ReviewData) {
    try {
-      // console.log('Sending review data to Supabase:', reviewData);
-
-      // console.log('Review Tea Type:', typeof reviewData.review_tea);
-      // console.log('Review User Type:', typeof reviewData.review_user);
-
       const { data, error } = await supabase
          .from('review')
          .insert([reviewData])
@@ -27,7 +22,6 @@ export async function createReviewData(reviewData: ReviewData) {
          return null;
       }
 
-      console.log('Review created successfully:', data);
       return data[0].id;
    } catch (error) {
       console.error('Unexpected error creating review:', error);

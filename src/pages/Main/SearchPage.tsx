@@ -80,8 +80,6 @@ export function Component() {
 
             setSearchTeaResults(teaData || []);
             setSearchReviewResults(reviewData as any);
-            console.log(teaData);
-            console.log(reviewData);
          } catch (error) {
             console.error('검색 중 오류 발생:', error);
             toast.error('검색 중 오류가 발생했습니다.');

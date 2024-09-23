@@ -16,5 +16,3 @@ export async function getSelectionData(nickname: string) {
 
    return selectionData;
 }
-
-// userData.nickname

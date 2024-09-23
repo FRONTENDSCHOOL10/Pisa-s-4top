@@ -25,11 +25,9 @@ export function Component() {
                // user_taste 가져오기
                const taste = await fetchUserTaste(userNickname);
                setUserTaste(taste); // 가져온 taste를 상태에 저장
-               console.log('User Taste:', taste);
 
                // 사용자 선택에 기반한 차 목록 가져오기
                const teas = await fetchTeasByUserSelection(userNickname);
-               console.log('Fetched Teas:', teas);
                setFilteredTeas(teas as any);
             } catch (error) {
                console.error('Failed to fetch user teas:', error);
