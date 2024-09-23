@@ -20,7 +20,7 @@ export interface TeaBrewingGuideProps {
 }
 
 const sectionClass: string =
-   'shadow-tea-brewing-guide w-full min-w-72 max-w-md flex justify-between rounded-2xl bg-stone-50 px-10 py-6 select-none';
+   'shadow-tea-brewing-guide w-full min-w-72 max-w-md md:w-[24rem] flex justify-between rounded-2xl bg-stone-50 px-10 py-6 select-none';
 const containerClass: string = 'flex flex-col items-center';
 const iconClass: string =
    'text-green-700 text-3xl flex justify-center items-center';
