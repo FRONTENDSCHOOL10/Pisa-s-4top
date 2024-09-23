@@ -6,6 +6,7 @@ export default {
          sm: '320px',
          md: '480px',
          lg: '700px',
+         ex: '360px',
       },
       extend: {
          boxShadow: {

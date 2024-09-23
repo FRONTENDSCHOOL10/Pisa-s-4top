@@ -38,6 +38,10 @@ export default function LoginPage() {
       setEmailError(checkEmailError);
       setPasswordError(checkPasswordError);
 
+      if (email === '' || password === '') {
+         toast.error('이메일 또는 비밀번호를 입력하세요');
+      }
+
       // 유효성 검사 통과됐다면 if문 실행
       if (!checkEmailError && !checkPasswordError) {
          const { data, error } = await supabase.auth.signInWithPassword({
