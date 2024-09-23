@@ -34,6 +34,34 @@ export async function fetchFilteredTeaData(selectedCategory, userNickname) {
 
       const selectedTastes = userTastes?.user_selection || [];
 
+      if (selectedTastes.includes('😋️ 가리는 거 없어요!')) {
+         const { data: totalTeas, error: teaCountError } = await supabase
+            .from('tea')
+            .select('id');
+
+         if (teaCountError || !totalTeas) {
+            throw new Error('티 데이터를 가져오는 중 오류가 발생했습니다.');
+         }
+
+         const randomTeaIds = totalTeas
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 30)
+            .map((tea) => tea.id);
+
+         const { data: randomTeas, error: randomTeaError } = await supabase
+            .from('tea')
+            .select('id, tea_name, tea_image, tea_brand, tea_category')
+            .in('id', randomTeaIds);
+
+         if (randomTeaError || !randomTeas) {
+            throw new Error(
+               '랜덤 티 데이터를 가져오는 중 오류가 발생했습니다.'
+            );
+         }
+
+         return randomTeas;
+      }
+
       const { data: tastingNotes, error: tastingNoteError } = await supabase
          .from('teatastingnote')
          .select('tea_id')
