@@ -247,7 +247,7 @@ export function TeaRecommendCard({
          </div>
          <div className="relative mx-auto mt-3">
             <p className="text-sm text-stone-400">{brand}</p>
-            <CardTitle className="mt-1 line-clamp-2 text-base sm:break-words">
+            <CardTitle className="mt-1 line-clamp-2 text-base xs:break-words">
                {teaName}
             </CardTitle>
             <div className="absolute right-0 top-0.5">

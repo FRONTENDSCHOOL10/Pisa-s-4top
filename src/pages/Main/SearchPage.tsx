@@ -130,7 +130,7 @@ export function Component() {
                                     data={searchValue}
                                     count={searchTeaResults.length}
                                  />
-                                 <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                                 <ul className="grid gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                     {searchTeaResults.map((tea: Tea) => (
                                        <li key={tea.id}>
                                           <TeaRecommendCard

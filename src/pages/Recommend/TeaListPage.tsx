@@ -100,7 +100,7 @@ export function Component() {
             onChange={handleShowAllChange}
          />
          {resultTeas.length > 0 ? (
-            <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <ul className="grid gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                {resultTeas.map((tea) => (
                   <li key={tea.id}>
                      <TeaRecommendCard

@@ -3,10 +3,10 @@ export default {
    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
    theme: {
       screens: {
-         sm: '320px',
+         xs: '320px',
+         sm: '360px',
          md: '480px',
          lg: '700px',
-         ex: '360px',
       },
       extend: {
          boxShadow: {
