@@ -56,11 +56,11 @@ TeaReviewCard
 */
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import { ButtonHeart } from '../Buttons/Buttons';
 import { CardStarRating } from '../Review/StarRate';
 import { SelectColor } from '../Select/SelectColor';
 import { LabelGroup } from '../Labels/Labels';
-// 기능 구현 완료 후 합칠 예정
 import { addLike, checkLikeStatus, removeLike } from '@/utils/likeData';
 
 // 공통 UI 컴포넌트
@@ -238,7 +238,7 @@ export function TeaRecommendCard({
          className={`h-64 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100% ${className}`}
          ariaLabel={`${teaName} 추천 카드`}
       >
-         <div className="mx-auto w-full h-32 rounded-t-2xl">
+         <div className="mx-auto h-32 w-full rounded-t-2xl">
             <CardImage
                src={imageUrl}
                alt={`${teaName} 미리보기`}

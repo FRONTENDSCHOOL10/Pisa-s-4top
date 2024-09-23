@@ -3,10 +3,11 @@ import { useEffect, useState, useMemo, useCallback } from 'react';
 import { TabButton } from '@/components/Buttons/TabButton';
 import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
-import { useTeaLikes } from '@/hooks/useTeaLikes';
-import { fetchFilteredTeaData, fetchTeaData } from '@/utils/fetchData';
 import CheckBox from '@/components/Input/CheckBox';
 import NoData from '@/components/Data/NoData';
+import AppHelmet from '@/components/Main/AppHelmet';
+import { useTeaLikes } from '@/hooks/useTeaLikes';
+import { fetchFilteredTeaData, fetchTeaData } from '@/utils/fetchData';
 
 interface Tea {
    id: string;
@@ -86,37 +87,43 @@ export function Component() {
    }
 
    return (
-      <main className="-mt-2 flex min-h-screen flex-col">
-         <h1 className="sr-only">추천 티 리스트 페이지</h1>
-         <TabButton
-            tabs={categories.map((category) => category.category) || []}
-            onTabSelect={handleTabSelect}
-            activeTab={selectedCategory}
+      <>
+         <AppHelmet
+            title="추천 티"
+            description="Tea of the Day 추천 티 - 당신의 취향에 맞는 다양한 티를 만나보세요. 개인화된 추천 시스템으로 새로운 티의 세계를 발견하고, 당신만의 특별한 티 경험을 즐겨보세요."
          />
-         <CheckBox
-            label="모든 티 보기"
-            className="my-3 ml-1 text-stone-950"
-            checked={isShowAll}
-            onChange={handleShowAllChange}
-         />
-         {resultTeas.length > 0 ? (
-            <ul className="grid gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-               {resultTeas.map((tea) => (
-                  <li key={tea.id}>
-                     <TeaRecommendCard
-                        id={tea.id}
-                        imageUrl={tea.tea_image}
-                        teaName={tea.tea_name}
-                        brand={tea.tea_brand}
-                        userNickname={currentUser?.nickname || ''}
-                        className="!w-full"
-                     />
-                  </li>
-               ))}
-            </ul>
-         ) : (
-            <NoData text="선택한 카테고리에 해당하는 티가 없습니다" />
-         )}
-      </main>
+         <main className="-mt-2 flex min-h-screen flex-col">
+            <h1 className="sr-only">추천 티 리스트 페이지</h1>
+            <TabButton
+               tabs={categories.map((category) => category.category) || []}
+               onTabSelect={handleTabSelect}
+               activeTab={selectedCategory}
+            />
+            <CheckBox
+               label="모든 티 보기"
+               className="my-3 ml-1 text-stone-950"
+               checked={isShowAll}
+               onChange={handleShowAllChange}
+            />
+            {resultTeas.length > 0 ? (
+               <ul className="grid gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {resultTeas.map((tea) => (
+                     <li key={tea.id}>
+                        <TeaRecommendCard
+                           id={tea.id}
+                           imageUrl={tea.tea_image}
+                           teaName={tea.tea_name}
+                           brand={tea.tea_brand}
+                           userNickname={currentUser?.nickname || ''}
+                           className="!w-full"
+                        />
+                     </li>
+                  ))}
+               </ul>
+            ) : (
+               <NoData text="선택한 카테고리에 해당하는 티가 없습니다" />
+            )}
+         </main>
+      </>
    );
 }

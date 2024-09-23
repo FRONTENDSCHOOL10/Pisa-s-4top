@@ -5,10 +5,10 @@ import toast from 'react-hot-toast';
 import supabase from '@/api/supabase';
 import { useJoinStore } from '@/stores';
 import { Button } from '@/components/Buttons/Buttons';
-import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
-import { updateLocalData } from '@/utils/updateLocalData';
 import DuplicateNicknameInput from '@/components/Input/DuplicateNicknameInput';
 import AppHelmet from '@/components/Main/AppHelmet';
+import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
+import { updateLocalData } from '@/utils/updateLocalData';
 
 export function Component() {
    const navigate = useNavigate();

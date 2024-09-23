@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchSingleReview } from '@/utils/fetchData';
-import { deleteReviewData } from '@/utils/deleteData';
+import toast from 'react-hot-toast';
+
 import { Button } from '@/components/Buttons/Buttons';
 import { StarRatingAverage } from '@/components/Review/StarRate';
 import {
@@ -10,7 +10,9 @@ import {
    TeaTasteCard,
 } from '@/components/TeaCard/CardComponents';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
-import toast from 'react-hot-toast';
+import AppHelmet from '@/components/Main/AppHelmet';
+import { fetchSingleReview } from '@/utils/fetchData';
+import { deleteReviewData } from '@/utils/deleteData';
 
 interface Review {
    id: string;
@@ -98,58 +100,62 @@ export function Component() {
    const isAuthor = currentUser?.nickname === reviewData.user.nickname;
 
    return (
-      <main className="flex flex-col items-center px-6">
-         <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
-            <img
-               className="object-contain"
-               src={reviewData.tea.tea_image}
-               alt={reviewData.tea.tea_name}
+      <>
+         <AppHelmet
+            title={`${reviewData.tea.tea_name} 리뷰`}
+            description={`Tea of the Day 티 리뷰 상세 - ${reviewData.user.nickname}님의 ${reviewData.tea.tea_name} 리뷰를 확인해보세요. 티의 맛, 색상, 향에 대한 상세한 평가와 함께 남겨진 솔직한 리뷰를 읽어보실 수 있습니다. Tea of the Day에서 다양한 티 리뷰를 통해 새로운 티 경험을 발견하세요.`}
+         />
+         <main className="flex flex-col items-center px-6">
+            <div className="h-60 w-60 overflow-hidden rounded-full bg-white">
+               <img
+                  className="object-contain"
+                  src={reviewData.tea.tea_image}
+                  alt={reviewData.tea.tea_name}
+               />
+            </div>
+            <h2 className="mt-6 text-xl font-bold">
+               {reviewData?.tea.tea_name}
+            </h2>
+            <p className="text-stone-500">{reviewData?.tea.tea_brand}</p>
+            <p className="my-4">{reviewData.user.nickname}</p>
+            <StarRatingAverage score={reviewData.tea_rate} />
+            <TeaTasteCard
+               labels={reviewData.review_tasting_note}
+               selectedLabels={reviewData.review_tasting_note.map(() => false)}
+               types="label"
+               isEditable={false}
+               className="mb-2 mt-8"
             />
-         </div>
-         <h2 className="mt-6 text-xl font-bold">{reviewData?.tea.tea_name}</h2>
-         <p className="text-stone-500">{reviewData?.tea.tea_brand}</p>
-         <p className="my-4">{reviewData.user.nickname}</p>
-         <StarRatingAverage score={reviewData.tea_rate} />
-
-         <TeaTasteCard
-            labels={reviewData.review_tasting_note}
-            selectedLabels={reviewData.review_tasting_note.map(() => false)}
-            types="label"
-            isEditable={false}
-            className="mb-2 mt-8"
-         />
-
-         <TeaColorCard
-            className="mb-2"
-            initialColor={reviewData.tea_color}
-            disabled={true}
-         />
-
-         <TeaReviewDetailCard
-            title={reviewData.review_title}
-            contents={reviewData.review_comment}
-         />
-
-         {isAuthor && (
-            <>
-               <div className="mb-2 mt-6 w-full">
-                  <Button
-                     size="fullWidth"
-                     content="리뷰 수정하기"
-                     handleClick={() => navigate(`/reviews/edit/${id}`)}
-                  />
-               </div>
-               <div className="w-full">
-                  <Button
-                     content="삭제"
-                     size="fullWidth"
-                     className="mt-2"
-                     isError={true}
-                     handleClick={handleDeleteReview}
-                  />
-               </div>
-            </>
-         )}
-      </main>
+            <TeaColorCard
+               className="mb-2"
+               initialColor={reviewData.tea_color}
+               disabled={true}
+            />
+            <TeaReviewDetailCard
+               title={reviewData.review_title}
+               contents={reviewData.review_comment}
+            />
+            {isAuthor && (
+               <>
+                  <div className="mb-2 mt-6 w-full">
+                     <Button
+                        size="fullWidth"
+                        content="리뷰 수정하기"
+                        handleClick={() => navigate(`/reviews/edit/${id}`)}
+                     />
+                  </div>
+                  <div className="w-full">
+                     <Button
+                        content="삭제"
+                        size="fullWidth"
+                        className="mt-2"
+                        isError={true}
+                        handleClick={handleDeleteReview}
+                     />
+                  </div>
+               </>
+            )}
+         </main>
+      </>
    );
 }

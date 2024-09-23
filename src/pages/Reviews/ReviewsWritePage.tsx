@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom'; // useSearchParams 사용
+import toast from 'react-hot-toast';
+
 import { Button } from '@/components/Buttons/Buttons';
-import { loadTasteNoteData, fetchTeaData } from '@/utils/fetchData';
-import { createReviewData } from '@/utils/createData';
-import { StarRating, StarRatingAverage } from '@/components/Review/StarRate';
+import { StarRating } from '@/components/Review/StarRate';
 import {
    TeaColorCard,
    TeaTasteCard,
    TeaReviewDetailCard,
 } from '@/components/TeaCard/CardComponents';
-import toast from 'react-hot-toast';
-import { Helmet } from 'react-helmet-async';
+import AppHelmet from '@/components/Main/AppHelmet';
+import { loadTasteNoteData, fetchTeaData } from '@/utils/fetchData';
+import { createReviewData } from '@/utils/createData';
 import { getValidEmoji } from '@/utils/emojiMap';
 
 export function Component() {
@@ -158,9 +159,10 @@ export function Component() {
 
    return (
       <>
-         <Helmet>
-            <title>TOTD, 티 리뷰 작성 페이지</title>
-         </Helmet>
+         <AppHelmet
+            title={`${teaInfo?.tea_name || '티'} 리뷰 작성`}
+            description={`Tea of the Day 리뷰 작성 - Tea of the Day에서 ${teaInfo?.tea_name || '티'}에 대한 리뷰를 작성해보세요. 맛, 향, 색상 등 다양한 측면에서 당신의 티 경험을 공유하고, 다른 사람들과 소중한 의견을 나눠보세요. 당신만의 특별한 티 이야기를 만들어가세요.`}
+         />
          <main className="flex flex-col items-center px-6">
             <h1 className="sr-only">리뷰 작성 페이지</h1>
             {teaInfo ? (
