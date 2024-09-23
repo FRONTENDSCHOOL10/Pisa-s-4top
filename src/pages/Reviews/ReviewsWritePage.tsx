@@ -20,7 +20,6 @@ export function Component() {
    const [reviewTitle, setReviewTitle] = useState<string>('');
    const [reviewContent, setReviewContent] = useState<string>('');
    const [reviewColor, setReviewColor] = useState<string>('');
-   const [teaRate, setTeaRate] = useState<number>(0);
    const [currentUser, setCurrentUser] = useState<string | null>(null);
    const [teaInfo, setTeaInfo] = useState<any>(null);
    const [rating, setRating] = useState(3);
@@ -54,7 +53,6 @@ export function Component() {
 
          try {
             const teaData = await fetchTeaData();
-            console.log('Fetched tea data:', teaData);
 
             const selectedTea = teaData.find((tea) => tea.id == teaId);
             if (selectedTea) {
@@ -73,7 +71,6 @@ export function Component() {
       const fetchTasteNoteData = async () => {
          try {
             const data = await loadTasteNoteData();
-            console.log('Loaded taste note data:', data);
 
             if (!data) {
                throw new Error('Taste note data is undefined or null');
@@ -139,14 +136,10 @@ export function Component() {
          review_user: currentUser,
       };
 
-      console.log('Creating review for tea ID:', teaId);
-      console.log('New review data:', newReview);
-
       const reviewId = await createReviewData(newReview);
 
       if (reviewId) {
          toast.success('리뷰가 작성되었습니다.');
-         console.log(`Navigating to /reviews/detail/${reviewId}`);
          try {
             navigate(`/reviews/detail/${reviewId}`);
          } catch (error) {

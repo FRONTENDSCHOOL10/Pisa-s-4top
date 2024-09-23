@@ -15,12 +15,12 @@ export function Component() {
    const [selectedCategory, setSelectedCategory] = useState<string>('');
    const [reviewData, setReviewData] = useState<Review[]>([]);
    const [isLoading, setIsLoading] = useState(true);
+   const [isTabLoading, setIsTabLoading] = useState(false);
 
    useEffect(() => {
       const fetchData = async () => {
          setIsLoading(true);
          try {
-            // 사용자 정보 가져오기
             const userData = localStorage.getItem('@auth/user');
             if (!userData) {
                navigate('/login');
@@ -37,7 +37,6 @@ export function Component() {
             }
 
             const data = await fetchMultipleReviews();
-            // 사용자의 리뷰만 필터링
             if (data) {
                const userReviews = data.filter(
                   (review: any) => review.user.nickname === user.nickname
@@ -53,6 +52,13 @@ export function Component() {
 
       fetchData();
    }, [navigate]);
+
+   useEffect(() => {
+      setIsTabLoading(true);
+      setTimeout(() => {
+         setIsTabLoading(false);
+      }, 300);
+   }, [selectedCategory]);
 
    const filteredReviews = reviewData.filter(
       (review) => review.tea.tea_category.category === selectedCategory
@@ -78,7 +84,9 @@ export function Component() {
                activeTab={selectedCategory}
             />
             <section className="flex flex-col gap-2">
-               {filteredReviews.length > 0 ? (
+               {isTabLoading ? (
+                  <LoadingSpinner />
+               ) : filteredReviews.length > 0 ? (
                   filteredReviews.map((review: Review) => (
                      <HomeReviewCard
                         key={review.id}

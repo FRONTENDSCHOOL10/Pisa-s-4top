@@ -30,7 +30,6 @@ export function Component() {
       const fetchTasteNoteData = async () => {
          try {
             const data = await loadTasteNoteData();
-            console.log('Loaded taste note data:', data);
 
             if (!data) {
                throw new Error('Taste note data is undefined or null');

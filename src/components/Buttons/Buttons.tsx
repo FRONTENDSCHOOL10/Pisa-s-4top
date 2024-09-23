@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 /* 기본 버튼 */
 /* 버튼 사용법 */

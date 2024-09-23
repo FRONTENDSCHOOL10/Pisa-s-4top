@@ -123,8 +123,6 @@ export function Component() {
                return;
             }
 
-            console.log('Selected tea:', selectedTea); // 선택된 tea 로그 추가
-
             setTea(selectedTea);
 
             const tastingNotes = await fetchTeaTastingNotes(selectedTea.id);
@@ -147,8 +145,6 @@ export function Component() {
             }
 
             const teaRecipe = await fetchTeaRecipe(selectedTea.id);
-            console.log('Tea recipe:', teaRecipe); // 레시피 결과 확인
-
             setRecipe(teaRecipe);
          } catch (error) {
             console.error('Failed to fetch tea data:', error);

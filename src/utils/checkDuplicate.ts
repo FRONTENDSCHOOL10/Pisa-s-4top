@@ -12,7 +12,5 @@ export const checkDuplicate = async (column: string, value: string) => {
       return false;
    }
 
-   console.log(data); // ! 추후 삭제
-
    return data.length !== 0; // true면 중복인 것
 };

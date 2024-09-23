@@ -6,7 +6,6 @@ export async function postTasteSelection(
 ) {
    try {
       const mostFrequentCategory = await calculateCategory(selectedTastes);
-      // console.log('Most Frequent Taste Category:', mostFrequentCategory);
 
       const { error: insertError } = await supabase
          .from('tasteselection')
@@ -23,7 +22,6 @@ export async function postTasteSelection(
          throw insertError;
       }
 
-      // console.log('Taste selection saved:', selectedTastes);
       return mostFrequentCategory;
    } catch (error) {
       console.error('Error in postTasteSelection:', error);
@@ -35,10 +33,6 @@ export async function calculateCategory(selectedTastes: string[]) {
       const normalizedTastes = selectedTastes.map((taste) =>
          taste.trim().toLowerCase()
       );
-      // console.log(
-      //    'Normalized tastes for category calculation:',
-      //    normalizedTastes
-      // );
 
       const { data: tasteNotes, error: fetchError } = await supabase
          .from('tastingnotecategory')
@@ -49,8 +43,6 @@ export async function calculateCategory(selectedTastes: string[]) {
          console.error('Error fetching tasting categories:', fetchError);
          throw fetchError;
       }
-
-      // console.log('Fetched tasting categories:', tasteNotes);
 
       if (!tasteNotes || tasteNotes.length === 0) {
          console.error('No matching tasting categories found.');

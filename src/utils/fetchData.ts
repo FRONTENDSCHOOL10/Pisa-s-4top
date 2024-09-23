@@ -233,7 +233,6 @@ export async function fetchUserTaste(userNickname: string) {
    }
 
    const userTaste = data.user_taste;
-   // console.log('User Taste Result from fetchUserTaste:', userTaste);
 
    return userTaste;
 }
@@ -254,7 +253,6 @@ export async function fetchTeasByUserSelection(userNickname: string) {
       }
 
       const selectedTastes = userData?.user_selection || [];
-      console.log('Selected Tastes:', selectedTastes);
 
       if (!selectedTastes || selectedTastes.length === 0) {
          console.log('No selected tastes found for user:', userNickname);
@@ -273,7 +271,6 @@ export async function fetchTeasByUserSelection(userNickname: string) {
       }
 
       const teaIds = teaTastingNotes.map((note) => note.tea_id);
-      console.log('Tea IDs:', teaIds);
 
       if (!teaIds || teaIds.length === 0) {
          console.log('No matching tea IDs found for selected tastes.');
@@ -291,7 +288,6 @@ export async function fetchTeasByUserSelection(userNickname: string) {
          throw teaError;
       }
 
-      console.log('Fetched Teas by User Selection:', teas);
       return teas;
    } catch (error) {
       console.error('Error in fetchTeasByUserSelection:', error);
@@ -302,8 +298,6 @@ export async function fetchTeasByUserSelection(userNickname: string) {
 // 티 레시피 데이터 함수
 export const fetchTeaRecipe = async (teaId: string) => {
    try {
-      console.log('Fetching recipe for tea_id:', teaId);
-
       const { data, error } = await supabase
          .from('tearecipe')
          .select(
@@ -321,8 +315,6 @@ export const fetchTeaRecipe = async (teaId: string) => {
          console.error('Error fetching tea recipe:', error);
          return null;
       }
-
-      console.log('Fetched data:', data);
 
       return data.length > 0 ? data[0].recipe_id : null;
    } catch (error) {

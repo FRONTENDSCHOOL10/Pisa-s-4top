@@ -26,7 +26,7 @@ interface Review {
       tea_name: string;
       tea_image: string;
       tea_brand: string;
-      category: {
+      tea_category: {
          category: string;
       };
    };
