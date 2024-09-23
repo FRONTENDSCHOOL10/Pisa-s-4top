@@ -11,23 +11,30 @@ import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
 import { loadTasteNoteData } from '@/utils/fetchData';
 import { getValidEmoji } from '@/utils/emojiMap';
 import { calculateCategory } from '@/utils/postData';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import NoData from '@/components/Data/NoData';
 
 export function Component() {
    const userNickname = useLocalStorageUserData('nickname');
 
    const [tasteNoteData, setTasteNoteData] = useState<string[]>([]);
    const [selectedLabels, setSelectedLabels] = useState<boolean[]>([]);
+   const [isLoading, setIsLoading] = useState(true);
 
    const navigate = useNavigate();
 
    useEffect(() => {
       const fetchUserSelection = async () => {
+         if (!userNickname) {
+            console.error('사용자 닉네임이 비어 있습니다');
+            return [];
+         }
          try {
             const { data, error } = await supabase
                .from('tasteselection')
                .select('user_selection')
                .eq('user_nickname', userNickname)
-               .single();
+               .maybeSingle();
 
             if (error) throw error;
 
@@ -67,10 +74,16 @@ export function Component() {
             setSelectedLabels(updatedSelectedLabels);
          } catch (error) {
             console.error('Failed to load taste note data:', error);
+         } finally {
+            setIsLoading(false);
          }
       };
 
-      fetchTasteNoteData();
+      if (userNickname) {
+         fetchTasteNoteData();
+      } else {
+         setIsLoading(false);
+      }
    }, [userNickname]);
 
    const toggleLabelSelection = (index: number) => {
@@ -122,6 +135,17 @@ export function Component() {
 
       navigate('/my-page');
    };
+
+   if (isLoading) {
+      return <LoadingSpinner />;
+   }
+
+   if (!userNickname) {
+      console.error('사용자 정보를 찾을 수 없습니다.');
+      return (
+         <NoData text="취향 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요." />
+      );
+   }
 
    return (
       <>
