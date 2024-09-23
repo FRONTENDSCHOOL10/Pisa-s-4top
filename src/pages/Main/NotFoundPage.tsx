@@ -8,7 +8,7 @@ export default function NotFoundPage() {
       <main className="center-layout">
          <h1 className="sr-only">잘못된 경로 진입</h1>
 
-         <p className="text-9xl font-bold">
+         <p className="text-8xl font-bold">
             <span className="text-green-700">4</span>0
             <span className="text-green-700">4</span>
          </p>
