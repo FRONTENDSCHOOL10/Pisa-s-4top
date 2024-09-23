@@ -139,7 +139,7 @@ export function Component() {
                      types="button"
                      selectedLabels={selectedLabels}
                      handleToggleLabel={toggleLabelSelection}
-                     className="flex justify-center gap-3 px-28"
+                     className="flex justify-center gap-3"
                   />
                </CardLayout>
                <Button
