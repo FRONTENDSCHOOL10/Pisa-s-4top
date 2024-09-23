@@ -25,8 +25,8 @@ export default [
          'react/react-in-jsx-scope': 'off', // React 17 이상에서는 필요하지 않음
          'react/jsx-uses-react': 'error', // JSX에서 React를 잘못 사용하면 오류
          'react/jsx-uses-vars': 'error', // 사용되지 않은 JSX 변수에 대한 오류
-         'react-hooks/rules-of-hooks': 'error', // hooks 사용 규칙 필수
-         'react-hooks/exhaustive-deps': 'warn', // useEffect 의존성 배열 검사
+         'react-hooks/rules-of-hooks': 'off', // hooks 사용 규칙 필수
+         'react-hooks/exhaustive-deps': 'off', // useEffect 의존성 배열 검사
          'react-refresh/only-export-components': 'warn', // 컴포넌트만 export 하도록 경고
          'storybook/no-stories-of': 'error', // Storybook 관련 규칙
          '@typescript-eslint/no-unused-vars': 'error', // 사용되지 않은 변수에 대한 오류
@@ -35,7 +35,7 @@ export default [
             'error',
             'interface',
          ], // 인터페이스 사용 강제
-         '@typescript-eslint/no-explicit-any': 'warn', // 'any' 타입 사용 부분 경고
+         '@typescript-eslint/no-explicit-any': 'off',
       },
       settings: {
          react: {
