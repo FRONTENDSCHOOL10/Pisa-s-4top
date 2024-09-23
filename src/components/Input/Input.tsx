@@ -46,7 +46,7 @@ export default function Input({
 
    const bottomClass =
       isFirstPassword && type === 'password'
-         ? 'ex:-bottom-5 -bottom-9'
+         ? 'sm:-bottom-5 -bottom-9'
          : '-bottom-5';
 
    let getInputTitle: string = '';

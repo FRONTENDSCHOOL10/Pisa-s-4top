@@ -55,7 +55,12 @@ export default function TeaInfo({
             score={averageRate}
             aria-label={`리뷰 평균 별점 ${averageRate}점`}
          />
-         <LabelGroup labels={labels} types="label" size="small" />
+         <LabelGroup
+            labels={labels}
+            types="label"
+            size="small"
+            className="flex max-w-md justify-center"
+         />
          <TeaBrewingGuide
             teaAmount={teaAmount}
             waterAmount={waterAmount}

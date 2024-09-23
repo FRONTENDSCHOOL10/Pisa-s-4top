@@ -35,7 +35,7 @@ export function Component() {
                ) : filteredTeas.length === 0 ? (
                   <NoData text="선택한 카테고리에 해당하는 티가 없습니다" />
                ) : (
-                  <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  <ul className="grid gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                      {filteredTeas.map((tea) => (
                         <li key={tea.id}>
                            <TeaRecommendCard
