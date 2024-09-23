@@ -30,7 +30,7 @@ export async function postTasteSelection(
    }
 }
 
-async function calculateCategory(selectedTastes: string[]) {
+export async function calculateCategory(selectedTastes: string[]) {
    try {
       const normalizedTastes = selectedTastes.map((taste) =>
          taste.trim().toLowerCase()
