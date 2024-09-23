@@ -2,9 +2,12 @@ import React, { StrictMode } from 'react';
 import ReactDOM, { createRoot } from 'react-dom/client';
 import axe from '@axe-core/react';
 import ko from 'axe-core/locales/ko.json';
+import Modal from 'react-modal'; // 추가된 import
 
 import '@/styles/main.css';
 import App from './App';
+
+Modal.setAppElement('#root');
 
 // 개발 버전에서만 접근성 검사되도록 조건 처리
 if (process.env.NODE_ENV !== 'production') {
