@@ -79,14 +79,16 @@ export default function DoublePasswordInput({ ...restProps }: Props) {
             type="password"
             className={outlineColor.password}
             onChange={handlePasswordChange}
+            isFirstPassword={true}
             error={!passwordSuccess}
             errorMessage={INPUT_ERROR_MESSAGE.PASSWORD}
             showMessage={passwordValue.password !== ''}
             successMessage={INPUT_SUCCESS_MESSAGE.PASSWORD}
          />
          <Input
-            title="비밀번호"
+            title="비밀번호 확인"
             type="password"
+            placeholder="비밀번호를 다시 한번 입력하세요."
             className={outlineColor.password_confirm}
             onChange={handlePasswordConfirmChange}
             error={!passwordConfirmSuccess}

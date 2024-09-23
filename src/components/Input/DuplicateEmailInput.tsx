@@ -78,6 +78,7 @@ export default function DuplicateEmailInput({
    // 입력값 실시간으로 변경
    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
       textRef.current = e.target.value.trim();
+      setEmailSuccess(false);
    };
 
    // Enter key 눌렀을 때
@@ -102,7 +103,7 @@ export default function DuplicateEmailInput({
             {...restProps}
          />
          <Button
-            className="h-12"
+            className="mt-6 h-12"
             content="중복확인"
             type="button"
             size="small"

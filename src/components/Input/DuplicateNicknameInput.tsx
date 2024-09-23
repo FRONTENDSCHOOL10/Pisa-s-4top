@@ -77,6 +77,7 @@ export default function DuplicateNicknameInput({
    // 입력값 실시간으로 변경
    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
       textRef.current = e.target.value.trim();
+      setNicknameSuccess(false);
    };
 
    // Enter key 눌렀을 때
@@ -101,7 +102,7 @@ export default function DuplicateNicknameInput({
             {...restProps}
          />
          <Button
-            className="h-12"
+            className="mt-6 h-12"
             content="중복확인"
             type="button"
             size="small"

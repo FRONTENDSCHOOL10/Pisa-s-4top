@@ -1,7 +1,7 @@
 /* (공통) 사용자 입력 input */
 
 import postposition from 'cox-postposition';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 
 import { INPUT_TYPE } from '@/constants';
 
@@ -10,27 +10,44 @@ interface Props {
    type: string;
    className?: string;
    showMessage?: boolean;
+   placeholder?: string;
    error?: boolean;
    errorMessage?: string;
    successMessage?: string;
+   isFirstPassword?: boolean;
    [property: string]: any;
 }
+
+const inputTitle = (title: string): string => {
+   return postposition.put(title, '을'); // 조사(을/를) 검사
+};
 
 export default function Input({
    title,
    type,
    className = '',
    showMessage = true,
+   placeholder = `${inputTitle(title)} 입력하세요.`,
    error = false,
    errorMessage = '',
    successMessage = '',
+   isFirstPassword = false,
    ...restProps
 }: Props) {
    const inputId: string = useId();
 
-   const inputTitle = (title: string): string => {
-      return postposition.put(title, '을'); // 조사(을/를) 검사
+   const [showPassword, setShowPassword] = useState(false);
+
+   const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
    };
+
+   const isPassword = type === 'password';
+
+   const bottomClass =
+      isFirstPassword && type === 'password'
+         ? 'ex:-bottom-5 -bottom-9'
+         : '-bottom-5';
 
    let getInputTitle: string = '';
 
@@ -51,21 +68,35 @@ export default function Input({
    const messageStyle = error ? 'text-red-600' : 'text-green-700';
 
    return (
-      <div className="input-group relative mb-6 w-full">
-         <label className="sr-only" htmlFor={inputId}>
-            {`${title} 입력`}
+      <div className="input-group relative mb-10 w-full">
+         <label className="text-sm font-bold" htmlFor={inputId}>
+            {title}
          </label>
          <input
             className={className.trim()}
-            type={type}
+            type={isPassword && showPassword ? 'text' : type}
             id={inputId}
-            placeholder={`${inputTitle(title)} 입력하세요.`}
+            placeholder={placeholder}
             title={getInputTitle}
             {...restProps}
          />
+         {/* 비밀번호 확인 */}
+         {isPassword && (
+            <button
+               type="button"
+               className="absolute bottom-2 right-2"
+               onClick={togglePasswordVisibility}
+            >
+               {showPassword ? (
+                  <span className="fi fi-rr-unlock text-stone-500" />
+               ) : (
+                  <span className="fi fi-sr-lock text-stone-500" />
+               )}
+            </button>
+         )}
          {showMessage && (
             <span
-               className={`absolute -bottom-5 left-0 z-10 text-xs font-bold ${messageStyle}`}
+               className={`absolute left-0 z-10 text-xs font-bold ${messageStyle} ${bottomClass}`}
             >
                {error ? errorMessage : successMessage}
             </span>
