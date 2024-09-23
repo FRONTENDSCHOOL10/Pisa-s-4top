@@ -9,6 +9,7 @@ import { CardLayout, CardTitle } from '@/components/TeaCard/CardComponents';
 import { LabelGroup } from '@/components/Labels/Labels';
 import { loadTasteNoteData } from '@/utils/fetchData';
 import { getValidEmoji } from '@/utils/emojiMap';
+import { calculateCategory } from '@/utils/postData';
 
 export function Component() {
    const userNickname = useLocalStorageUserData('nickname');
@@ -103,9 +104,11 @@ export function Component() {
          (_, index) => selectedLabels[index]
       );
 
+      const userTaste = await calculateCategory(selectedTastes);
+
       const { error: updateError } = await supabase
          .from('tasteselection')
-         .update({ user_selection: selectedTastes })
+         .update({ user_selection: selectedTastes, user_taste: userTaste })
          .eq('user_nickname', userNickname);
 
       if (updateError) {

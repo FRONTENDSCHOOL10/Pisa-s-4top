@@ -53,16 +53,14 @@ export default function MainPage() {
             }
             setUserTaste(userTasteResult);
 
-            // 카테고리 필터 없이 전체 데이터를 가져옴
-            const teaResult = await fetchFilteredTeaData('', userNickname); // 카테고리를 빈 값으로 전달
+            const teaResult = await fetchFilteredTeaData('', userNickname);
             const reviewResult = await fetchMultipleReviews();
 
             setUserNickname(userNickname);
 
-            // 무작위로 20개의 티 데이터를 선택
             const randomTeaData = teaResult
-               .sort(() => Math.random() - 0.5) // 데이터를 무작위로 섞음
-               .slice(0, 20); // 20개의 데이터만 선택
+               .sort(() => Math.random() - 0.5)
+               .slice(0, 20);
 
             setTeaData(formatTeaData(randomTeaData));
             setReviewData(reviewResult || []);
