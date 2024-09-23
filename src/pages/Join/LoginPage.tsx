@@ -9,6 +9,7 @@ import Logo from '@/components/Main/Logo';
 import { isValidEmail, isValidPassword } from '@/utils/isValidCheck';
 import { INPUT_ERROR_MESSAGE } from '@/constants';
 import { getSelectionData } from '@/utils/getSelectionData';
+import AppHelmet from '@/components/Main/AppHelmet';
 
 export default function LoginPage() {
    const navigate = useNavigate();
@@ -110,46 +111,49 @@ export default function LoginPage() {
    };
 
    return (
-      <main className="center-layout">
-         <h1 className="sr-only">로그인</h1>
-
-         <Logo large />
-
-         <form className="mt-20 flex w-full flex-col" onSubmit={handleLogin}>
-            <Input
-               title="이메일"
-               type="email"
-               name="email"
-               className={outlineColorStyle(emailError)}
-               error={emailError}
-               errorMessage={INPUT_ERROR_MESSAGE.EMAIL}
-            />
-            <Input
-               title="비밀번호"
-               type="password"
-               name="password"
-               className={outlineColorStyle(passwordError)}
-               error={passwordError}
-               errorMessage={INPUT_ERROR_MESSAGE.PASSWORD}
-            />
-            <Button
-               className="mt-6"
-               content="로그인"
-               type="submit"
-               size="fullWidth"
-            />
-         </form>
-
-         <div className="mt-24 flex w-full items-center justify-between">
-            <p>계정이 없으신가요?</p>
-            <Button
-               content="회원가입"
-               size="small"
-               isLink={true}
-               href="/join"
-               ariaLabel="회원가입 페이지로 이동"
-            />
-         </div>
-      </main>
+      <>
+         <AppHelmet
+            title="로그인"
+            description="Tea of the Day 로그인 - 개인 맞춤 차 추천 서비스에 접속하세요. 다양한 차 추천과 정보를 만나보세요."
+         />
+         <main className="center-layout">
+            <h1 className="sr-only">로그인</h1>
+            <Logo large />
+            <form className="mt-20 flex w-full flex-col" onSubmit={handleLogin}>
+               <Input
+                  title="이메일"
+                  type="email"
+                  name="email"
+                  className={outlineColorStyle(emailError)}
+                  error={emailError}
+                  errorMessage={INPUT_ERROR_MESSAGE.EMAIL}
+               />
+               <Input
+                  title="비밀번호"
+                  type="password"
+                  name="password"
+                  className={outlineColorStyle(passwordError)}
+                  error={passwordError}
+                  errorMessage={INPUT_ERROR_MESSAGE.PASSWORD}
+               />
+               <Button
+                  className="mt-6"
+                  content="로그인"
+                  type="submit"
+                  size="fullWidth"
+               />
+            </form>
+            <div className="mt-24 flex w-full items-center justify-between">
+               <p>계정이 없으신가요?</p>
+               <Button
+                  content="회원가입"
+                  size="small"
+                  isLink={true}
+                  href="/join"
+                  ariaLabel="회원가입 페이지로 이동"
+               />
+            </div>
+         </main>
+      </>
    );
 }

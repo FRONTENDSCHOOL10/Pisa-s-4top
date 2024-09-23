@@ -37,7 +37,7 @@ export default function DuplicateNicknameInput({
 
    const { setNicknameSuccess } = useJoinStore();
 
-   //! 버튼클릭 테스트
+   // 중복확인 버튼 눌렀을 때
    const handleClick = async () => {
       const currentText: string = textRef.current; // 최신 입력 값 가져옴
 
@@ -56,7 +56,7 @@ export default function DuplicateNicknameInput({
          setError(true);
          setNicknameSuccess(false);
       }
-      // 이메일 중복 시
+      // 닉네임 중복 시
       if (isDuplicate) {
          setShowText(INPUT_ERROR_MESSAGE.NICKNAME_DUPLICATE);
          setOutlineColor('outline-error');

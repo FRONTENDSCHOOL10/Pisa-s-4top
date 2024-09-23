@@ -12,6 +12,7 @@ import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
 import { getSearchReviewData } from '@/utils/getSearchReviewData';
 import { getSearchTeaData } from '@/utils/getSearchTeaData';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import AppHelmet from '@/components/Main/AppHelmet';
 
 interface Tea {
    id: string;
@@ -91,87 +92,95 @@ export function Component() {
    };
 
    return (
-      <main className="flex flex-col gap-4">
-         <h1 className="sr-only">검색 페이지</h1>
+      <>
+         <AppHelmet
+            title="검색"
+            description="Tea of the Day 검색 - 다양한 차 정보를 쉽게 찾아보세요. 새로운 차의 맛과 향을 발견하고 자신만의 차 컬렉션을 만들어보세요."
+         />
+         <main className="flex flex-col gap-4">
+            <h1 className="sr-only">검색 페이지</h1>
 
-         <SearchInput onSubmit={handleSearch} />
+            <SearchInput onSubmit={handleSearch} />
 
-         {!isSearched ? (
-            <NoData
-               text="검색어를 입력하세요"
-               className="h-[calc(100dvh-264px)]"
-            />
-         ) : (
-            <>
-               <SearchFilterButton
-                  filter={['상품', '리뷰']}
-                  handleFilterChange={handleFilterChange}
+            {!isSearched ? (
+               <NoData
+                  text="검색어를 입력하세요"
+                  className="h-[calc(100dvh-264px)]"
                />
+            ) : (
+               <>
+                  <SearchFilterButton
+                     filter={['상품', '리뷰']}
+                     handleFilterChange={handleFilterChange}
+                  />
 
-               {isLoading ? (
-                  <LoadingSpinner className="h-[calc(100dvh-324px)]" />
-               ) : (
-                  <>
-                     {selectedFilter === 0 &&
-                        (searchTeaResults.length === 0 ? (
-                           <NoData
-                              text={`'${searchValue}'에 대한 검색 결과가 없습니다`}
-                              className="h-[calc(100dvh-324px)]"
-                           />
-                        ) : (
-                           <>
-                              <SearchCount
-                                 data={searchValue}
-                                 count={searchTeaResults.length}
+                  {isLoading ? (
+                     <LoadingSpinner className="h-[calc(100dvh-324px)]" />
+                  ) : (
+                     <>
+                        {selectedFilter === 0 &&
+                           (searchTeaResults.length === 0 ? (
+                              <NoData
+                                 text={`'${searchValue}'에 대한 검색 결과가 없습니다`}
+                                 className="h-[calc(100dvh-324px)]"
                               />
-                              <ul className="grid h-[calc(100dvh-364px)] gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                                 {searchTeaResults.map((tea: Tea) => (
-                                    <li key={tea.id}>
-                                       <TeaRecommendCard
-                                          id={tea.id}
-                                          imageUrl={tea.tea_image}
-                                          teaName={tea.tea_name}
-                                          brand={tea.tea_brand}
-                                          userNickname={userNickname}
-                                       />
-                                    </li>
-                                 ))}
-                              </ul>
-                           </>
-                        ))}
-                     {selectedFilter === 1 &&
-                        (searchReviewResults.length === 0 ? (
-                           <NoData
-                              text={`'${searchValue}'에 대한 검색 결과가 없습니다`}
-                              className="h-[calc(100dvh-324px)]"
-                           />
-                        ) : (
-                           <>
-                              <SearchCount
-                                 data={searchValue}
-                                 count={searchReviewResults.length}
+                           ) : (
+                              <>
+                                 <SearchCount
+                                    data={searchValue}
+                                    count={searchTeaResults.length}
+                                 />
+                                 <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                                    {searchTeaResults.map((tea: Tea) => (
+                                       <li key={tea.id}>
+                                          <TeaRecommendCard
+                                             id={tea.id}
+                                             imageUrl={tea.tea_image}
+                                             teaName={tea.tea_name}
+                                             brand={tea.tea_brand}
+                                             userNickname={userNickname}
+                                          />
+                                       </li>
+                                    ))}
+                                 </ul>
+                              </>
+                           ))}
+                        {selectedFilter === 1 &&
+                           (searchReviewResults.length === 0 ? (
+                              <NoData
+                                 text={`'${searchValue}'에 대한 검색 결과가 없습니다`}
+                                 className="h-[calc(100dvh-324px)]"
                               />
-                              <section className="flex h-[calc(100dvh-364px)] flex-col gap-2">
-                                 {searchReviewResults.map((review: Review) => (
-                                    <HomeReviewCard
-                                       key={review.id}
-                                       id={review.id}
-                                       teaName={review.tea.tea_name}
-                                       teaBrand={review.tea.tea_brand}
-                                       teaImg={review.tea.tea_image}
-                                       nickname={review.users.nickname}
-                                       title={review.review_title}
-                                       comment={review.review_comment}
-                                       score={review.tea_rate}
-                                    />
-                                 ))}
-                              </section>
-                           </>
-                        ))}
-                  </>
-               )}
-            </>
-         )}
-      </main>
+                           ) : (
+                              <>
+                                 <SearchCount
+                                    data={searchValue}
+                                    count={searchReviewResults.length}
+                                 />
+                                 <section className="flex flex-col gap-2">
+                                    {searchReviewResults.map(
+                                       (review: Review) => (
+                                          <HomeReviewCard
+                                             key={review.id}
+                                             id={review.id}
+                                             teaName={review.tea.tea_name}
+                                             teaBrand={review.tea.tea_brand}
+                                             teaImg={review.tea.tea_image}
+                                             nickname={review.users.nickname}
+                                             title={review.review_title}
+                                             comment={review.review_comment}
+                                             score={review.tea_rate}
+                                          />
+                                       )
+                                    )}
+                                 </section>
+                              </>
+                           ))}
+                     </>
+                  )}
+               </>
+            )}
+         </main>
+      </>
    );
 }
