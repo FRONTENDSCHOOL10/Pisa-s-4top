@@ -45,7 +45,7 @@ export async function fetchFilteredTeaData(selectedCategory, userNickname) {
 
          const randomTeaIds = totalTeas
             .sort(() => Math.random() - 0.5)
-            .slice(0, 20)
+            .slice(0, 30)
             .map((tea) => tea.id);
 
          const { data: randomTeas, error: randomTeaError } = await supabase
