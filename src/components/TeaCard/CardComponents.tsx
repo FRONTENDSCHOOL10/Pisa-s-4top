@@ -235,14 +235,14 @@ export function TeaRecommendCard({
    return (
       <CardLayout
          to={`/detail/${id}`}
-         className={`h-64 w-1/3 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100% ${className}`}
+         className={`h-64 cursor-pointer overflow-hidden bg-gradient-to-b from-white from-70% to-stone-100 to-100% ${className}`}
          ariaLabel={`${teaName} 추천 카드`}
       >
-         <div className="mx-auto rounded-t-2xl">
+         <div className="mx-auto w-full h-32 rounded-t-2xl">
             <CardImage
                src={imageUrl}
                alt={`${teaName} 미리보기`}
-               className="h-32 w-full object-cover"
+               className="object-cover"
             />
          </div>
          <div className="relative mx-auto mt-3">

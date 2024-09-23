@@ -75,7 +75,7 @@ export default function TeaRecommendSwiper({
                <TeaRecommendCard
                   {...recommendation}
                   userNickname={userNickname}
-                  className="w-44 lg:w-48"
+                  className='!w-44'
                />
             </SwiperSlide>
          ))}
