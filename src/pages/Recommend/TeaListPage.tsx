@@ -64,6 +64,8 @@ export function Component() {
 
    const handleTabSelect = (category: string) => {
       setSelectedCategory(category);
+      setIsTeaLoading(true);
+      setTimeout(() => setIsTeaLoading(false), 300); // 짧은 지연 후 로딩 상태 해제
    };
 
    const handleShowAllChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,10 +83,6 @@ export function Component() {
          (tea) => tea.tea_category === selectedCategory
       );
    }, [isShowAll, allTeas, selectedCategory, filteredTeas]);
-
-   if (isLikesLoading || isTeaLoading) {
-      return <LoadingSpinner />;
-   }
 
    return (
       <>
@@ -105,7 +103,9 @@ export function Component() {
                checked={isShowAll}
                onChange={handleShowAllChange}
             />
-            {resultTeas.length > 0 ? (
+            {isLikesLoading || isTeaLoading ? (
+               <LoadingSpinner />
+            ) : resultTeas.length > 0 ? (
                <ul className="grid gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {resultTeas.map((tea) => (
                      <li key={tea.id}>

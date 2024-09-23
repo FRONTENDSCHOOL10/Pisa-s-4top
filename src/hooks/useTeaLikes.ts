@@ -26,6 +26,7 @@ export function useTeaLikes() {
    const [currentUser, setCurrentUser] = useState<User | null>(null);
    const [likedTeas, setLikedTeas] = useState<Tea[]>([]);
    const [isLoading, setIsLoading] = useState(true);
+   const [isTabLoading, setIsTabLoading] = useState(false);
 
    useEffect(() => {
       const getCurrentUser = () => {
@@ -35,10 +36,7 @@ export function useTeaLikes() {
                const user = JSON.parse(userData);
                setCurrentUser(user);
             } catch (error) {
-               console.error(
-                  'Failed to parse user data from localStorage:',
-                  error
-               );
+               console.error('Failed to parse user data from localStorage:', error);
             }
          }
       };
@@ -71,17 +69,12 @@ export function useTeaLikes() {
 
             if (currentUser) {
                const likedTeaPromises = allTeaData.map(async (tea: Tea) => {
-                  const isLiked = await checkLikeStatus(
-                     currentUser.nickname,
-                     tea.id
-                  );
+                  const isLiked = await checkLikeStatus(currentUser.nickname, tea.id);
                   return isLiked ? tea : null;
                });
 
                const likedTeaResults = await Promise.all(likedTeaPromises);
-               const filteredLikedTeas = likedTeaResults.filter(
-                  (tea): tea is Tea => tea !== null
-               );
+               const filteredLikedTeas = likedTeaResults.filter((tea): tea is Tea => tea !== null);
                setLikedTeas(filteredLikedTeas);
             }
          } catch (error) {
@@ -98,16 +91,21 @@ export function useTeaLikes() {
       }
    }, [currentUser]);
 
-   const filteredTeas = likedTeas.filter(
-      (tea) => tea.tea_category === selectedCategory
-   );
+   const handleCategoryChange = (category: string) => {
+      setIsTabLoading(true);
+      setSelectedCategory(category);
+      setTimeout(() => setIsTabLoading(false), 300); // 짧은 지연 후 로딩 상태 해제
+   };
+
+   const filteredTeas = likedTeas.filter((tea) => tea.tea_category === selectedCategory);
 
    return {
       categories,
       selectedCategory,
-      setSelectedCategory,
+      setSelectedCategory: handleCategoryChange,
       currentUser,
       filteredTeas,
       isLoading,
+      isTabLoading,
    };
 }

@@ -13,7 +13,38 @@ export function Component() {
       currentUser,
       filteredTeas,
       isLoading,
+      isTabLoading,
    } = useTeaLikes();
+
+   const renderContent = () => {
+      if (isTabLoading) {
+         return <LoadingSpinner />;
+      }
+
+      if (!currentUser) {
+         return <p className="text-center">로그인이 필요합니다.</p>;
+      }
+
+      if (filteredTeas.length === 0) {
+         return <NoData text="선택한 카테고리에 해당하는 티가 없습니다" />;
+      }
+
+      return (
+         <ul className="grid gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {filteredTeas.map((tea) => (
+               <li key={tea.id}>
+                  <TeaRecommendCard
+                     id={tea.id}
+                     imageUrl={tea.tea_image}
+                     teaName={tea.tea_name}
+                     brand={tea.tea_brand}
+                     userNickname={currentUser.nickname}
+                  />
+               </li>
+            ))}
+         </ul>
+      );
+   };
 
    if (isLoading) {
       return <LoadingSpinner />;
@@ -35,25 +66,7 @@ export function Component() {
                      className="mb-8 self-start"
                      activeTab={selectedCategory}
                   />
-                  {!currentUser ? (
-                     <p className="text-center">로그인이 필요합니다.</p>
-                  ) : filteredTeas.length === 0 ? (
-                     <NoData text="선택한 카테고리에 해당하는 티가 없습니다" />
-                  ) : (
-                     <ul className="grid gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {filteredTeas.map((tea) => (
-                           <li key={tea.id}>
-                              <TeaRecommendCard
-                                 id={tea.id}
-                                 imageUrl={tea.tea_image}
-                                 teaName={tea.tea_name}
-                                 brand={tea.tea_brand}
-                                 userNickname={currentUser.nickname}
-                              />
-                           </li>
-                        ))}
-                     </ul>
-                  )}
+                  {renderContent()}
                </div>
             </article>
          </main>

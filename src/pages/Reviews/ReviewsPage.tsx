@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import { TabButton } from '@/components/Buttons/TabButton';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
@@ -14,37 +14,49 @@ export function Component() {
    const [reviewData, setReviewData] = useState<Review[]>([]);
    const [isLoading, setIsLoading] = useState(true);
 
-   useEffect(() => {
-      const fetchData = async () => {
-         setIsLoading(true);
-         try {
-            const categoryData =
-               (await fetchTeaCategoryData()) as TeaCategory[];
-            setCategories(categoryData);
+   const fetchCategories = useCallback(async () => {
+      try {
+         const categoryData = (await fetchTeaCategoryData()) as TeaCategory[];
+         setCategories(categoryData);
 
-            if (categoryData.length > 0) {
-               setSelectedCategory(categoryData[0].category);
-            }
-
-            const data = await fetchMultipleReviews();
-            setReviewData(data as any);
-         } catch (error) {
-            console.error('Failed to fetch data:', error);
-         } finally {
-            setIsLoading(false);
+         if (categoryData.length > 0) {
+            setSelectedCategory(categoryData[0].category);
          }
-      };
+      } catch (error) {
+         console.error('Failed to fetch categories:', error);
+      }
+   }, []);
 
-      fetchData();
+   const fetchReviews = useCallback(async () => {
+      if (!selectedCategory) return;
+
+      setIsLoading(true);
+      try {
+         const data = await fetchMultipleReviews();
+         setReviewData(data as Review[]);
+      } catch (error) {
+         console.error('Failed to fetch reviews:', error);
+      } finally {
+         setIsLoading(false);
+      }
+   }, [selectedCategory]);
+
+   useEffect(() => {
+      fetchCategories();
+   }, [fetchCategories]);
+
+   useEffect(() => {
+      fetchReviews();
+   }, [fetchReviews]);
+
+   const handleTabSelect = useCallback((categoryName: string) => {
+      setSelectedCategory(categoryName);
+      setIsLoading(true); // 탭 변경 시 즉시 로딩 상태로 설정
    }, []);
 
    const filteredReviews = reviewData.filter((review) => {
       return review.tea?.tea_category?.category === selectedCategory;
    });
-
-   if (isLoading) {
-      return <LoadingSpinner />;
-   }
 
    return (
       <>
@@ -56,13 +68,13 @@ export function Component() {
             <h1 className="sr-only">티 리뷰 리스트 페이지</h1>
             <TabButton
                tabs={categories.map((category) => category.category)}
-               onTabSelect={(categoryName) => {
-                  setSelectedCategory(categoryName);
-               }}
+               onTabSelect={handleTabSelect}
                activeTab={selectedCategory}
             />
             <section className="flex flex-col gap-2">
-               {filteredReviews.length > 0 ? (
+               {isLoading ? (
+                  <LoadingSpinner />
+               ) : filteredReviews.length > 0 ? (
                   filteredReviews.map((review: Review) => (
                      <HomeReviewCard
                         key={review.id}
