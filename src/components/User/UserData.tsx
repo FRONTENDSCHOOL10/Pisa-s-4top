@@ -8,7 +8,7 @@ interface Props {
 
 export default function UserData({ label, userData = '', href }: Props) {
    return (
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
          {userData ? (
             <div>
                <span className="text-sm font-bold text-stone-500">{label}</span>
