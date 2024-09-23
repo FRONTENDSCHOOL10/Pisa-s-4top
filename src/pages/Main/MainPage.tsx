@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
+
+import TeaRecommendSwiper from '@/components/TeaCard/TeaRecommendSwiper';
+import SearchInput from '@/components/Input/SearchInput';
+import HomeReviewCard from '@/components/Review/HomeReviewCard';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import AppHelmet from '@/components/Main/AppHelmet';
 import {
    fetchFilteredTeaData,
    fetchMultipleReviews,
    fetchUserTaste,
 } from '@/utils/fetchData';
-import TeaRecommendSwiper from '@/components/TeaCard/TeaRecommendSwiper';
-import SearchInput from '@/components/Input/SearchInput';
-import HomeReviewCard from '@/components/Review/HomeReviewCard';
-import { Helmet } from 'react-helmet-async';
-import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
 
 const getUserNicknameFromLocalStorage = () => {
    const userString = localStorage.getItem('@auth/user');
@@ -80,13 +81,10 @@ export default function MainPage() {
 
    return (
       <>
-         <Helmet>
-            <title>데일리 차 추천 서비스, Tea of the Day</title>
-            <meta
-               name="description"
-               content="당신의 차 취향에 맞춘 추천 서비스, Tea of the Day"
-            />
-         </Helmet>
+         <AppHelmet
+            title="데일리 차 추천 서비스, Tea of the Day"
+            description="Tea of the Day에서 당신의 취향에 맞는 차를 찾아보세요. 개인화된 추천 시스템으로 새로운 차를 발견하고, 다른 사용자들의 리뷰를 통해 다양한 차 경험을 공유하세요. 차 애호가들을 위한 최고의 플랫폼, Tea of the Day에서 당신만의 특별한 차 여정을 시작하세요."
+         />
          <main>
             <h1 className="sr-only">메인 페이지</h1>
             <SearchInput isButton={true} />

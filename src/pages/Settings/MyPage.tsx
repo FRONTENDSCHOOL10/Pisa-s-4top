@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+
 import supabase from '@/api/supabase';
 import { Button } from '@/components/Buttons/Buttons';
 import { UserActivity } from '@/components/User/UserActivity';
 import UserCollection from '@/components/User/UserCollection';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
-import { fetchMultipleReviews, fetchUserTaste } from '@/utils/fetchData';
 import UserData from '@/components/User/UserData';
-import UserDataLayout from './../../components/User/UserDataLayout';
+import UserDataLayout from '@/components/User/UserDataLayout';
 import UserProfileImg from '@/components/User/UserProfileImg';
-import { updateLocalData } from '@/utils/updateLocalData';
+import AppHelmet from '@/components/Main/AppHelmet';
+import { fetchMultipleReviews, fetchUserTaste } from '@/utils/fetchData';
 
 interface UserInfo {
    id: string;
@@ -24,17 +25,6 @@ interface Activity {
    count: number;
    className?: string;
 }
-
-// interface Review {
-//    id: string;
-//    review_title: string;
-//    review_comment: string;
-//    tea_rate: number;
-//    user: {
-//       nickname: string;
-//       profile_img: string;
-//    };
-// }
 
 const defaultActivities: Activity[] = [
    { title: '찜 개수', count: 0 },
@@ -163,72 +153,77 @@ export function Component() {
    }
 
    return (
-      <main className="flex flex-col gap-6">
-         <h1 className="sr-only">마이페이지</h1>
-         <section className="mb-3 flex flex-col items-center">
-            <UserProfileImg
-               userId={userInfo.id}
-               userName={userInfo.nickname}
-               img={userInfo.profile_img}
-               name="profile_img"
-            />
-            <p className="mb-2 text-xs font-normal">{userTaste}</p>
-            <p className="mb-1 text-base font-bold">{userInfo.nickname}</p>
-         </section>
-
-         <section className="flex flex-col gap-2">
-            <h2 className="sr-only">나의 프로필 수정</h2>
-            <UserDataLayout>
-               <UserData
-                  label="닉네임"
-                  userData={userInfo.nickname}
-                  href="edit/nickname"
+      <>
+         <AppHelmet
+            title={`${userInfo.nickname}님의 마이페이지`}
+            description={`Tea of the Day 마이페이지 - ${userInfo.nickname}님의 프로필, 활동 내역, 찜과 리뷰 목록을 확인하세요. 개인정보 수정, 취향 태그 변경 등 다양한 기능을 이용할 수 있습니다.`}
+         />
+         <main className="flex flex-col gap-6">
+            <h1 className="sr-only">마이페이지</h1>
+            <section className="mb-3 flex flex-col items-center">
+               <UserProfileImg
+                  userId={userInfo.id}
+                  userName={userInfo.nickname}
+                  img={userInfo.profile_img}
+                  name="profile_img"
                />
-               <UserData
-                  label="이메일"
-                  userData={userInfo.email}
-                  href="edit/email"
-               />
-            </UserDataLayout>
-
-            <UserDataLayout>
-               <UserData label="비밀번호 변경" href="edit/password" />
-            </UserDataLayout>
-
-            <UserDataLayout>
-               <UserData label="나의 취향 태그 변경" href="edit/my-selection" />
-            </UserDataLayout>
-         </section>
-
-         <section>
-            <h2 className="mb-6 text-2xl font-bold text-stone-950">
-               나의 활동
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-               {activities.map((activity, index) => (
-                  <UserActivity
-                     key={index}
-                     className={activity.className}
-                     {...activity}
+               <p className="mb-2 text-xs font-normal">{userTaste}</p>
+               <p className="mb-1 text-base font-bold">{userInfo.nickname}</p>
+            </section>
+            <section className="flex flex-col gap-2">
+               <h2 className="sr-only">나의 프로필 수정</h2>
+               <UserDataLayout>
+                  <UserData
+                     label="닉네임"
+                     userData={userInfo.nickname}
+                     href="edit/nickname"
                   />
-               ))}
+                  <UserData
+                     label="이메일"
+                     userData={userInfo.email}
+                     href="edit/email"
+                  />
+               </UserDataLayout>
+               <UserDataLayout>
+                  <UserData label="비밀번호 변경" href="edit/password" />
+               </UserDataLayout>
+               <UserDataLayout>
+                  <UserData
+                     label="나의 취향 태그 변경"
+                     href="edit/my-selection"
+                  />
+               </UserDataLayout>
+            </section>
+            <section>
+               <h2 className="mb-6 text-2xl font-bold text-stone-950">
+                  나의 활동
+               </h2>
+               <div className="grid grid-cols-2 gap-4">
+                  {activities.map((activity, index) => (
+                     <UserActivity
+                        key={index}
+                        className={activity.className}
+                        {...activity}
+                     />
+                  ))}
+               </div>
+            </section>
+            <UserCollection />
+            <div className="button-group">
+               <Button
+                  content="로그아웃"
+                  size="fullWidth"
+                  handleClick={handleLogout}
+               />
+               <Button
+                  content="회원 탈퇴"
+                  size="fullWidth"
+                  isError={true}
+                  className="mt-2"
+                  handleClick={handleUserDelete}
+               />
             </div>
-         </section>
-         <UserCollection />
-         <div className="button-group">
-            <Button
-               content="로그아웃"
-               size="fullWidth"
-               handleClick={handleLogout}
-            />
-            <Button
-               content="회원 탈퇴"
-               size="fullWidth"
-               isError={true}
-               className="mt-2"
-               handleClick={handleUserDelete}
-            />
-         </div>
-      </main>
+         </main>
+      </>
    );
 }

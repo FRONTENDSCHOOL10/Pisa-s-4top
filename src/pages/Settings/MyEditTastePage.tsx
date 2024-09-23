@@ -4,9 +4,10 @@ import toast from 'react-hot-toast';
 
 import supabase from '@/api/supabase';
 import { Button } from '@/components/Buttons/Buttons';
-import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
 import { CardLayout, CardTitle } from '@/components/TeaCard/CardComponents';
+import AppHelmet from '@/components/Main/AppHelmet';
 import { LabelGroup } from '@/components/Labels/Labels';
+import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
 import { loadTasteNoteData } from '@/utils/fetchData';
 import { getValidEmoji } from '@/utils/emojiMap';
 import { calculateCategory } from '@/utils/postData';
@@ -123,34 +124,39 @@ export function Component() {
    };
 
    return (
-      <main>
-         <h1 className="sr-only">선호하는 테이스팅 노트 수정</h1>
-
-         <form onSubmit={handleSubmit}>
-            <CardLayout>
-               <CardTitle className="mb-4">선호하는 맛</CardTitle>
-               <LabelGroup
-                  labels={tasteNoteData}
-                  types="button"
-                  selectedLabels={selectedLabels}
-                  handleToggleLabel={toggleLabelSelection}
-                  className="flex justify-center gap-3 px-28"
+      <>
+         <AppHelmet
+            title="취향 태그 변경"
+            description="Tea of the Day 취향 태그 변경 - Tea of the Day에서 당신의 취향을 더욱 정확하게 표현해보세요. 선호하는 맛과 향을 선택하여 개인화된 티 추천을 받아보세요. 취향 태그를 통해 더 나은 티 경험을 만들어갑니다."
+         />
+         <main>
+            <h1 className="sr-only">선호하는 테이스팅 노트 수정</h1>
+            <form onSubmit={handleSubmit}>
+               <CardLayout>
+                  <CardTitle className="mb-4">선호하는 맛</CardTitle>
+                  <LabelGroup
+                     labels={tasteNoteData}
+                     types="button"
+                     selectedLabels={selectedLabels}
+                     handleToggleLabel={toggleLabelSelection}
+                     className="flex justify-center gap-3 px-28"
+                  />
+               </CardLayout>
+               <Button
+                  content="리셋할래요!"
+                  size="fullWidth"
+                  className="mt-6"
+                  isError={true}
+                  handleClick={resetSelection}
                />
-            </CardLayout>
-            <Button
-               content="리셋할래요!"
-               size="fullWidth"
-               className="mt-6"
-               isError={true}
-               handleClick={resetSelection}
-            />
-            <Button
-               className="mt-2"
-               content="수정 완료하기"
-               type="submit"
-               size="fullWidth"
-            />
-         </form>
-      </main>
+               <Button
+                  className="mt-2"
+                  content="수정 완료하기"
+                  type="submit"
+                  size="fullWidth"
+               />
+            </form>
+         </main>
+      </>
    );
 }

@@ -7,12 +7,12 @@ import SearchInput from '@/components/Input/SearchInput';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
 import SearchCount from '@/components/Search/SearchCount';
 import { TeaRecommendCard } from '@/components/TeaCard/CardComponents';
+import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import AppHelmet from '@/components/Main/AppHelmet';
 import { useInputFocus } from '@/hooks/useInputFocus';
 import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
 import { getSearchReviewData } from '@/utils/getSearchReviewData';
 import { getSearchTeaData } from '@/utils/getSearchTeaData';
-import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
-import AppHelmet from '@/components/Main/AppHelmet';
 
 interface Tea {
    id: string;
@@ -95,7 +95,7 @@ export function Component() {
       <>
          <AppHelmet
             title="검색"
-            description="Tea of the Day 검색 - 다양한 차 정보를 쉽게 찾아보세요. 새로운 차의 맛과 향을 발견하고 자신만의 차 컬렉션을 만들어보세요."
+            description="Tea of the Day 검색 - 다양한 티 정보를 쉽게 찾아보세요. 새로운 티의 맛과 향을 발견하고 자신만의 티 컬렉션을 만들어보세요."
          />
          <main className="flex flex-col gap-4">
             <h1 className="sr-only">검색 페이지</h1>

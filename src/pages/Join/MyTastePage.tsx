@@ -84,7 +84,7 @@ export function Component() {
       <>
          <AppHelmet
             title="맞춤 차 추천"
-            description="Tea of the Day - 당신의 취향에 맞는 차를 발견하세요. 선택하신 취향 데이터를 바탕으로 TOTD가 추천한 최적의 차 목록을 확인하실 수 있습니다. 새로운 차의 세계를 만나보세요."
+            description="Tea of the Day 맞춤 차 추천 - 당신의 취향에 맞는 차를 발견하세요. 선택하신 취향 데이터를 바탕으로 TOTD가 추천한 최적의 차 목록을 확인하실 수 있습니다. 새로운 차의 세계를 만나보세요."
          />
          <main className="center-layout">
             <h1 className="text-center text-2xl font-bold">

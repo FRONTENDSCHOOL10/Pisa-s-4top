@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { Button } from '@/components/Buttons/Buttons';
 import {
    TeaDescriptionCard,
@@ -8,6 +9,8 @@ import {
 import TeaInfo from '@/components/TeaDetail/TeaInfo';
 import TeaReviewList from '@/components/TeaDetail/TeaReviewList';
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import NoData from '@/components/Data/NoData';
+import AppHelmet from '@/components/Main/AppHelmet';
 import {
    fetchTeaData,
    fetchTeaTastingNotes,
@@ -21,7 +24,6 @@ import {
    checkLikeStatus,
    fetchTotalLikes,
 } from '@/utils/likeData';
-import NoData from '@/components/Data/NoData';
 
 interface Tea {
    id: string;
@@ -193,44 +195,50 @@ export function Component() {
    }
 
    return (
-      <main className="relative flex flex-col gap-4">
-         <h1 className="sr-only">티 상세 페이지</h1>
-         <div className="mx-8 mb-8 flex flex-col items-center">
-            <TeaInfo
-               img={tea.tea_image}
-               category={tea.tea_category}
-               name={tea.tea_name}
-               brand={tea.tea_brand}
-               totalLike={likeCount}
-               isLiked={isLiked}
-               handleToggle={handleLikeToggle}
-               averageRate={averageRate}
-               teaAmount={tea.tea_amount}
-               waterAmount={tea.tea_water_amount}
-               temperature={tea.tea_temperature}
-               brewingTime={tea.tea_brew_time}
-               labels={labels}
-            />
-         </div>
-         <TeaDescriptionCard description={tea.tea_detail} />
-         {recipe && (
-            <TeaRecipeCard
-               title={recipe.recipe_title}
-               imageUrl={recipe.recipe_image}
-               steps={recipe.recipe_detail}
-            />
-         )}
-         <div className="relative">
-            <TeaReviewList reviews={reviews} />
-            <Button
-               isLink={true}
-               href={`/reviews/write?teaId=${tea.id}`}
-               ariaLabel="리뷰 작성 페이지"
-               content="리뷰 쓰기"
-               size="small"
-               className="absolute right-0 top-0 z-50 mt-1 !py-3 text-sm !font-bold"
-            />
-         </div>
-      </main>
+      <>
+         <AppHelmet
+            title={`${tea.tea_name} 상세 정보`}
+            description={`Tea of the Day 티 상세 정보 - ${tea.tea_name}의 상세 정보를 확인해보세요. 티의 특징, 브루잉 가이드, 레시피 및 리뷰까지 한눈에 볼 수 있습니다. Tea of the Day에서 당신의 완벽한 한 잔을 찾아보세요.`}
+         />
+         <main className="relative flex flex-col gap-4">
+            <h1 className="sr-only">티 상세 페이지</h1>
+            <div className="mx-8 mb-8 flex flex-col items-center">
+               <TeaInfo
+                  img={tea.tea_image}
+                  category={tea.tea_category}
+                  name={tea.tea_name}
+                  brand={tea.tea_brand}
+                  totalLike={likeCount}
+                  isLiked={isLiked}
+                  handleToggle={handleLikeToggle}
+                  averageRate={averageRate}
+                  teaAmount={tea.tea_amount}
+                  waterAmount={tea.tea_water_amount}
+                  temperature={tea.tea_temperature}
+                  brewingTime={tea.tea_brew_time}
+                  labels={labels}
+               />
+            </div>
+            <TeaDescriptionCard description={tea.tea_detail} />
+            {recipe && (
+               <TeaRecipeCard
+                  title={recipe.recipe_title}
+                  imageUrl={recipe.recipe_image}
+                  steps={recipe.recipe_detail}
+               />
+            )}
+            <div className="relative">
+               <TeaReviewList reviews={reviews} />
+               <Button
+                  isLink={true}
+                  href={`/reviews/write?teaId=${tea.id}`}
+                  ariaLabel="리뷰 작성 페이지"
+                  content="리뷰 쓰기"
+                  size="small"
+                  className="absolute right-0 top-0 z-50 mt-1 !py-3 text-sm !font-bold"
+               />
+            </div>
+         </main>
+      </>
    );
 }
