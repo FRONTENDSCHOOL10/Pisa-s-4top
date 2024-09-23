@@ -4,6 +4,7 @@ import { Button } from '@/components/Buttons/Buttons';
 import SplashSwiper from '@/components/TeaCard/SplashSwiper';
 import { fetchTeasByUserSelection, fetchUserTaste } from '@/utils/fetchData'; // fetchUserTaste 함수 import
 import { LoadingSpinner } from '@/components/Main/LoadingSpinner';
+import AppHelmet from '@/components/Main/AppHelmet';
 
 export function Component() {
    const [filteredTeas, setFilteredTeas] = useState([]);
@@ -80,31 +81,37 @@ export function Component() {
       return <LoadingSpinner />;
    }
    return (
-      <main className="center-layout gap-2 overflow-x-hidden">
-         <h1 className="mt-36 text-center text-2xl font-bold">
-            {userTaste ? `${userTaste} 당신에게` : '당신에게'}
-            <br /> 추천하는 차
-         </h1>
-         <p className="text-center text-sm text-stone-400">
-            취향 데이터를 기반으로 추천해드렸어요!
-         </p>
-         <Button
-            className="my-7 w-[18rem]"
-            content="홈으로 이동하기"
-            size="large"
-            isLink={true}
-            href="/"
-            ariaLabel="홈페이지"
+      <>
+         <AppHelmet
+            title="맞춤 차 추천"
+            description="Tea of the Day - 당신의 취향에 맞는 차를 발견하세요. 선택하신 취향 데이터를 바탕으로 TOTD가 추천한 최적의 차 목록을 확인하실 수 있습니다. 새로운 차의 세계를 만나보세요."
          />
-         <div className="flex flex-col gap-3">
-            {teaChunks.map((chunk, index) => (
-               <SplashSwiper
-                  key={index}
-                  images={chunk.map((tea) => tea.tea_image)}
-                  direction={index % 2 === 0 ? 'ltr' : 'rtl'}
-               />
-            ))}
-         </div>
-      </main>
+         <main className="center-layout">
+            <h1 className="text-center text-2xl font-bold">
+               {userTaste ? `${userTaste} 당신에게` : '당신에게'}
+               <br /> 추천하는 차
+            </h1>
+            <p className="text-center text-sm text-stone-400">
+               취향 데이터를 기반으로 추천해드렸어요!
+            </p>
+            <Button
+               className="my-7 w-[18rem]"
+               content="홈으로 이동하기"
+               size="large"
+               isLink={true}
+               href="/"
+               ariaLabel="홈페이지"
+            />
+            <div className="flex flex-col gap-3">
+               {teaChunks.map((chunk, index) => (
+                  <SplashSwiper
+                     key={index}
+                     images={chunk.map((tea) => tea.tea_image)}
+                     direction={index % 2 === 0 ? 'ltr' : 'rtl'}
+                  />
+               ))}
+            </div>
+         </main>
+      </>
    );
 }

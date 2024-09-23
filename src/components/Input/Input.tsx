@@ -88,9 +88,15 @@ export default function Input({
                onClick={togglePasswordVisibility}
             >
                {showPassword ? (
-                  <span className="fi fi-rr-unlock text-stone-500" />
+                  <span
+                     className="fi fi-rr-unlock text-stone-500"
+                     aria-label="비밀번호 표시"
+                  />
                ) : (
-                  <span className="fi fi-sr-lock text-stone-500" />
+                  <span
+                     className="fi fi-sr-lock text-stone-500"
+                     aria-label="비밀번호 숨기기"
+                  />
                )}
             </button>
          )}

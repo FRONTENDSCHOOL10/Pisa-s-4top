@@ -27,7 +27,7 @@ export const SEARCH_STYLES: SearchStyles = {
    default: 'w-full truncate rounded-full py-2 font-bold',
    selected: 'bg-stone-100 text-stone-600',
    unselected: 'text-stone-400',
-   group: 'search-filter-group flex gap-1 rounded-full bg-stone-300 p-0.5',
+   group: 'search-filter-group flex gap-1 rounded-full bg-stone-300 p-0.5 z-20',
    listItem: 'flex-1 truncate',
 };
 

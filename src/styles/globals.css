@@ -40,19 +40,19 @@ main {
       @apply p-1 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700;
    }
 
-   /* 앱바 + 바텀 내비게이션 X 페이지 */
+   /* 앱바 + 바텀 내비게이션 없는 페이지 */
    .center-layout {
       @apply flex h-[100dvh] flex-col items-center justify-center;
    }
 
-   /* 앱바+바텀 내비게이션 O 페이지 */
+   /* 앱바+바텀 내비게이션 있는 페이지 */
    .center-content {
       @apply h-[calc(100dvh-124px)];
    }
 
    /* 앱바만 있는 페이지 */
    .center-appbar-content {
-      @apply flex h-[calc(100dvh-64px)] flex-col items-center justify-center;
+      @apply h-[calc(100dvh-64px)];
    }
 
    .outline-base {

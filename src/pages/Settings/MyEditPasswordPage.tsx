@@ -7,6 +7,7 @@ import { Button } from '@/components/Buttons/Buttons';
 import DoublePasswordInput from '@/components/Input/DoublePasswordInput';
 import { useLocalStorageUserData } from '@/hooks/useLocalStorageUserData';
 import { useJoinStore } from '@/stores';
+import AppHelmet from '@/components/Main/AppHelmet';
 
 export function Component() {
    const navigate = useNavigate();
@@ -85,19 +86,25 @@ export function Component() {
    };
 
    return (
-      <main className="center-content">
-         <h1 className="sr-only">비밀번호 수정</h1>
+      <>
+         <AppHelmet
+            title="비밀번호 변경"
+            description="Tea of the Day 비밀번호 변경 - 비밀번호를 변경하세요. 더 나은 개인화 서비스를 위해 프로필을 최신 상태로 유지하세요."
+         />
+         <main className="center-content">
+            <h1 className="sr-only">비밀번호 변경</h1>
 
-         <form onSubmit={handleSubmit}>
-            <DoublePasswordInput name="password" />
+            <form onSubmit={handleSubmit}>
+               <DoublePasswordInput name="password" />
 
-            <Button
-               className="mt-10"
-               content="수정 완료하기"
-               type="submit"
-               size="fullWidth"
-            />
-         </form>
-      </main>
+               <Button
+                  className="mt-10"
+                  content="변경 완료하기"
+                  type="submit"
+                  size="fullWidth"
+               />
+            </form>
+         </main>
+      </>
    );
 }

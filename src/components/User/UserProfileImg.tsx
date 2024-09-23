@@ -100,7 +100,7 @@ export default function UserProfileImg({
             <input
                id="profile-upload"
                type="file"
-               accept=".png, .jpeg, .jpg"
+               accept=".png, .jpeg, .jpg, .webp"
                hidden={true}
                onChange={handleImagePreview}
                {...restProps}
