@@ -27,14 +27,14 @@ const routes: RouteConfig[] = [
    { path: '/my-page/reviews', props: { title: '나의 리뷰' } },
 ];
 
-// AppBar를 표시하지 않을 페이지들의 경로
+// AppBar 표시하지 않을 페이지들의 경로
 const noAppBarRoutes = ['/login', '/my-selection', '/my-taste'];
 
 export default function AppBarController() {
    const location = useLocation();
 
-   // AppBar를 표시하지 않을 페이지들에서는 null을 반환합니다.
-   if (noAppBarRoutes.includes(location.pathname)) {
+   // AppBar 표시하지 않을 페이지들에서는 null 반환
+   if (noAppBarRoutes.some((route) => matchPath(route, location.pathname))) {
       return null;
    }
 
@@ -47,8 +47,8 @@ export default function AppBarController() {
 
    const tea = useTeaData(detailMatch?.params?.id);
 
-   const matchedRoute = routes.find(
-      (route) => location.pathname === route.path
+   const matchedRoute = routes.find((route) =>
+      matchPath(route.path, location.pathname)
    );
 
    if (matchedRoute) {
