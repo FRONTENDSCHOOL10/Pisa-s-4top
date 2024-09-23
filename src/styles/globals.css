@@ -11,11 +11,18 @@
    max-width: 48rem;
    height: 100dvh;
    background-color: #f5f5f4;
+   overflow-x: hidden;
    overflow-y: auto;
 
    img {
       user-select: none;
    }
+}
+
+footer {
+   position: fixed;
+   left: 50%;
+   transform: translateX(-50%);
 }
 
 /* 한글 줄바꿈 스타일 지정 */
@@ -25,7 +32,7 @@
 }
 
 main {
-   padding: 1rem 1rem 3rem;
+   padding: 1rem 1rem 5rem;
 }
 
 @layer components {

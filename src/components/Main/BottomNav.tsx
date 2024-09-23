@@ -11,19 +11,26 @@ export default function BottomNav() {
    const { pathname } = useLocation();
 
    return (
-      <nav
-         aria-label="하단 내비게이션"
-         className="sticky bottom-0 left-0 z-50 flex h-[3.75rem] w-full min-w-80 max-w-3xl items-center justify-around border-t-[1px] border-t-stone-200 bg-stone-50 text-xl bg-blend-multiply"
-      >
-         {navItems.map(({ to, label, icon }) => (
-            <Link key={to} to={to} className="focus-green" aria-label={label}>
-               <span
-                  className={`fi fi-${pathname === to ? 'sr' : 'rr'}-${icon} ${
-                     pathname === to ? 'text-stone-500' : 'text-stone-400'
-                  }`}
-               />
-            </Link>
-         ))}
-      </nav>
+      <footer className="bottom-0 z-50 w-full min-w-80 max-w-3xl">
+         <nav
+            className="flex h-[3.75rem] w-full items-center justify-around border-t-[1px] border-t-stone-200 bg-stone-50 text-xl"
+            aria-label="하단 내비게이션"
+         >
+            {navItems.map(({ to, label, icon }) => (
+               <Link
+                  key={to}
+                  to={to}
+                  className="focus-green"
+                  aria-label={label}
+               >
+                  <span
+                     className={`fi fi-${pathname === to ? 'sr' : 'rr'}-${icon} ${
+                        pathname === to ? 'text-stone-500' : 'text-stone-400'
+                     }`}
+                  />
+               </Link>
+            ))}
+         </nav>
+      </footer>
    );
 }
