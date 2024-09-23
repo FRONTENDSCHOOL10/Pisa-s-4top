@@ -71,7 +71,7 @@ export function Component() {
             description="Tea of the Day 이메일 변경 - 이메일을 변경하세요. 더 나은 개인화 서비스를 위해 프로필을 최신 상태로 유지하세요."
          />
          <main className="center-content">
-            <h1 className="sr-only">이메일 수정</h1>
+            <h1 className="sr-only">이메일 변경</h1>
 
             <form onSubmit={handleSubmit}>
                <DuplicateEmailInput
@@ -83,7 +83,7 @@ export function Component() {
 
                <Button
                   className="mt-10"
-                  content="수정 완료하기"
+                  content="변경 완료하기"
                   type="submit"
                   size="fullWidth"
                />
