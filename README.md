@@ -47,11 +47,11 @@
 ![2 1 로그인 (성공)](https://github.com/user-attachments/assets/a0a12c66-c84e-4e71-9cd9-2d41d4db54d6)
 ![2 2 로그인 (로그인 실패하였을 때)](https://github.com/user-attachments/assets/cb5451b2-a6c7-4c76-8802-9e6695e6eb84)
 
-### 📍 취향 태그 선택
-
-### 📍 맞춤 차 추천 스플래시
+### 📍 취향 태그 선택 & 맞춤 차 추천 스플래시
+![취향 선택 페이지](https://github.com/user-attachments/assets/31423a41-a010-4dd7-ac62-46a3c428e135)
 
 ### 📍 메인
+![메인페이지](https://github.com/user-attachments/assets/c15a3572-f6fb-4a20-a76b-3caaf6c0f996)
 
 ### 📍 검색
 ![4 1 검색 페이지(검색 성공)](https://github.com/user-attachments/assets/26807086-ea4a-4abd-9210-56f3b650d082)
@@ -67,6 +67,14 @@
 ![리뷰 리스트 페이지](https://github.com/user-attachments/assets/68fd0f21-495b-48b4-8805-512f16e1ca32)
 
 ### 📍 리뷰 상세
+![리뷰 상세 페이지](https://github.com/user-attachments/assets/93ee189b-07e4-44dd-8dae-c45e4427f2e9)
+
+### 📍 리뷰 작성
+![리뷰 작성 페이지](https://github.com/user-attachments/assets/29d2f2b7-d054-4749-bd63-63f64792f318)
+
+### 📍 리뷰 수정
+![리뷰 수정 페이지](https://github.com/user-attachments/assets/29b3297b-3157-43d1-b697-ecdab9643a57)
+
 
 ### 📍 마이페이지
 - 개인 정보 수정
@@ -77,6 +85,8 @@
 
 ![마이페이지 개인정보 수정](https://github.com/user-attachments/assets/3fe9cc80-1ae1-4dd0-8aee-e1db6578a96b)
 ![마이페이지 나의 찜, 나의 리뷰](https://github.com/user-attachments/assets/885a365f-593c-4629-8ee6-e089a44c9f71)
+![마이페이지 나의 취향 수정](https://github.com/user-attachments/assets/87dc6c69-9e32-4728-a4bb-fcdb1d9eb681)
+
 
 ![로그아웃](https://github.com/user-attachments/assets/7e14cbce-587f-4a7c-9893-c02e24edf5e0)
 ![회원탈퇴](https://github.com/user-attachments/assets/4b1269d1-6ce8-4c23-90f3-2099daa33055)
