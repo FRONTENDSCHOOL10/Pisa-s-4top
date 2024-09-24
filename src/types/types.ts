@@ -49,3 +49,10 @@ export interface TeaColor {
    id: string;
    tea_color: string;
 }
+
+export interface FormattedTea {
+   id: string;
+   imageUrl: string;
+   teaName: string;
+   brand: string;
+}
