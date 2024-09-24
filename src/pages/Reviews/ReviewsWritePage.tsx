@@ -90,6 +90,14 @@ export function Component() {
       fetchTasteNoteData();
    }, []);
 
+   useEffect(() => {
+      if (currentUser) {
+         setIsEditable(true); // 사용자가 로그인했으면 수정 가능
+      } else {
+         setIsEditable(false); // 로그인하지 않았으면 수정 불가
+      }
+   }, [currentUser]);
+
    const toggleLabelSelection = (index: number) => {
       setSelectedLabels((prevSelected) =>
          prevSelected.map((selected, i) => (i === index ? !selected : selected))
