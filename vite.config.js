@@ -19,6 +19,26 @@ const viteConfig = defineConfig({
       include: ['@storybook/builder-vite', '@storybook/react'],
       exclude: ['fsevents'], // fsevents를 번들에서 제외
    },
+   build: {
+      rollupOptions: {
+         output: {
+            manualChunks: {
+               react: ['react', 'react-dom'],
+               'react-router-dom': ['react-router-dom'],
+               'react-ecosystem': [
+                  'react-helmet-async',
+                  'react-modal',
+                  'react-hot-toast',
+                  'zustand',
+                  'swiper',
+                  'axios',
+                  'cox-postposition',
+               ],
+               supabase: ['@supabase/supabase-js'],
+            },
+         },
+      },
+   },
 });
 
 export default viteConfig;

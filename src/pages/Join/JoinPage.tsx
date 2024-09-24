@@ -65,7 +65,7 @@ export default function JoinPage() {
                error: '회원가입에 실패하였습니다',
             });
             navigate('/login');
-         } catch (error) {
+         } catch {
             toast.error('모든 필드를 올바르게 입력해주세요');
          }
       }

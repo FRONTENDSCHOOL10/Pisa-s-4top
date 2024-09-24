@@ -39,10 +39,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
-import { TeaRecommendCard, TeaRecommendCardProps } from './CardComponents';
+import { TeaRecommendCard } from './CardComponents';
+import { FormattedTea } from '@/types/types';
 
 interface TeaRecommendSwiperProps {
-   teaRecommendations: TeaRecommendCardProps[];
+   teaRecommendations: FormattedTea[];
    userNickname: string;
 }
 

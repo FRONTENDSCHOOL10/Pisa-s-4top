@@ -61,7 +61,7 @@ interface User {
 }
 
 interface Recipe {
-   id: string;
+   id?: string;
    recipe_title: string;
    recipe_image: string;
    recipe_detail: string[];
@@ -145,7 +145,7 @@ export function Component() {
             }
 
             const teaRecipe = await fetchTeaRecipe(selectedTea.id);
-            setRecipe(teaRecipe);
+            setRecipe(Array.isArray(teaRecipe) && teaRecipe.length > 0 ? teaRecipe[0] : null);
          } catch (error) {
             console.error('Failed to fetch tea data:', error);
             setError('Failed to load tea data. Please try again.');

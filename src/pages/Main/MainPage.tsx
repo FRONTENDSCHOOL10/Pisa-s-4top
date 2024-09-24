@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 import TeaRecommendSwiper from '@/components/TeaCard/TeaRecommendSwiper';
 import SearchInput from '@/components/Input/SearchInput';
 import HomeReviewCard from '@/components/Review/HomeReviewCard';
@@ -10,6 +9,15 @@ import {
    fetchMultipleReviews,
    fetchUserTaste,
 } from '@/utils/fetchData';
+import { Review } from '@/types/types';
+
+interface Tea {
+   id: string;
+   tea_name: string;
+   tea_image: string;
+   tea_brand: string;
+   tea_category: string;
+}
 
 const getUserNicknameFromLocalStorage = () => {
    const userString = localStorage.getItem('@auth/user');
@@ -24,7 +32,14 @@ const getUserNicknameFromLocalStorage = () => {
    return null;
 };
 
-const formatTeaData = (teas) => {
+interface FormattedTea {
+   id: string;
+   imageUrl: string;
+   teaName: string;
+   brand: string;
+}
+
+const formatTeaData = (teas: Tea[]): FormattedTea[] => {
    return teas.map((tea) => ({
       id: tea.id,
       imageUrl: tea.tea_image,
@@ -34,8 +49,8 @@ const formatTeaData = (teas) => {
 };
 
 export default function MainPage() {
-   const [teaData, setTeaData] = useState([]);
-   const [reviewData, setReviewData] = useState([]);
+   const [teaData, setTeaData] = useState<FormattedTea[]>([]);
+   const [reviewData, setReviewData] = useState<Review[]>([]);
    const [userTaste, setUserTaste] = useState('추천하는');
    const [userNickname, setUserNickname] = useState('');
    const [isLoading, setIsLoading] = useState(true);
