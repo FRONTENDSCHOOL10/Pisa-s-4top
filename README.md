@@ -17,8 +17,8 @@
 
 |           🧡           |          💜          |           💙           |
 | :--------------------: | :------------------: | :--------------------: |
-| ![김한울](https://github.com/user-attachments/assets/ac4c624b-b065-49ee-be43-98f588bc06b6)| ![정혜지](https://github.com/user-attachments/assets/3c1cd6d0-a0ee-4337-8de4-5231277f25a8)| ![최수빈](https://github.com/user-attachments/assets/f31ca0fb-1fea-46b4-94eb-9fef80773009)|
-|       **김한울**       |      **정혜지**      |       **최수빈**       |
+| ![김한울](https://github.com/user-attachments/assets/ac4c624b-b065-49ee-be43-98f588bc06b6)| ![정새벽](https://github.com/user-attachments/assets/3c1cd6d0-a0ee-4337-8de4-5231277f25a8)| ![최수빈](https://github.com/user-attachments/assets/f31ca0fb-1fea-46b4-94eb-9fef80773009)|
+|       **김한울**       |      **정새벽**      |       **최수빈**       |
 |    팀장 / 디자이너     |         발표         |     스크럼 마스터      |
 <br />
 
